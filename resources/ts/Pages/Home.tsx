@@ -1,10 +1,12 @@
 import React from 'react';
 
-export default function Home() {
+const Home: React.FC = () => {
     return (
         <div>
-            <h1>Welcome to EcoBite</h1>
-            <p>Your go-to app for sustainable living.</p>
+            <h2 className="text-2xl font-bold">Welcome to EcoBite</h2>
+            <p>Find recipes and products that match your lifestyle!</p>
         </div>
     );
 };
+
+export default Home;
