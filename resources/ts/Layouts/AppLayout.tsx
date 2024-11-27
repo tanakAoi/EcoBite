@@ -1,3 +1,4 @@
+import Header from '../Components/Header';
 import React from 'react';
 
 interface AppLayoutProps {
@@ -7,9 +8,7 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     return (
         <div>
-            <header>
-                <h1>App Header</h1>
-            </header>
+            <Header />
             <main>
                 {children}
             </main>

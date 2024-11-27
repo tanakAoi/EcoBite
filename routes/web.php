@@ -97,18 +97,6 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
-// Route::get('/login', function () {
-//     return Inertia::render('Login');
-// });
-// Route::post('/login', 'AuthController@login');
-// Route::middleware('auth')->get('/logout', function () {
-//     Auth::logout();
-//     return redirect('/');
-// });
-// Route::get('/create-account', function () {
-//     return Inertia::render('CreateAccount');
-// });
-// Route::post('/create-account', 'AuthController@create');
 
 // Cart
 Route::get('/cart', function () {
