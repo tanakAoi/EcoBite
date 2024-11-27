@@ -17,7 +17,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 
 Route::get('/', function () {
     return Inertia::render('Home');
-});
+})->name('home');
 
 // Recipes
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipe.index');
