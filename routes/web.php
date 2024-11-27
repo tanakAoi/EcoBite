@@ -3,18 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return Inertia::render('Home');
 });
 
 // Recipes
-Route::get('/recipes', function () {
-    return Inertia::render('RecipeList');
-});
-Route::get('/recipes/{id}', function ($id) {
-    return Inertia::render('RecipeDetails', ['id' => $id]);
-});
+Route::get('/recipes', [RecipeController::class, 'index'])->name('recipe.index');
+Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipe.show');
 Route::middleware('auth')->group(function () {
     Route::get('/recipe/create', function () {
         return Inertia::render('CreateRecipe');
@@ -23,12 +21,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // Products
-Route::get('/products', function () {
-    return Inertia::render('ProductList');
-});
-Route::get('/products/{id}', function ($id) {
-    return Inertia::render('ProductDetails', ['id' => $id]);
-});
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('product.show');
 
 // User
 Route::middleware('auth')->group(function () {
@@ -85,11 +79,11 @@ Route::get('/contact', function () {
 Route::post('/contact', 'ContactController@send');
 
 // Admin
-Route::middleware('auth', 'admin')->group(function () {
+/* Route::middleware('auth', 'admin')->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('AdminDashboard');
     });
     Route::resource('/admin/product', 'Admin\ProductController');
     Route::resource('/admin/order', 'Admin\OrderController');
     Route::resource('/admin/user', 'Admin\UserController');
-});
+}); */
