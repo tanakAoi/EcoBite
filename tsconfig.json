@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "strict": true,
+        "isolatedModules": true,
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "noEmit": true,
+        "paths": {
+            "@/*": ["./resources/ts/*"],
+            "ziggy-js": ["./vendor/tightenco/ziggy"]
+        }
+    },
+    "include": ["resources/ts/**/*.ts", "resources/ts/**/*.tsx", "resources/ts/**/*.d.ts", "resources/ts/Components/ApplicationLogo.tsx", "resources/ts/Components/Checkbox.tsx", "resources/ts/Components/DangerButton.tsx", "resources/ts/Components/Dropdown.tsx", "resources/ts/Components/InputError.tsx", "resources/ts/Components/InputLabel.tsx", "resources/ts/Components/Modal.tsx", "resources/ts/Components/NavLink.tsx", "resources/ts/Components/PrimaryButton.tsx", "resources/ts/Components/ResponsiveNavLink.tsx", "resources/ts/Components/SecondaryButton.tsx", "resources/ts/Components/TextInput.tsx", "resources/ts/Layouts/AuthenticatedLayout.tsx", "resources/ts/Layouts/GuestLayout.tsx", "resources/ts/Pages/Dashboard.tsx", "resources/ts/Pages/Welcome.tsx", "resources/ts/Pages/User/Profile/Edit.tsx"]
+}
