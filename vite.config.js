@@ -18,6 +18,6 @@ export default defineConfig({
     },
     base:
         process.env.APP_ENV === "production"
-            ? "https://your-heroku-app.herokuapp.com/"
+            ? "https://ecobite-4c90906c8f67.herokuapp.com/"
             : "/",
 });
