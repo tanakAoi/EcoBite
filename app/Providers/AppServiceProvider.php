@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 use Illuminate\Support\ServiceProvider;
 
