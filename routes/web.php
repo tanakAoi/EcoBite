@@ -130,3 +130,7 @@ Route::post('/contact', 'ContactController@send');
     Route::resource('/admin/order', 'Admin\OrderController');
     Route::resource('/admin/user', 'Admin\UserController');
 }); */
+
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
