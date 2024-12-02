@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
@@ -125,13 +126,24 @@ Route::post('/contact', 'ContactController@send');
 
 // Admin
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    Route::get('/admin',
-    [AdminController::class, 'index'])
+    Route::get(
+        '/admin',
+        [AdminController::class, 'index']
+    )
     ->name('admin.dashboard');
-    /*     Route::resource('/admin/product', 'Admin\ProductController');
-        Route::resource('/admin/order', 'Admin\OrderController');
-        Route::resource('/admin/user', 'Admin\UserController'); */
-    });
+
+    Route::resource(
+        '/admin/product',
+        AdminProductController::class
+    )
+    ->names([
+        'index' => 'admin.product.index',
+        'create' => 'admin.product.create',
+        'store' => 'admin.product.store',
+    ]);
+    Route::resource('/admin/order', 'Admin\OrderController');
+    Route::resource('/admin/user', 'Admin\UserController');
+});
 
 
 Route::get('/{any}', function () {

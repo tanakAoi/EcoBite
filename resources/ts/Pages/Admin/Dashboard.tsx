@@ -9,6 +9,9 @@ const Dashboard: React.FC = () => {
                 Welcome to the admin dashboard. Here you can manage your
                 application.
             </p>
+            <div>
+                <a href="admin/product">Manage your products</a>
+            </div>
         </div>
     );
 };

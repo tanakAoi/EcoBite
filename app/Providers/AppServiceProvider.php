@@ -34,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
                     'user' => Auth::user() ? Auth::user()->only('id', 'username', 'email') : null,
                 ];
             },
+            'success' => function () {
+                return Session::get('success');
+            },
             'error' => function () {
                 return Session::get('error');
             },
