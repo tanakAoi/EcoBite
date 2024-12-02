@@ -140,6 +140,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         'index' => 'admin.product.index',
         'create' => 'admin.product.create',
         'store' => 'admin.product.store',
+        'update' => 'admin.product.update',
+        'destroy' => 'admin.product.destroy',
     ]);
     Route::resource('/admin/order', 'Admin\OrderController');
     Route::resource('/admin/user', 'Admin\UserController');

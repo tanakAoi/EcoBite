@@ -51,4 +51,26 @@ class AdminProductController extends Controller
 
         return redirect()->route('admin.product.index')->with('success', 'Product created successfully!');;
     }
+
+    public function edit($id)
+    {
+        $product = Product::find($id);
+
+        return Inertia::render('Admin/ProductEdit', [
+            'productData' => $product
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+
+        if ($product->image) {
+            Storage::disk('s3')->delete($product->image);
+        }
+
+        $product->delete();
+
+        return redirect()->route('admin.product.index')->with('success', 'Product deleted successfully!');
+    }
 }

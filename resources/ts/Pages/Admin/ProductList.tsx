@@ -1,3 +1,4 @@
+import DeleteForm from "../../Components/DeleteForm";
 import { Session } from "inspector";
 import React, { useState, useEffect } from "react";
 
@@ -17,14 +18,21 @@ interface AdminProductProps {
     success?: string;
 }
 
-const ProductList: React.FC<AdminProductProps> = ({ productsData, success }) => {
-    console.log(success);
-
+const ProductList: React.FC<AdminProductProps> = ({
+    productsData,
+    success,
+}) => {
     const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
         setProducts(productsData.data);
     }, [products]);
+
+    const handleDelete = (id: number) => {
+        setProducts((prevProducts) =>
+            prevProducts.filter((product) => product.id !== id)
+        );
+    };
 
     return (
         <div>
@@ -63,7 +71,7 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData, success }) => 
                             <td>{product.updated_at}</td>
                             <td>
                                 <button>Edit</button>
-                                <button>Delete</button>
+                                <DeleteForm productId={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
                     ))}
