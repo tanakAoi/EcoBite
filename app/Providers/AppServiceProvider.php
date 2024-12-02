@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
                 return [
                     'user' => Auth::user() ? Auth::user()->only('id', 'username', 'email') : null,
                 ];
+            },
+            'error' => function () {
+                return Session::get('error');
             },
         ]);
     }

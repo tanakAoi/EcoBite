@@ -1,8 +1,12 @@
-import { Link } from '@inertiajs/react';
-import React from 'react';
-import { route } from 'ziggy-js';
+import { Link } from "@inertiajs/react";
+import React from "react";
+import { route } from "ziggy-js";
+interface DashboardProps {
+    error?: string;
+}
 
-const Home: React.FC = () => {
+const Home: React.FC<DashboardProps> = ({ error }) => {
+    console.log(error);
 
     return (
         <div className="container mx-auto p-4">
@@ -13,7 +17,7 @@ const Home: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {/* 最新の製品の表示部分 */}
                 </div>
-                <Link href={route('product.index')} className="text-blue-500">
+                <Link href={route("product.index")} className="text-blue-500">
                     View All Products
                 </Link>
             </section>
@@ -22,7 +26,7 @@ const Home: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {/* 人気のレシピ表示部分 */}
                 </div>
-                <Link href={route('recipe.index')} className="text-blue-500">
+                <Link href={route("recipe.index")} className="text-blue-500">
                     Browse Recipes
                 </Link>
             </section>
