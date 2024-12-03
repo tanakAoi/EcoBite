@@ -16,7 +16,7 @@ interface ProductShowProps {
 const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
 
     const handleDelete = () => {
-        window.location.href = "/admin/product";
+        window.location.href = "/admin/products";
     }
 
     return (
@@ -27,7 +27,7 @@ const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
             <p>${product.price}</p>
             <div>
                 <a
-                    href={`/admin/product/${product.id}/edit`}
+                    href={`/admin/products/${product.id}/edit`}
                 >
                     Edit
                 </a>

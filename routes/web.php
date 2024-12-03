@@ -133,7 +133,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     ->name('admin.dashboard');
 
     Route::resource(
-        '/admin/product',
+        '/admin/products',
         AdminProductController::class
     )
     ->names([

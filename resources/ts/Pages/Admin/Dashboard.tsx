@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
                 application.
             </p>
             <div>
-                <a href="admin/product">Manage your products</a>
+                <a href="admin/products">Manage your products</a>
             </div>
         </div>
     );
