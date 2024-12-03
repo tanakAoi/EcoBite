@@ -1,3 +1,9 @@
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+}
 
 export interface Product {
     id: number;
@@ -12,7 +18,7 @@ export interface Product {
 
 export interface RecipeIngredient {
     id: number;
-    name: string
+    name: string;
     quantity: number;
     unit: string;
     pivot: RecipeIngredientPivot;

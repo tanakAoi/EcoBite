@@ -1,18 +1,12 @@
-import { Link, usePage } from "@inertiajs/react";
+import { User } from "@/types";
+import { Link } from "@inertiajs/react";
 import React from "react";
-
-interface User {
-    id: number;
-    username: string;
-    email: string;
-}
 
 interface HeaderProps {
     auth: { user: User | null };
 }
 
 const Header: React.FC<HeaderProps> = ({ auth }) => {
-
     const handleLogout = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -34,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ auth }) => {
             body: JSON.stringify({}),
         });
         console.log(response);
-        
+
         if (response.ok) {
             window.location.href = "/";
         } else {
@@ -44,17 +38,39 @@ const Header: React.FC<HeaderProps> = ({ auth }) => {
 
     return (
         <header className="bg-green-800 px-8 py-4 flex justify-between text-white">
-            <h1 className="m-0">EcoBite</h1>
-            {auth.user ? (
-                <div className="flex gap-3">
-                    <p>Welcome {auth.user.username}!</p>
+            <Link href="/">EcoBite</Link>
+            <ul className="flex gap-10">
+                <li>
+                    <Link href="/products">Products</Link>
+                </li>
+                <li>
+                    <Link href="/recipes">Recipes</Link>
+                </li>
+                {auth.user ? (
+                    <li>
+                        <Link href="/user">Account</Link>
+                    </li>
+                ) : (
+                    <li>
+                        <Link href="/register">Create account</Link>
+                    </li>
+                )}
+                {auth.user && auth.user.role === "admin" && (
+                    <li>
+                        <Link href="/admin">Admin</Link>
+                    </li>
+                )}
+            </ul>
+            <div className="flex gap-6">
+                {auth.user ? (
                     <form onSubmit={handleLogout}>
                         <button type="submit">Logout</button>
                     </form>
-                </div>
-            ) : (
-                <Link href="/login">Login</Link>
-            )}
+                ) : (
+                    <Link href="/login">Login</Link>
+                )}
+                <span>Cart</span>
+            </div>
         </header>
     );
 };
