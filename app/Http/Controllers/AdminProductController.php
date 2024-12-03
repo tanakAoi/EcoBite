@@ -20,8 +20,7 @@ class AdminProductController extends Controller
 
     public function create()
     {
-        return
-            Inertia::render('Admin/ProductCreate');
+        return Inertia::render('Admin/ProductCreate');
     }
 
     public function store(Request $request)
@@ -52,13 +51,40 @@ class AdminProductController extends Controller
         return redirect()->route('admin.product.index')->with('success', 'Product created successfully!');;
     }
 
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+
+        return Inertia::render('Admin/ProductShow', [
+            'product' => $product
+        ]);
+    }
+
     public function edit($id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
 
         return Inertia::render('Admin/ProductEdit', [
-            'productData' => $product
+            'product' => $product
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'stock_quantity' => 'required|integer|min:0',
+        ]);
+
+        $product->update($validatedData);
+
+        return redirect()
+            ->route('admin.product.index')
+            ->with('success', 'Product updated successfully.');
     }
 
     public function destroy($id)

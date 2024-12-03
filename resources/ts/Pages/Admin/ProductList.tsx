@@ -54,7 +54,7 @@ const ProductList: React.FC<AdminProductProps> = ({
                 </thead>
                 <tbody>
                     {products.map((product) => (
-                        <tr key={product.id}>
+                        <tr key={product.id} className="relative">
                             <td>{product.id}</td>
                             <td>{product.name}</td>
                             <td>{product.description}</td>
@@ -69,10 +69,24 @@ const ProductList: React.FC<AdminProductProps> = ({
                             </td>
                             <td>{product.created_at}</td>
                             <td>{product.updated_at}</td>
-                            <td>
-                                <button>Edit</button>
-                                <DeleteForm productId={product.id} onDelete={handleDelete} />
+                            <td className="relative">
+                                <a
+                                    href={`/admin/product/${product.id}/edit`}
+                                    className="relative z-10 w-fit"
+                                >
+                                    Edit
+                                </a>
+                                <div className="relative z-10 w-fit">
+                                    <DeleteForm
+                                        productId={product.id}
+                                        onDelete={handleDelete}
+                                    />
+                                </div>
                             </td>
+                            <a
+                                href={`/admin/product/${product.id}`}
+                                className="absolute inset-0 z-0"
+                            ></a>
                         </tr>
                     ))}
                 </tbody>

@@ -140,6 +140,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         'index' => 'admin.product.index',
         'create' => 'admin.product.create',
         'store' => 'admin.product.store',
+        'show' => 'admin.product.show',
+        'edit' => 'admin.product.edit',
         'update' => 'admin.product.update',
         'destroy' => 'admin.product.destroy',
     ]);

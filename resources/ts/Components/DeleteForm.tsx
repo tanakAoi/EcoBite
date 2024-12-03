@@ -25,7 +25,7 @@ const DeleteForm: React.FC<DeleteFormProps> = ({ productId, onDelete }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ display: "inline-block" }}>
+        <form onSubmit={handleSubmit}>
             <button type="submit">Delete</button>
         </form>
     );

@@ -10,7 +10,7 @@ const ProductCreate: React.FC = () => {
         image: null as File | null,
     });
 
-    const submit: FormEventHandler = (e) => {
+    const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
 
         const formData = new FormData();
@@ -31,8 +31,7 @@ const ProductCreate: React.FC = () => {
 
     return (
         <form
-            onSubmit={submit}
-            method="POST"
+            onSubmit={handleSubmit}
             encType="multipart/form-data"
             className="flex flex-col"
         >
