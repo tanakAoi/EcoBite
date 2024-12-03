@@ -1,17 +1,6 @@
+import { Product } from "@/types";
 import DeleteForm from "../../Components/DeleteForm";
-import { Session } from "inspector";
 import React, { useState, useEffect } from "react";
-
-interface Product {
-    id: number;
-    name: string;
-    price: number;
-    description: string;
-    stock_quantity: number;
-    image: string;
-    created_at: string;
-    updated_at: string;
-}
 
 interface AdminProductProps {
     productsData: { data: Product[] };
@@ -71,7 +60,7 @@ const ProductList: React.FC<AdminProductProps> = ({
                             <td>{product.updated_at}</td>
                             <td className="relative">
                                 <a
-                                    href={`/admin/product/${product.id}/edit`}
+                                    href={`/admin/products/${product.id}/edit`}
                                     className="relative z-10 w-fit"
                                 >
                                     Edit
@@ -84,7 +73,7 @@ const ProductList: React.FC<AdminProductProps> = ({
                                 </div>
                             </td>
                             <a
-                                href={`/admin/product/${product.id}`}
+                                href={`/admin/products/${product.id}`}
                                 className="absolute inset-0 z-0"
                             ></a>
                         </tr>
