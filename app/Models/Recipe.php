@@ -9,4 +9,9 @@ class Recipe extends Model
 {
     /** @use HasFactory<\Database\Factories\RecipeFactory> */
     use HasFactory;
+
+    public function ingredients()
+    {
+        return $this->belongsToMany(Product::class, 'recipe_ingredients')->withPivot('quantity', 'unit');
+    }
 }

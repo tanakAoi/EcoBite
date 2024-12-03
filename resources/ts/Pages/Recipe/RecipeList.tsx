@@ -1,29 +1,55 @@
-import React from 'react';
+import { Recipe } from "@/types";
+import { Link } from "@inertiajs/react";
+import React from "react";
 
-interface Recipe {
-    id: number;
-    title: string;
-    description: string;
+interface RecipeListProps {
+    recipes: Recipe[];
 }
 
-const recipes: Recipe[] = [
-    { id: 1, title: 'Spaghetti Carbonara', description: 'A classic Italian pasta dish.' },
-    { id: 2, title: 'Chicken Curry', description: 'A spicy and flavorful dish.' },
-    { id: 3, title: 'Beef Stroganoff', description: 'A rich and creamy beef dish.' },
-];
-
-const RecipeList: React.FC = () => {
+const RecipeList: React.FC<RecipeListProps> = ({ recipes }) => {
     return (
-        <div>
-            <h1>Recipe List</h1>
-            <ul>
-                {recipes.map(recipe => (
-                    <li key={recipe.id}>
-                        <h2>{recipe.title}</h2>
-                        <p>{recipe.description}</p>
-                    </li>
+        <div className="max-w-4xl mx-auto">
+            <h1 className="text-3xl font-bold mb-6">All Recipe</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {recipes.map((recipe) => (
+                    <div
+                        key={recipe.id}
+                        className="border rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
+                    >
+                        <Link
+                            href={`/recipes/${recipe.id}`}
+                            className="flex flex-col justify-between h-full gap-4"
+                        >
+                            <div
+                                className={`w-full h-48 overflow-hidden rounded-lg ${
+                                    !recipe.image ? "bg-green-100" : ""
+                                }`}
+                            >
+                                {recipe.image ? (
+                                    <img
+                                        src={recipe.image}
+                                        alt={recipe.title}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="flex justify-center items-center w-full h-full text-gray-500">
+                                        No Image Available
+                                    </div>
+                                )}
+                            </div>
+                            <h2 className="text-2xl font-semibold">
+                                {recipe.title}
+                            </h2>
+                            <p className="text-sm text-gray-500">
+                                Created at:{" "}
+                                {new Date(
+                                    recipe.created_at
+                                ).toLocaleDateString()}
+                            </p>
+                        </Link>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

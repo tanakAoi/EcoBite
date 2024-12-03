@@ -18,4 +18,9 @@ class Product extends Model
         'stock_quantity',
         'image',
     ];
+    
+    public function recipes()
+    {
+        return $this->belongsToMany(Recipe::class, 'recipe_ingredients');
+    }
 }
