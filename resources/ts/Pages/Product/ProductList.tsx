@@ -1,3 +1,4 @@
+import AddToCartButton from "../../Components/AddToCartButton";
 import { Product } from "@/types";
 import { Link } from "@inertiajs/react";
 import React, { useState } from "react";
@@ -7,28 +8,24 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
-    const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
-
+    const [productQuantities, setProductQuantities] = useState<{ [key: number]: number }>({});
+    console.log(productQuantities);
+    
     const handleQuantityChange = (id: number, quantity: number) => {
-        setQuantities((prevQuantities) => ({
-            ...prevQuantities,
+        setProductQuantities((prevProductQuantities) => ({
+            ...prevProductQuantities,
             [id]: quantity,
         }));
     };
 
-    const handleAddToCart = (id: number) => {
-        const quantity = quantities[id] || 1;
-        console.log(`Added ${quantity} of product ${id} to cart`);
-    };
-
     return (
-        <div className="product-list">
+        <div className="">
             <h1 className="text-3xl font-bold mb-6">Product List</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product) => (
                     <div
                         key={product.id}
-                        className="border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow"
+                        className="flex flex-col items-center justify-center gap-5 border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow"
                     >
                         <Link
                             href={`/products/${product.id}`}
@@ -61,34 +58,33 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                                     </span>
                                 )}
                             </div>
-                            <div className="flex items-center justify-between gap-4">
-                                <input
-                                    type="number"
-                                    value={quantities[product.id] || 1}
-                                    min="1"
-                                    max={product.stock_quantity}
-                                    onChange={(e) =>
-                                        handleQuantityChange(
-                                            product.id,
-                                            parseInt(e.target.value, 10)
-                                        )
-                                    }
-                                    className="w-16 p-2 border rounded"
-                                    disabled={product.stock_quantity === 0}
-                                />
-                                <button
-                                    onClick={() => handleAddToCart(product.id)}
-                                    className={`${
-                                        product.stock_quantity === 0
-                                            ? "bg-gray-400 cursor-not-allowed"
-                                            : "bg-blue-500 hover:bg-blue-600"
-                                    } text-white px-4 py-2 rounded transition`}
-                                    disabled={product.stock_quantity === 0}
-                                >
-                                    Add to Cart
-                                </button>
-                            </div>
                         </Link>
+                        <div className="flex  gap-4">
+                            <input
+                                type="number"
+                                value={productQuantities[product.id] || 1}
+                                min="1"
+                                max={product.stock_quantity}
+                                onChange={(e) =>
+                                    handleQuantityChange(
+                                        product.id,
+                                        parseInt(e.target.value, 10)
+                                    )
+                                }
+                                className="w-16 p-2 border rounded"
+                                disabled={product.stock_quantity === 0}
+                            />
+                            <AddToCartButton
+                                productQuantities={{
+                                    ...productQuantities,
+                                    [product.id]:
+                                        productQuantities[product.id] || 1,
+                                }}
+                                inStock={
+                                    product.stock_quantity > 0 ? true : false
+                                }
+                            />
+                        </div>
                     </div>
                 ))}
             </div>

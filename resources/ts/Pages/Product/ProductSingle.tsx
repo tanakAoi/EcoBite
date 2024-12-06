@@ -1,14 +1,14 @@
+import AddToCartButton from "../../Components/AddToCartButton";
 import { Product } from "@/types";
 import { usePage } from "@inertiajs/react";
 import React, { useState } from "react";
 
-interface ProductDetailProps {
+interface ProductSingleProps {
     product: Product;
 }
 
-const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
+const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
     const [quantity, setQuantity] = useState<number>(1);
-    const { auth } = usePage().props;
 
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newQuantity = Math.max(
@@ -17,11 +17,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
         );
         setQuantity(newQuantity);
     };
-
-    const handleAddToCart = () => {
-        console.log(`Added ${quantity} of product ${product.id} to cart`);
-    };
-
+    
     return (
         <div className="product-detail-container max-w-4xl mx-auto p-6">
             <div className="flex flex-col md:flex-row">
@@ -70,22 +66,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                             className="w-20 p-2 border rounded-lg"
                         />
                     </div>
-
-                    <button
-                        onClick={handleAddToCart}
-                        className={`${
-                            product.stock_quantity === 0
-                                ? "bg-gray-400 cursor-not-allowed"
-                                : "bg-blue-600 hover:bg-blue-700"
-                        } text-white px-6 py-3 rounded-lg transition`}
-                        disabled={product.stock_quantity === 0}
-                    >
-                        Add to Cart
-                    </button>
+                    <AddToCartButton
+                        productQuantities={{ [product.id]: quantity }}
+                        inStock={product.stock_quantity > 0 ? true : false}
+                    />
                 </div>
             </div>
         </div>
     );
 };
 
-export default ProductDetail;
+export default ProductSingle;

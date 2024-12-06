@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ auth }) => {
                 ) : (
                     <Link href="/login">Login</Link>
                 )}
-                <span>Cart</span>
+                <Link href="/cart">Cart</Link>
             </div>
         </header>
     );

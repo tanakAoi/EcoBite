@@ -23,4 +23,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Recipe::class, 'recipe_ingredients');
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

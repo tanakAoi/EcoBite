@@ -42,3 +42,34 @@ export interface Recipe {
     created_at: string;
     updated_at: string;
 }
+
+export interface CartItem {
+    id: number;
+    cart_id: number;
+    product_id: number;
+    quantity: number;
+    item_price: number;
+    created_at: string;
+    updated_at: string;
+}
+export interface CartItemProduct {
+    id: number;
+    cart_id: number;
+    product_id: number;
+    product: Product;
+    quantity: number;
+    item_price: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Cart {
+    id: number;
+    user_id?: number;
+    session_id?: number;
+    total_price?: number;
+    status: string;
+    created_at: string;
+    updated_at: string;
+    items?: Array<CartItemProduct>;
+}

@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\CartController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
@@ -102,9 +103,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // Cart
-Route::get('/cart', function () {
-    return Inertia::render('Cart');
-});
+Route::get('/cart', [CartController::class, 'showCart'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'addItem'])->name('cart.add');
 
 // Checkout
 Route::get('/checkout', function () {
