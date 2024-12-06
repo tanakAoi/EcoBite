@@ -11,32 +11,41 @@ class CartItemController extends Controller
 {
     public function addItem(Request $request)
     {
-        $validated = $request->validate([
-            'cart_id' => 'required|exists:carts,id',
+        $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
         ]);
 
-        $cart = Cart::find($validated['cart_id']);
-        $product = Product::find($validated['product_id']);
-
-        $existingCartItem = CartItem::where('cart_id', $cart->id)
-            ->where('product_id', $product->id)
-            ->first();
-
-        if ($existingCartItem) {
-            $existingCartItem->quantity += $validated['quantity'];
-            $existingCartItem->save();
+        if (!$request->user()) {
+            $cart = Cart::firstOrCreate([
+                'session_id' => session()->getId(),
+                'status' => 'pending',
+            ]);
         } else {
-            CartItem::create([
-                'cart_id' => $cart->id,
-                'product_id' => $product->id,
-                'quantity' => $validated['quantity'],
+            $cart = Cart::firstOrCreate([
+                'user_id' => $request->user()->id,
+                'status' => 'pending',
+            ]);
+        }
+
+        $product = Product::find($request->product_id);
+
+        $item = $cart->items()->where('product_id', $request->product_id)->first();
+        if ($item) {
+            $item->quantity += $request->quantity;
+            $item->item_price = $product->price;
+            $item->save();
+        } else {
+            $cart->items()->create([
+                'product_id' => $request->product_id,
+                'quantity' => $request->quantity,
                 'item_price' => $product->price,
             ]);
         }
 
-        return response()->json(['message' => 'Item added to cart'], 200);
+        $cart->updateTotalPrice();
+
+        return response()->json($item, 201);
     }
 
     public function removeItem($cartId, $productId)
@@ -53,20 +62,24 @@ class CartItemController extends Controller
         return response()->json(['message' => 'Item not found in cart'], 404);
     }
 
-    public function updateQuantity(Request $request, $cartId, $productId)
+    public function updateQuantity(Request $request)
     {
         $validated = $request->validate([
             'quantity' => 'required|integer|min:1',
         ]);
 
-        $cartItem = CartItem::where('cart_id', $cartId)
-            ->where('product_id', $productId)
+        $cartItem = CartItem::with('product')
+            ->where('id', $request->cartItemId)
             ->first();
 
         if ($cartItem) {
             $cartItem->quantity = $validated['quantity'];
             $cartItem->save();
-            return response()->json(['message' => 'Item quantity updated'], 200);
+
+            $cart = Cart::find($cartItem->cart_id);
+            $totalPrice = $cart->updateTotalPrice();
+
+            return response()->json([$cartItem, $totalPrice], 200);
         }
 
         return response()->json(['message' => 'Item not found in cart'], 404);

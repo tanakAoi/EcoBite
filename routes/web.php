@@ -17,6 +17,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartItemController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
@@ -104,7 +105,8 @@ Route::middleware('auth')->group(function () {
 
 // Cart
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart.index');
-Route::post('/cart/add', [CartController::class, 'addItem'])->name('cart.add');
+Route::post('/cart/add', [CartItemController::class, 'addItem'])->name('cart.item.add');
+Route::put('cart/update/{cartItemId}', [CartItemController::class, 'updateQuantity'])->name('cart.item.update');
 
 // Checkout
 Route::get('/checkout', function () {

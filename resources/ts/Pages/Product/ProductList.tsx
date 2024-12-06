@@ -8,9 +8,11 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
-    const [productQuantities, setProductQuantities] = useState<{ [key: number]: number }>({});
+    const [productQuantities, setProductQuantities] = useState<{
+        [key: number]: number;
+    }>({});
     console.log(productQuantities);
-    
+
     const handleQuantityChange = (id: number, quantity: number) => {
         setProductQuantities((prevProductQuantities) => ({
             ...prevProductQuantities,

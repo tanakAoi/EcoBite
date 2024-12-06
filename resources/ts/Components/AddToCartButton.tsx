@@ -20,7 +20,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         );
 
         try {
-            const response = await axios.post(route("cart.add"), {
+            const response = await axios.post(route("cart.item.add"), {
                 ...product[0]
             });
 
