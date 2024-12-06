@@ -180,9 +180,9 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                         <p className="text-xl font-semibold">
                             Total: ${(updatedCart.total_price)}
                         </p>
-                        <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
+                        <a href="/checkout" className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
                             Checkout
-                        </button>
+                        </a>
                     </div>
                 </div>
             ) : (

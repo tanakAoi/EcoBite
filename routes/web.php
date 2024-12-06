@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -110,10 +111,8 @@ Route::put('cart/update/{cartItemId}', [CartItemController::class, 'updateQuanti
 Route::delete('cart/delete/{cartItemId}', [CartItemController::class, 'removeItem'])->name('cart.item.delete');
 
 // Checkout
-Route::get('/checkout', function () {
-    return Inertia::render('Checkout');
-});
-Route::post('/checkout', 'CheckoutController@process');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.create-payment-intent');
 
 // Other Pages
 Route::get('/about', function () {
