@@ -49,8 +49,16 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
     };
 
     const handleIncrement = (cartItemId: number, quantity: number) => {
-        if (quantity < 99) {
-            handleQuantityChange(cartItemId, quantity + 1);
+        if (cart.items) {
+            cart.items.map((item) => {
+                if (cartItemId === item.id) {
+                    const stock = item.product.stock_quantity;
+
+                    if (quantity < stock) {
+                        handleQuantityChange(cartItemId, quantity + 1);
+                    }
+                }
+            });
         }
     };
 
@@ -170,7 +178,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                     </ul>
                     <div className="mt-6 flex justify-between items-center">
                         <p className="text-xl font-semibold">
-                            Total: ${updatedCart.total_price}
+                            Total: ${(updatedCart.total_price)}
                         </p>
                         <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
                             Checkout

@@ -51,7 +51,7 @@ class CartItemController extends Controller
     public function removeItem(Request $request)
     {
         $cartItem = CartItem::with('product')
-        ->where('id', $request->cartItemId)->first();
+            ->where('id', $request->cartItemId)->first();
 
         if ($cartItem) {
             $cartItem->delete();
