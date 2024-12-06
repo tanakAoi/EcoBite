@@ -26,8 +26,6 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
             });
 
             if (response.status === 200) {
-                console.log(response.data);
-
                 const updatedItem = response.data[0];
                 const updatedTotalPrice = response.data[1];
 
@@ -59,6 +57,33 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
     const handleDecrement = (cartItemId: number, quantity: number) => {
         if (quantity > 1) {
             handleQuantityChange(cartItemId, quantity - 1);
+        }
+    };
+
+    const RemoveItem = async (cartItemId: number) => {
+        setIsLoading(true);
+        try {
+            const response = await axios.delete(`/cart/delete/${cartItemId}`);
+
+            if (response.status === 200) {
+                const updatedTotalPrice = response.data[0];
+
+                setUpdatedCart((prevCart) => {
+                    const updatedItems = prevCart.items?.filter(
+                        (item) => item.id !== cartItemId
+                    );
+
+                    return {
+                        ...prevCart,
+                        items: updatedItems,
+                        total_price: updatedTotalPrice,
+                    };
+                });
+            }
+        } catch (error) {
+            console.error("Error removing item:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -132,7 +157,9 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                     <div>
                                         <button
                                             className="text-red-500 hover:text-red-700"
-                                            onClick={() => {}}
+                                            onClick={() => {
+                                                RemoveItem(item.id);
+                                            }}
                                         >
                                             Remove
                                         </button>
