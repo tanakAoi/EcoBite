@@ -43,6 +43,8 @@ class Cart extends Model
             return $item->quantity * $item->item_price;
         });
 
+        $totalPrice = round($totalPrice, 2);
+
         $this->update([
             'total_price' => $totalPrice,
         ]);
