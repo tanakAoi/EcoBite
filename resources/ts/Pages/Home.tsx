@@ -15,7 +15,6 @@ const Home: React.FC<DashboardProps> = ({ error }) => {
             <section>
                 <h2 className="text-2xl font-semibold">Latest Products</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {/* 最新の製品の表示部分 */}
                 </div>
                 <Link href={route("product.index")} className="text-blue-500">
                     View All Products
@@ -24,7 +23,6 @@ const Home: React.FC<DashboardProps> = ({ error }) => {
             <section className="mt-8">
                 <h2 className="text-2xl font-semibold">Featured Recipes</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {/* 人気のレシピ表示部分 */}
                 </div>
                 <Link href={route("recipe.index")} className="text-blue-500">
                     Browse Recipes

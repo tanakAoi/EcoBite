@@ -1,5 +1,6 @@
-import React from 'react';
-import DeleteForm from '../../Components/DeleteForm';
+import React from "react";
+import DeleteForm from "../../Components/DeleteForm";
+import { Link } from "@inertiajs/react";
 
 interface Product {
     id: number;
@@ -14,10 +15,9 @@ interface ProductShowProps {
 }
 
 const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
-
     const handleDelete = () => {
         window.location.href = "/admin/products";
-    }
+    };
 
     return (
         <div>
@@ -26,11 +26,7 @@ const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
             <p>{product.description}</p>
             <p>${product.price}</p>
             <div>
-                <a
-                    href={`/admin/products/${product.id}/edit`}
-                >
-                    Edit
-                </a>
+                <Link href={route("admin.product.edit", product.id)}>Edit</Link>
                 <DeleteForm productId={product.id} onDelete={handleDelete} />
             </div>
         </div>

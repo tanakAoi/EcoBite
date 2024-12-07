@@ -17,7 +17,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipes }) => {
                         className="border rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
                     >
                         <Link
-                            href={`/recipes/${recipe.id}`}
+                            href={route("recipe.show", recipe.id)}
                             className="flex flex-col justify-between h-full gap-4"
                         >
                             <div

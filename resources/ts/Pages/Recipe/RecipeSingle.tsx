@@ -56,7 +56,10 @@ const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
                                     <li key={ingredient.id}>
                                         {ingredient.pivot.product_id ? (
                                             <Link
-                                                href={`/products/${ingredient.pivot.product_id}`}
+                                                href={route(
+                                                    "product.show",
+                                                    ingredient.pivot.product_id
+                                                )}
                                                 className="text-blue-500 underline"
                                             >
                                                 {ingredient.name}

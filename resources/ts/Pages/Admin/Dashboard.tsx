@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import React from "react";
 
 const Dashboard: React.FC = () => {
@@ -10,7 +11,9 @@ const Dashboard: React.FC = () => {
                 application.
             </p>
             <div>
-                <a href="admin/products">Manage your products</a>
+                <Link href={route("admin.product.index")}>
+                    Manage your products
+                </Link>
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import { Cart } from "@/types";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "@inertiajs/react";
 
 interface CartProps {
     cart: Cart;
@@ -180,9 +181,9 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                         <p className="text-xl font-semibold">
                             Total: ${(updatedCart.total_price)}
                         </p>
-                        <a href="/checkout" className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
+                        <Link href={route("checkout.index")} className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
                             Checkout
-                        </a>
+                        </Link>
                     </div>
                 </div>
             ) : (

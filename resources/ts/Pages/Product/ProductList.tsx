@@ -30,7 +30,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                         className="flex flex-col items-center justify-center gap-5 border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow"
                     >
                         <Link
-                            href={`/products/${product.id}`}
+                            href={route("product.show", product.id)}
                             className="flex flex-col items-center justify-between gap-4"
                         >
                             <img

@@ -1,6 +1,7 @@
 import { Product } from "@/types";
 import DeleteForm from "../../Components/DeleteForm";
 import React, { useState, useEffect } from "react";
+import { Link } from "@inertiajs/react";
 
 interface AdminProductProps {
     productsData: { data: Product[] };
@@ -26,7 +27,7 @@ const ProductList: React.FC<AdminProductProps> = ({
     return (
         <div>
             <h1>Admin Product Management</h1>
-            <a href="product/create">Add new product</a>
+            <Link href={route("admin.product.create")}>Add new product</Link>
             <table className="border">
                 <thead>
                     <tr>
@@ -59,12 +60,12 @@ const ProductList: React.FC<AdminProductProps> = ({
                             <td>{product.created_at}</td>
                             <td>{product.updated_at}</td>
                             <td className="relative">
-                                <a
-                                    href={`/admin/products/${product.id}/edit`}
+                                <Link
+                                    href={route("admin.product.edit", product.id)}
                                     className="relative z-10 w-fit"
                                 >
                                     Edit
-                                </a>
+                                </Link>
                                 <div className="relative z-10 w-fit">
                                     <DeleteForm
                                         productId={product.id}
@@ -72,10 +73,10 @@ const ProductList: React.FC<AdminProductProps> = ({
                                     />
                                 </div>
                             </td>
-                            <a
-                                href={`/admin/products/${product.id}`}
+                            <Link
+                                href={route("admin.product.show", product.id)}
                                 className="absolute inset-0 z-0"
-                            ></a>
+                            />
                         </tr>
                     ))}
                 </tbody>
