@@ -11,8 +11,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
     return (
         <div>
-            <Header auth={auth} />
-            <main className='my-10 mx-auto px-10'>{children}</main>
+            {auth ? (
+                <Header auth={auth} />
+            ) : (
+                <Header auth={null} /> 
+            )}
+            <main className="my-10 mx-auto px-10">{children}</main>
             <footer>
                 <p>App Footer</p>
             </footer>

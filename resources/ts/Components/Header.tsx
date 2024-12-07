@@ -1,12 +1,15 @@
-import { User } from "@/types";
 import { Link } from "@inertiajs/react";
 import React from "react";
+import { User } from "../types";
 
 interface HeaderProps {
-    auth: { user: User | null };
+    auth: { user: User } | null;
 }
 
 const Header: React.FC<HeaderProps> = ({ auth }) => {
+    console.log(auth);
+    
+    
     const handleLogout = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -46,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ auth }) => {
                 <li>
                     <Link href="/recipes">Recipes</Link>
                 </li>
-                {auth.user ? (
+                {auth && auth.user ? (
                     <li>
                         <Link href="/user">Account</Link>
                     </li>
@@ -55,14 +58,14 @@ const Header: React.FC<HeaderProps> = ({ auth }) => {
                         <Link href="/register">Create account</Link>
                     </li>
                 )}
-                {auth.user && auth.user.role === "admin" && (
+                {auth && auth.user && auth.user.role === "admin" && (
                     <li>
                         <Link href="/admin">Admin</Link>
                     </li>
                 )}
             </ul>
             <div className="flex gap-6">
-                {auth.user ? (
+                {auth && auth.user ? (
                     <form onSubmit={handleLogout}>
                         <button type="submit">Logout</button>
                     </form>

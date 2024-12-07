@@ -12,10 +12,15 @@ class HomeController extends Controller
      */
     public function __invoke()
     {
-        $auth = Auth::user();
+        if (Auth::check()) {
+            $user = Auth::user();
+            return Inertia::render('AppLayout', [
+                'auth' => [
+                    'user' => $user,
+                ],
+            ]);
+        }
 
-        return Inertia::render('AppLayout', [
-            'auth' => $auth,
-        ]);
+        return Inertia::render('AppLayout', []);
     }
 }
