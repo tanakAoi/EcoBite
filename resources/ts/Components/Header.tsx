@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ auth }) => {
     };
 
     return (
-        <header className="bg-green-800 px-8 py-4 flex justify-between text-white">
+        <header className="bg-chinese-leaf px-8 py-4 flex justify-between text-white">
             <Link href="/">EcoBite</Link>
             <ul className="flex gap-10">
                 <li>
