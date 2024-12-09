@@ -4,25 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Stripe\Stripe;
-use Stripe\PaymentIntent;
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Checkout');
+        $cartData = $request->input('cartData', []);
+
+        return Inertia::render('Checkout', [
+            'cartData' => $cartData,
+        ]);
     }
 
     public function createPaymentIntent(Request $request)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
 
-        $paymentIntent = PaymentIntent::create([
-            'amount' => 1000,
-            'currency' => 'sek',
+        $customer = $stripe->customers->search([
+            'query' => 'email:\'' . $request->email . '\'',
         ]);
 
-        return response()->json(['clientSecret' => $paymentIntent->client_secret]);
+        if (count($customer->data) > 0) {
+            $customerId = $customer->data[0]->id;
+        } else {
+            $customer = $stripe->customers->create([
+                'email' => $request->email,
+            ]);
+            $customerId = $customer->id;
+        }
+
+        $intent = $stripe->paymentIntents->create([
+            'customer' => $customerId,
+            'amount' => $request->totalPrice * 100,
+            'currency' => 'sek',
+            'automatic_payment_methods' => ['enabled' => true],
+        ]);
+
+        return json_encode(['client_secret' => $intent->client_secret]);
     }
 }

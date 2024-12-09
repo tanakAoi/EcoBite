@@ -179,9 +179,14 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                     </ul>
                     <div className="mt-6 flex justify-between items-center">
                         <p className="text-xl font-semibold">
-                            Total: ${(updatedCart.total_price)}
+                            Total: ${updatedCart.total_price}
                         </p>
-                        <Link href={route("checkout.index")} className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
+                        <Link
+                            method="post"
+                            href={route("checkout.index")}
+                            className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition"
+                            data={{ cartData: JSON.stringify(updatedCart) }}
+                        >
                             Checkout
                         </Link>
                     </div>

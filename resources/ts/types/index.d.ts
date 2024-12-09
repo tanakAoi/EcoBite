@@ -1,10 +1,3 @@
-/* export interface User {
-    id: number;
-    username: string;
-    email: string;
-    email_verified_at?: string;
-} */
-
 import { User } from "@/types";
 
 export type PageProps<
@@ -13,4 +6,5 @@ export type PageProps<
     auth: {
         user: User;
     };
+    cartData: Cart;
 };

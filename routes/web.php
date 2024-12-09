@@ -111,7 +111,7 @@ Route::put('cart/update/{cartItemId}', [CartItemController::class, 'updateQuanti
 Route::delete('cart/delete/{cartItemId}', [CartItemController::class, 'removeItem'])->name('cart.item.delete');
 
 // Checkout
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.create-payment-intent');
 
 // Other Pages

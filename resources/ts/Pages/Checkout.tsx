@@ -1,63 +1,31 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { usePage } from "@inertiajs/react";
+import CheckoutForm from "./CheckoutForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
-const CheckoutForm = () => {
-    const stripe = useStripe();
-    const elements = useElements();
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [clientSecret, setClientSecret] = useState<string | null>(null);
+const stripePromise = loadStripe(
+    "pk_test_51QT2jfGM3tsnbU0zeuYylJtYVS2nxxSXEjKgf5jMp4GhUNrKEWhvS0OxUXHOGhPL54ZgJGnX7urvGhNIGf95NZWo00erVkp35B"
+);
 
-    useEffect(() => {
-        axios
-            .post("checkout/create-payment-intent")
-            .then((response) => {
-                setClientSecret(response.data.clientSecret);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, []);
+const Checkout = () => {
+    const { props } = usePage();
+    const { cartData } = props;
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        if (!stripe || !elements || !clientSecret) return;
-
-        setIsProcessing(true);
-
-        const cardElement = elements.getElement(CardElement);
-        if (!cardElement) {
-            console.error("Card element not found");
-            setIsProcessing(false);
-            return;
-        }
-
-        const { error, paymentIntent } = await stripe.confirmCardPayment(
-            clientSecret,
-            {
-                payment_method: {
-                    card: cardElement,
-                },
-            }
-        );
-
-        if (error) {
-            console.error(error.message);
-            setIsProcessing(false);
-        } else if (paymentIntent && paymentIntent.status === "succeeded") {
-            console.log("Payment successful");
-            setIsProcessing(false);
-        }
+    const cart = JSON.parse(cartData);
+    console.log(cart);
+    
+    const options = {
+        mode: "payment",
+        amount: cart.total_price * 1000 as number,
+        currency: "sek",
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <CardElement />
-            <button type="submit" disabled={!stripe || isProcessing}>
-                {isProcessing ? "Processing..." : "Pay"}
-            </button>
-        </form>
+        <Elements stripe={stripePromise} options={options}>
+            <h1>Checkout</h1>
+            <CheckoutForm cart={cart} />
+        </Elements>
     );
 };
 
-export default CheckoutForm;
+export default Checkout;
