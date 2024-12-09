@@ -25,37 +25,6 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-// Recipes
-Route::get('/recipes', [RecipeController::class, 'index'])->name('recipe.index');
-Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipe.show');
-Route::middleware('auth')->group(function () {
-    Route::get('/recipe/create', function () {
-        return Inertia::render('CreateRecipe');
-    });
-    Route::post('/recipe/create', 'RecipeController@store');
-});
-
-// Products
-Route::get('/products', [ProductController::class, 'index'])->name('product.index');
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('product.show');
-
-// User
-Route::middleware('auth')->group(function () {
-    Route::get('/user', function () {
-        return Inertia::render('UserDashboard');
-    });
-    Route::get('/user/profile', function () {
-        return Inertia::render('UserProfile');
-    });
-    Route::get('/user/order-history', function () {
-        return Inertia::render('OrderHistory');
-    });
-    Route::get('/user/account-settings', function () {
-        return Inertia::render('AccountSettings');
-    });
-    Route::post('/user/account-settings', 'UserController@updateSettings');
-});
-
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -104,6 +73,37 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 });
 
+// Recipes
+Route::get('/recipes', [RecipeController::class, 'index'])->name('recipe.index');
+Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipe.show');
+Route::middleware('auth')->group(function () {
+    Route::get('/recipe/create', function () {
+        return Inertia::render('CreateRecipe');
+    });
+    Route::post('/recipe/create', 'RecipeController@store');
+});
+
+// Products
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('product.show');
+
+// User
+Route::middleware('auth')->group(function () {
+    Route::get('/user', function () {
+        return Inertia::render('UserDashboard');
+    });
+    Route::get('/user/profile', function () {
+        return Inertia::render('UserProfile');
+    });
+    Route::get('/user/order-history', function () {
+        return Inertia::render('OrderHistory');
+    });
+    Route::get('/user/account-settings', function () {
+        return Inertia::render('AccountSettings');
+    });
+    Route::post('/user/account-settings', 'UserController@updateSettings');
+});
+
 // Cart
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart.index');
 Route::post('/cart/add', [CartItemController::class, 'addItem'])->name('cart.item.add');
@@ -113,6 +113,32 @@ Route::delete('cart/delete/{cartItemId}', [CartItemController::class, 'removeIte
 // Checkout
 Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.create-payment-intent');
+Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+
+// Admin
+Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::get(
+        '/admin',
+        [AdminController::class, 'index']
+    )
+        ->name('admin.dashboard');
+
+    Route::resource(
+        '/admin/products',
+        AdminProductController::class
+    )
+        ->names([
+            'index' => 'admin.product.index',
+            'create' => 'admin.product.create',
+            'store' => 'admin.product.store',
+            'show' => 'admin.product.show',
+            'edit' => 'admin.product.edit',
+            'update' => 'admin.product.update',
+            'destroy' => 'admin.product.destroy',
+        ]);
+    Route::resource('/admin/order', 'Admin\OrderController');
+    Route::resource('/admin/user', 'Admin\UserController');
+});
 
 // Other Pages
 Route::get('/about', function () {
@@ -125,32 +151,6 @@ Route::get('/contact', function () {
     return Inertia::render('Contact');
 });
 Route::post('/contact', 'ContactController@send');
-
-// Admin
-Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    Route::get(
-        '/admin',
-        [AdminController::class, 'index']
-    )
-    ->name('admin.dashboard');
-
-    Route::resource(
-        '/admin/products',
-        AdminProductController::class
-    )
-    ->names([
-        'index' => 'admin.product.index',
-        'create' => 'admin.product.create',
-        'store' => 'admin.product.store',
-        'show' => 'admin.product.show',
-        'edit' => 'admin.product.edit',
-        'update' => 'admin.product.update',
-        'destroy' => 'admin.product.destroy',
-    ]);
-    Route::resource('/admin/order', 'Admin\OrderController');
-    Route::resource('/admin/user', 'Admin\UserController');
-});
-
 
 Route::get('/{any}', function () {
     return view('app');

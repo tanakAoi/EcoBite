@@ -49,7 +49,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
             elements,
             clientSecret,
             confirmParams: {
-                return_url: "http://ecobite.test",
+                return_url: "http://ecobite.test/checkout/order-confirmation",
             },
         });
 

@@ -42,4 +42,9 @@ class CheckoutController extends Controller
 
         return json_encode(['client_secret' => $intent->client_secret]);
     }
+
+    public function confirm()
+    {
+        return Inertia::render('OrderConfirmation');
+    }
 }
