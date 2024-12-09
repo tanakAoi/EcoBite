@@ -1,18 +1,22 @@
-import React from "react";
+import { usePage } from "@inertiajs/react";
+import axios from "axios";
+import React, { useEffect } from "react";
 
-interface OrderConfirmationProps {
-    orderId: string;
-    customerName: string;
-    totalAmount: number;
-    items: { name: string; quantity: number; price: number }[];
-}
+const OrderConfirmation: React.FC = ({}) => {
+    const { cartData, auth } = usePage().props;
 
-const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
-    orderId,
-    customerName,
-    totalAmount,
-    items,
-}) => {
+    useEffect(() => {
+        const saveOrderData = async () => {
+            await axios.post(route("order.store"), {
+                user_id: auth.user ? auth.user.id : null,
+                session_id: auth.user ? null : cartData.session_id,
+                total_price: cartData.total_price,
+                items: cartData.items,
+            });
+        };
+        saveOrderData();
+    }, [cartData]);
+
     return (
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-10">
             <h2 className="text-3xl font-semibold text-center mb-8 text-gray-800">

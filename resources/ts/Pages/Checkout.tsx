@@ -8,11 +8,9 @@ const stripePromise = loadStripe(
 );
 
 const Checkout = () => {
-    const { props } = usePage();
-    const { cartData } = props;
+    const { cartData } = usePage().props;
 
     const cart = JSON.parse(cartData);
-    console.log(cart);
     
     const options = {
         mode: "payment",

@@ -20,7 +20,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
     const { auth } = usePage().props;
     const [isProcessing, setIsProcessing] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [userEmail, setUserEmail] = useState<string>("");    
+    const [userEmail, setUserEmail] = useState<string>("");
+
     const handleError = (error: StripeError) => {
         setIsProcessing(false);
         setErrorMessage(error.message ?? "An unknown error occurred");
@@ -55,6 +56,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
 
         if (error) {
             handleError(error);
+        } else {
+            setIsProcessing(false);
         }
     };
 

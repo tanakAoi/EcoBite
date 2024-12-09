@@ -15,10 +15,16 @@ class Order extends Model
     const ORDER_STATUS_COMPLETED = 'completed';
     const ORDER_STATUS_CANCELED = 'canceled';
 
-    public function updateTotalPrice()
+    protected $fillable = ['user_id', 'total_price', 'order_status'];
+
+    public function items()
     {
-        $this->total_price = $this->orderItems()->sum('total_price');
-        $this->save();
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

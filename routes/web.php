@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
@@ -114,6 +115,9 @@ Route::delete('cart/delete/{cartItemId}', [CartItemController::class, 'removeIte
 Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.create-payment-intent');
 Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+
+// Order
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 // Admin
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
