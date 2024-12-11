@@ -79,23 +79,23 @@ const Header: React.FC<HeaderProps> = () => {
             </Link>
             <ul className="flex gap-10">
                 <li>
-                    <Link href="/products">Products</Link>
+                    <Link href={route("product.index")}>Products</Link>
                 </li>
                 <li>
-                    <Link href="/recipes">Recipes</Link>
+                    <Link href={route("recipe.index")}>Recipes</Link>
                 </li>
                 {auth && auth.user ? (
                     <li>
-                        <Link href="/user">Account</Link>
+                        <Link href={route("user.index")}>Account</Link>
                     </li>
                 ) : (
                     <li>
-                        <Link href="/register">Create account</Link>
+                        <Link href={route("register")}>Create account</Link>
                     </li>
                 )}
                 {auth && auth.user && auth.user.role === "admin" && (
                     <li>
-                        <Link href="/admin">Admin</Link>
+                        <Link href={route("admin.index")}>Admin</Link>
                     </li>
                 )}
             </ul>
@@ -105,9 +105,9 @@ const Header: React.FC<HeaderProps> = () => {
                         <button type="submit">Logout</button>
                     </form>
                 ) : (
-                    <Link href="/login">Login</Link>
+                    <Link href={route("login")}>Login</Link>
                 )}
-                <Link href="/cart">Cart</Link>
+                <Link href={route("cart.index")}>Cart</Link>
             </div>
         </header>
     );

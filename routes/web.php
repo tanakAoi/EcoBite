@@ -19,7 +19,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
@@ -88,23 +90,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('product.show');
 
-// Customer
-Route::middleware('auth')->group(function () {
-    Route::get('/user', function () {
-        return Inertia::render('UserDashboard');
-    });
-    Route::get('/user/profile', function () {
-        return Inertia::render('UserProfile');
-    });
-    Route::get('/user/order-history', function () {
-        return Inertia::render('OrderHistory');
-    });
-    Route::get('/user/account-settings', function () {
-        return Inertia::render('AccountSettings');
-    });
-    Route::post('/user/account-settings', 'UserController@updateSettings');
-});
-
 // Cart
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart.index');
 Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
@@ -118,7 +103,25 @@ Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'crea
 Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
 
 // Order
-Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::middleware('auth')->group(
+    function () {
+/*         Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show'); */
+    }
+);
+Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+
+// User (Admin & Customer)
+Route::middleware('auth')->group(function () {
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/account-settings', [UserController::class, 'showAccount'])->name('user.account');
+    Route::put('/user/account-settings/update/profile', [UserController::class, 'updateAccount'])->name('user.account.update.profile');
+    Route::put('/user/account-settings/update/password', [UserController::class, 'updatePassword'])->name('user.account.update.password');
+});
+
+// Customer
+Route::middleware('auth')->group(function () {
+    Route::get('/customer/order', [CustomerController::class, 'showOrder'])->name('customer.order.index');
+});
 
 // Admin
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
@@ -126,7 +129,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         '/admin',
         [AdminController::class, 'index']
     )
-        ->name('admin.dashboard');
+        ->name('admin.index');
 
     Route::resource(
         '/admin/products',
@@ -141,7 +144,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'update' => 'admin.product.update',
             'destroy' => 'admin.product.destroy',
         ]);
-/*     Route::resource('/admin/order', 'Admin\OrderController');
+    /*     Route::resource('/admin/order', 'Admin\OrderController');
     Route::resource('/admin/user', 'Admin\UserController'); */
 });
 

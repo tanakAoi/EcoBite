@@ -74,3 +74,24 @@ export interface Cart {
     updated_at: string;
     items?: Array<CartItemProduct>;
 }
+
+export interface Order {
+    id: number;
+    user_id: number;
+    total_price: number;
+    order_status: string;
+    created_at: string;
+    updated_at: string;
+    items: Array<OrderItem>;
+}
+
+export interface OrderItem {
+    id: number;
+    order_id: number;
+    product_id: number;
+    quantity: number;
+    total_price: number;
+    created_at: string;
+    updated_at: string;
+    product: Product;
+}
