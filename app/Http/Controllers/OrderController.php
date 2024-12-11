@@ -20,7 +20,7 @@ class OrderController extends Controller
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
         ]);
-
+        
         $order = Order::create([
             'user_id' => $data['user_id'] ?? null,
             'session_id' => $data['session_id'] ?? null,
@@ -42,6 +42,6 @@ class OrderController extends Controller
                 'total_price' => $product->price * $item['quantity'],
             ]);
         }
-        return response()->json(['message' => 'Order created successfully', 'order' => $order], 201);
+        return response()->json(['order_id' => $order->id], 201);
     }
 }

@@ -107,9 +107,10 @@ Route::middleware('auth')->group(function () {
 
 // Cart
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart.index');
-Route::post('/cart/add', [CartItemController::class, 'addItem'])->name('cart.item.add');
-Route::put('cart/update/{cartItemId}', [CartItemController::class, 'updateQuantity'])->name('cart.item.update');
-Route::delete('cart/delete/{cartItemId}', [CartItemController::class, 'removeItem'])->name('cart.item.delete');
+Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+Route::post('/cart/item/add', [CartItemController::class, 'addItem'])->name('cart.item.add');
+Route::put('/cart/item/update/{cartItemId}', [CartItemController::class, 'updateQuantity'])->name('cart.item.update');
+Route::delete('/cart/item/delete/{cartItemId}', [CartItemController::class, 'removeItem'])->name('cart.item.delete');
 
 // Checkout
 Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
@@ -140,8 +141,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'update' => 'admin.product.update',
             'destroy' => 'admin.product.destroy',
         ]);
-    Route::resource('/admin/order', 'Admin\OrderController');
-    Route::resource('/admin/user', 'Admin\UserController');
+/*     Route::resource('/admin/order', 'Admin\OrderController');
+    Route::resource('/admin/user', 'Admin\UserController'); */
 });
 
 // Other Pages

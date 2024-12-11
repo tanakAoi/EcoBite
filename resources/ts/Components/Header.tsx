@@ -1,13 +1,16 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import React from "react";
-import { User } from "../types";
+import { Cart, User } from "../types";
 
 interface HeaderProps {
-    auth: { user: User } | null;
+    auth: { user: User | null };
+    cart: Cart;
 }
 
-const Header: React.FC<HeaderProps> = ({ auth }) => {
-    console.log(auth);
+const Header: React.FC<HeaderProps> = () => {
+    const { auth, cart } = usePage().props;
+    console.log("auth", auth);
+    console.log("cart", cart);
 
     const handleLogout = async (e: React.FormEvent) => {
         e.preventDefault();

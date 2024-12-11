@@ -15,7 +15,7 @@ class Order extends Model
     const ORDER_STATUS_COMPLETED = 'completed';
     const ORDER_STATUS_CANCELED = 'canceled';
 
-    protected $fillable = ['user_id', 'total_price', 'order_status'];
+    protected $fillable = ['user_id', 'session_id', 'total_price', 'order_status'];
 
     public function items()
     {

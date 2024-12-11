@@ -6,5 +6,5 @@ export type PageProps<
     auth: {
         user: User;
     };
-    cartData: Cart;
+    cart: Cart;
 };

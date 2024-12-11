@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Session;
+use App\Models\Cart;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,17 @@ class AppServiceProvider extends ServiceProvider
                 return [
                     'user' => Auth::user() ? Auth::user()->only('id', 'username', 'email') : null,
                 ];
+            },
+            'cart' => function () {
+                $sessionId = Session::getId();
+
+                return Cart::with('items.product')
+                    ->when(Auth::check(), function ($query) {
+                        $query->where('user_id', Auth::id());
+                    }, function ($query) use ($sessionId) {
+                        $query->where('session_id', $sessionId);
+                    })
+                    ->first();
             },
             'success' => function () {
                 return Session::get('success');

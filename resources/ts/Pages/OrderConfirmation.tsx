@@ -1,21 +1,41 @@
+import { CartItem, CartItemProduct, Product } from "@/types";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 
-const OrderConfirmation: React.FC = ({}) => {
-    const { cartData, auth } = usePage().props;
+const OrderConfirmation: FC = ({}) => {
+    const { cart, auth } = usePage().props;
+    const [orderId, setOrderId] = useState<number | null>(null);
+    const [orderPlaced, setOrderPlaced] = useState(false);
 
     useEffect(() => {
         const saveOrderData = async () => {
-            await axios.post(route("order.store"), {
-                user_id: auth.user ? auth.user.id : null,
-                session_id: auth.user ? null : cartData.session_id,
-                total_price: cartData.total_price,
-                items: cartData.items,
-            });
+            if (orderPlaced) return;
+
+            try {
+                const response = await axios.post(route("order.store"), {
+                    user_id: auth.user ? auth.user.id : null,
+                    session_id: auth.user ? null : cart.session_id,
+                    total_price: cart.total_price,
+                    items: cart.items,
+                });
+                if (response.status === 201) {
+                    setOrderId(response.data.order_id);
+                    setOrderPlaced(true);
+
+                    await axios.delete(route("cart.clear"), {
+                        params: {
+                            user_id: auth.user ? auth.user.id : null,
+                            session_id: auth.user ? null : cart.session_id,
+                        },
+                    });
+                }
+            } catch (error) {
+                console.error("Error saving order:", error);
+            }
         };
         saveOrderData();
-    }, [cartData]);
+    }, [orderPlaced, cart]);
 
     return (
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-10">
@@ -23,10 +43,10 @@ const OrderConfirmation: React.FC = ({}) => {
                 Order Confirmation
             </h2>
             <div className="text-center text-lg text-gray-600 mb-6">
-                <p>Thank you for your order, {customerName}!</p>
+                <p>Thank you for your order!</p>
                 <p>
-                    Your order ID is:{" "}
-                    <span className="font-bold text-gray-900">{orderId}</span>
+                    Your order ID is: {orderId}
+                    <span className="font-bold text-gray-900"></span>
                 </p>
             </div>
 
@@ -34,17 +54,17 @@ const OrderConfirmation: React.FC = ({}) => {
                 <h3 className="text-2xl font-semibold text-gray-800">
                     Order Summary
                 </h3>
-                <ul className="list-none space-y-4 mt-4">
-                    {items.map((item, index) => (
+                                <ul className="list-none space-y-4 mt-4">
+                    {cart.items.map((item: CartItemProduct, index: number) => (
                         <li
                             key={index}
                             className="flex justify-between text-gray-700"
                         >
                             <span>
-                                {item.name} (x{item.quantity})
+                                {item.product.name} (x{item.quantity})
                             </span>
                             <span>
-                                {(item.price * item.quantity).toFixed(2)} SEK
+                                {(item.product.price * item.quantity).toFixed(2)} SEK
                             </span>
                         </li>
                     ))}
@@ -54,7 +74,7 @@ const OrderConfirmation: React.FC = ({}) => {
             <div className="border-t border-gray-300 pt-4 mt-6">
                 <div className="flex justify-between font-semibold text-xl text-gray-800">
                     <span>Total Amount:</span>
-                    <span>{totalAmount.toFixed(2)} SEK</span>
+                    <span>{cart.total_price} SEK</span>
                 </div>
             </div>
 
