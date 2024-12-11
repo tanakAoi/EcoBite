@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('product.show');
 
-// User
+// Customer
 Route::middleware('auth')->group(function () {
     Route::get('/user', function () {
         return Inertia::render('UserDashboard');
