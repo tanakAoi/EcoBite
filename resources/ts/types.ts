@@ -95,3 +95,13 @@ export interface OrderItem {
     updated_at: string;
     product: Product;
 }
+
+export interface OrderDetails {
+    id: number;
+    order_status: string;
+    total_price: number;
+    user: User;
+    items: Array<OrderItem>;
+    created_at: string;
+    updated_at: string;
+}

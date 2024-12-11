@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
@@ -144,8 +145,15 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'update' => 'admin.product.update',
             'destroy' => 'admin.product.destroy',
         ]);
-    /*     Route::resource('/admin/order', 'Admin\OrderController');
-    Route::resource('/admin/user', 'Admin\UserController'); */
+    Route::resource('/admin/order', AdminOrderController::class)
+        ->names([
+            'index' => 'admin.order.index',
+            'show' => 'admin.order.show',
+            'edit' => 'admin.order.edit',
+            'update' => 'admin.order.update',
+            'destroy' => 'admin.order.destroy',
+        ]);
+    /*     Route::resource('/admin/user', 'Admin\UserController'); */
 });
 
 // Other Pages

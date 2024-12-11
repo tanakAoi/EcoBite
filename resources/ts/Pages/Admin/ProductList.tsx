@@ -77,7 +77,7 @@ const ProductList: React.FC<AdminProductProps> = ({
                 </thead>
                 <tbody>
                     {products.map((product) => (
-                        <tr key={product.id} className="border-b">
+                        <tr key={product.id} className="border-b relative">
                             <td className="px-4 py-2 border">{product.id}</td>
                             <td className="px-4 py-2 border">{product.name}</td>
                             <td className="px-4 py-2 border">
@@ -107,13 +107,13 @@ const ProductList: React.FC<AdminProductProps> = ({
                                 ).toLocaleDateString()}
                             </td>
                             <td className="px-4 py-2 border">
-                                <div className="flex flex-col items-center gap-2">
+                                <div className="flex flex-col items-center gap-2 relative z-10">
                                     <Link
                                         href={route(
                                             "admin.product.edit",
                                             product.id
                                         )}
-                                        className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 w-full text-center"
+                                        className=" bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 w-full text-center"
                                     >
                                         Edit
                                     </Link>
@@ -123,6 +123,10 @@ const ProductList: React.FC<AdminProductProps> = ({
                                     />
                                 </div>
                             </td>
+                            <Link
+                                href={route("admin.product.show", product.id)}
+                                className="absolute inset-0 z-0"
+                            ></Link>
                         </tr>
                     ))}
                 </tbody>
