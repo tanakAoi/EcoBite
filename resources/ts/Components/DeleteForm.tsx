@@ -25,8 +25,13 @@ const DeleteForm: React.FC<DeleteFormProps> = ({ productId, onDelete }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <button type="submit">Delete</button>
+        <form className="w-full flex items-center justify-center" onSubmit={handleSubmit}>
+            <button
+                type="submit"
+                className="w-full text-center bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
+            >
+                Delete
+            </button>
         </form>
     );
 };
