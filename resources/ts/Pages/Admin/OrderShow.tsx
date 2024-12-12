@@ -9,8 +9,6 @@ interface OrderShowProps {
 }
 
 const OrderShow: React.FC<OrderShowProps> = ({ order }) => {
-    console.log(order);
-
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">

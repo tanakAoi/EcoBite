@@ -31,18 +31,6 @@ const OrderList: FC<OrderListProps> = ({ ordersData }) => {
         return txt.value;
     };
 
-    const updateOrderStatus = async (orderId: number) => {
-        try {
-            const newStatus = updatedStatus[orderId];
-            await axios.put(route("admin.order.update.status", orderId), {
-                order_status: newStatus,
-            });
-            setEditingOrderId(null);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     const handleStatusChange = (
         e: React.ChangeEvent<HTMLSelectElement>,
         orderId: number

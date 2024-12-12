@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CustomerController;
@@ -149,7 +150,14 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'edit' => 'admin.order.edit',
             'update' => 'admin.order.update',
         ]);
-    /*     Route::resource('/admin/user', 'Admin\UserController'); */
+    Route::resource('/admin/user', AdminUserController::class)
+        ->names([
+            'index' => 'admin.user.index',
+            'show' => 'admin.user.show',
+            'edit' => 'admin.user.edit',
+            'update' => 'admin.user.update',
+            'destroy' => 'admin.user.destroy',
+        ]);
 });
 
 // Other Pages

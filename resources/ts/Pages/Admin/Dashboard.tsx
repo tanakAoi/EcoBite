@@ -17,6 +17,9 @@ const Dashboard: React.FC = () => {
                 <Link href={route("admin.order.index")}>
                     Manage orders
                 </Link>
+                <Link href={route("admin.user.index")}>
+                    Manage users
+                </Link>
             </div>
         </div>
     );
