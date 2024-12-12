@@ -10,6 +10,13 @@ class RecipeIngredient extends Model
     /** @use HasFactory<\Database\Factories\RecipeIngredientFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'product_id',
+        'recipe_id',
+        'quantity',
+        'unit',
+    ];
+
     const INGREDIENT_UNIT_GRAMS = 'grams';
     const INGREDIENT_UNIT_ML = 'ml';
     const INGREDIENT_UNIT_PIECES = 'pieces';

@@ -31,7 +31,7 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         Log::info($request->all());
-        
+
         $request->validate([
             'user_id' => 'required|string|exists:users,id',
             'title' => 'required|string|max:255',
@@ -48,11 +48,15 @@ class RecipeController extends Controller
             $imageUrl = null;
         }
 
+        $instructionsString = implode("\n", array_map(function($instruction) {
+        return "{$instruction['number']}. {$instruction['text']}";
+    }, $request->input('instructions')));
+
         $recipe = Recipe::create([
-            'user_id' => $request->input('userId'),
+            'user_id' => $request->input('user_id'),
             'title' => $request->input('title'),
             'description' => $request->input('description'),
-            'instructions' => $request->input('instructions'),
+            'instructions' => $instructionsString,
             'image' => $imageUrl,
         ]);
 
@@ -60,8 +64,8 @@ class RecipeController extends Controller
             $recipe->ingredients()->create([
                 'product_id' => $ingredient['product_id'] ?? null,
                 'recipe_id' => $recipe->id,
-                'quantity' => null,
-                'unit' => null
+                'quantity' => 0,
+                'unit' => 'grams'
             ]);
         }
 

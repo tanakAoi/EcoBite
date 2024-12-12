@@ -53,7 +53,7 @@ const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
                             recipe.ingredients.length > 0 ? (
                                 recipe.ingredients.map((ingredient) => (
                                     <li key={ingredient.id}>
-                                        {ingredient.id ? (
+                                        {ingredient.product_id ? (
                                             <Link
                                                 href={route(
                                                     "product.show",
