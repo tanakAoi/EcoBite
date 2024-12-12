@@ -26,6 +26,15 @@ class AdminOrderController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        $order = Order::with('items.product')->with('user')->findOrFail($id);
+
+        return Inertia::render('Admin/OrderUpdate', [
+            'order' => $order
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([

@@ -106,7 +106,7 @@ Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'
 // Order
 Route::middleware('auth')->group(
     function () {
-/*         Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show'); */
+        /*         Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show'); */
     }
 );
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
@@ -132,10 +132,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     )
         ->name('admin.index');
 
-    Route::resource(
-        '/admin/products',
-        AdminProductController::class
-    )
+    Route::resource('/admin/product', AdminProductController::class)
         ->names([
             'index' => 'admin.product.index',
             'create' => 'admin.product.create',
@@ -151,7 +148,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'show' => 'admin.order.show',
             'edit' => 'admin.order.edit',
             'update' => 'admin.order.update',
-            'destroy' => 'admin.order.destroy',
         ]);
     /*     Route::resource('/admin/user', 'Admin\UserController'); */
 });

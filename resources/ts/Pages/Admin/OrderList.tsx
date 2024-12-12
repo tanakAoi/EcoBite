@@ -34,7 +34,7 @@ const OrderList: FC<OrderListProps> = ({ ordersData }) => {
     const updateOrderStatus = async (orderId: number) => {
         try {
             const newStatus = updatedStatus[orderId];
-            await axios.post(route("admin.order.update", orderId), {
+            await axios.put(route("admin.order.update.status", orderId), {
                 order_status: newStatus,
             });
             setEditingOrderId(null);
@@ -101,25 +101,12 @@ const OrderList: FC<OrderListProps> = ({ ordersData }) => {
                                 {new Date(order.created_at).toLocaleString()}
                             </td>
                             <td className="px-4 py-2 relative">
-                                {editingOrderId === order.id ? (
-                                    <button
-                                        onClick={() =>
-                                            updateOrderStatus(order.id)
-                                        }
-                                        className="text-green-500 hover:text-green-700"
-                                    >
-                                        Save
-                                    </button>
-                                ) : (
-                                    <button
-                                        onClick={() =>
-                                            setEditingOrderId(order.id)
-                                        }
-                                        className="text-blue-500 hover:text-blue-700 absolute inset-0 z-10"
-                                    >
-                                        Edit
-                                    </button>
-                                )}
+                                <Link
+                                    href={route("admin.order.edit", order.id)}
+                                    className="text-blue-500 hover:text-blue-700 absolute top-2 inset-0 z-10"
+                                >
+                                    Update
+                                </Link>
                             </td>
                             {!editingOrderId && (
                                 <Link
