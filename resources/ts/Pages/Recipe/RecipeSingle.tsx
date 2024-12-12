@@ -1,13 +1,25 @@
 import { Recipe } from "@/types";
-import { Link } from "@inertiajs/react";
-import React from "react";
+import { Link, usePage } from "@inertiajs/react";
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
 
 interface RecipeSingleProps {
     recipe: Recipe;
 }
 
 const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
-    console.log(recipe);
+    const {success, error} = usePage().props;
+
+    useEffect(() => {
+        if (typeof success === 'string') {
+            toast.success(success); 
+        }
+
+        if (typeof error === 'string') {
+            toast.error(error);
+        }
+    }, [success, error]);
+
     return (
         <div className="max-w-4xl mx-auto p-6">
             <div className="">

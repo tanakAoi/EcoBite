@@ -1,14 +1,26 @@
 import { usePage } from "@inertiajs/react";
 import Header from "../Components/Header";
-import React from "react";
+import { FC, ReactNode, useEffect } from "react";
 import Footer from "../Components/Footer";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface AppLayoutProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
-    const { auth, cart } = usePage().props;
+const AppLayout: FC<AppLayoutProps> = ({ children }) => {
+    const { auth, cart, toast: toastMessage } = usePage().props;
+
+    useEffect(() => {
+        console.log("toastMessage", toastMessage);
+        
+        if (toastMessage) {
+            if (typeof toastMessage === "string") {
+                toast.success(toastMessage);
+            }
+        }
+    }, [toastMessage]);
 
     return (
         <div className="bg-glittery-yellow/20">
@@ -21,6 +33,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 {children}
             </main>
             <Footer />
+            <ToastContainer
+                position="top-right"
+                newestOnTop
+                closeOnClick
+            />
         </div>
     );
 };

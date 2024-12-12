@@ -71,6 +71,8 @@ class RecipeController extends Controller
             ]);
         }
 
+        session()->flash('success', 'Recipe submitted successfully!');
+
         return redirect()->route('recipe.show', ['id' => $recipe->id]);
     }
 }

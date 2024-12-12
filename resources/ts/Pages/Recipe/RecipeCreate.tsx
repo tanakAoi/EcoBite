@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FC, FormEventHandler } from "react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface RecipeFormData {
     user_id: number;
@@ -165,10 +166,14 @@ const RecipeCreate: FC = () => {
 
         post(route("recipe.store"), {
             data: formData,
+            onSuccess: () => {
+                toast.success("Recipe submitted successfully!");
+            },
+            onError: () => {
+                toast.error("Something went wrong. Please try again.");
+            },
         });
     };
-
-    console.log(data);
 
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">

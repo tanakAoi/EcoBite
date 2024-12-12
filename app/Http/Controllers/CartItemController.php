@@ -45,6 +45,8 @@ class CartItemController extends Controller
 
         $cart->updateTotalPrice();
 
+        session()->flash('success', 'Product added to cart!');
+
         return response()->json($item, 201);
     }
 
