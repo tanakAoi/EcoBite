@@ -10,8 +10,16 @@ class Recipe extends Model
     /** @use HasFactory<\Database\Factories\RecipeFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+        'instructions',
+        'image',
+    ];
+
     public function ingredients()
     {
-        return $this->belongsToMany(Product::class, 'recipe_ingredients')->withPivot('quantity', 'unit');
+        return $this->hasMany(RecipeIngredient::class);
     }
 }

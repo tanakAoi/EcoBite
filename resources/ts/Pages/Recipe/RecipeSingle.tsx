@@ -8,7 +8,6 @@ interface RecipeSingleProps {
 
 const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
     console.log(recipe);
-
     return (
         <div className="max-w-4xl mx-auto p-6">
             <div className="">
@@ -54,22 +53,22 @@ const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
                             recipe.ingredients.length > 0 ? (
                                 recipe.ingredients.map((ingredient) => (
                                     <li key={ingredient.id}>
-                                        {ingredient.pivot.product_id ? (
+                                        {ingredient.id ? (
                                             <Link
                                                 href={route(
                                                     "product.show",
-                                                    ingredient.pivot.product_id
+                                                    ingredient.product.id
                                                 )}
                                                 className="text-blue-500 underline"
                                             >
-                                                {ingredient.name}
+                                                {ingredient.product.name}
                                             </Link>
                                         ) : (
                                             ingredient.name
                                         )}
                                         {" : "}
-                                        {ingredient.pivot.quantity}
-                                        {ingredient.pivot.unit}
+                                        {ingredient.quantity}
+                                        {ingredient.unit}
                                     </li>
                                 ))
                             ) : (

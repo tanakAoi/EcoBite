@@ -16,4 +16,14 @@ class RecipeIngredient extends Model
     const INGREDIENT_UNIT_TSP = 'tsp';
     const INGREDIENT_UNIT_TBSP = 'tbsp';
     const INGREDIENT_UNIT_CUPS = 'cups';
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class);
+    }
+    
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

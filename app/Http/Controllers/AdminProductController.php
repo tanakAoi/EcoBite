@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class AdminProductController extends Controller
 {
@@ -25,6 +26,8 @@ class AdminProductController extends Controller
 
     public function store(Request $request)
     {
+        Log::info($request->all());
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',

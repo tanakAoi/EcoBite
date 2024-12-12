@@ -14,6 +14,13 @@ class ProductController extends Controller
         return Inertia::render('Product/ProductList', ['products' => $products]);
     }
 
+    public function getProducts()
+    {
+        $products = Product::all(['id', 'name']);
+        return response()->json($products);
+    }
+
+
     public function show($id)
     {
         $product = Product::find($id);

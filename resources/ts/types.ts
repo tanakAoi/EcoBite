@@ -23,6 +23,7 @@ export interface RecipeIngredient {
     quantity: number;
     unit: string;
     pivot: RecipeIngredientPivot;
+    product: Product;
 }
 
 export interface RecipeIngredientPivot {

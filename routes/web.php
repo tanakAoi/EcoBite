@@ -82,14 +82,13 @@ Route::middleware('auth')->group(function () {
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipe.index');
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipe.show');
 Route::middleware('auth')->group(function () {
-    Route::get('/recipe/create', function () {
-        return Inertia::render('CreateRecipe');
-    });
-    Route::post('/recipe/create', 'RecipeController@store');
+    Route::get('/recipe/create', [RecipeController::class, 'create'])->name('recipe.create');
+    Route::post('/recipe/store', [RecipeController::class, 'store'])->name('recipe.store');
 });
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+Route::get('/api/products', [ProductController::class, 'getProducts'])->name('api.products');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('product.show');
 
 // Cart

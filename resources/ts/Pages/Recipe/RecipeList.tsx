@@ -9,7 +9,10 @@ interface RecipeListProps {
 const RecipeList: React.FC<RecipeListProps> = ({ recipes }) => {
     return (
         <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">All Recipe</h1>
+            <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold mb-6">All Recipe</h1>
+                <Link href={route("recipe.create")}>Create a new recipe</Link>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recipes.map((recipe) => (
                     <div
