@@ -27,10 +27,12 @@ export interface RecipeIngredient {
 }
 
 export interface RecipeIngredientPivot {
+    name: string;
     recipe_id: number;
     product_id: number;
     quantity: number;
     unit: string;
+    product?: Product;
 }
 
 export interface Recipe {

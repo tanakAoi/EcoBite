@@ -6,7 +6,12 @@ interface RecipeFormData {
     user_id: number;
     title: string;
     description: string;
-    ingredients: { product_id: number | null; name: string }[];
+    ingredients: {
+        product_id: number | null;
+        name: string;
+        quantity: number;
+        unit: string;
+    }[];
     instructions: Instruction[];
     customIngredient: string;
     currentInstruction: string;
@@ -37,8 +42,15 @@ const RecipeCreate: FC = () => {
             image: null,
         }
     );
-
+    const [isCustomIngredient, setIsCustomIngredient] = useState(false);
+    const [currentIngredient, setCurrentIngredient] = useState({
+        name: "",
+        product_id: null,
+        quantity: 0,
+        unit: "",
+    });
     const [shopIngredients, setShopIngredients] = useState<ShopProduct[]>([]);
+    const unitOptions = ["g", "kg", "ml", "l", "tbsp", "tsp", "cup", "piece"];
 
     useEffect(() => {
         const fetchShopIngredients = async () => {
@@ -52,39 +64,42 @@ const RecipeCreate: FC = () => {
         fetchShopIngredients();
     }, []);
 
-    const addCustomIngredient = () => {
-        if (data.customIngredient) {
-            const newIngredient = {
-                name: data.customIngredient,
+    const addIngredient = () => {
+        if (
+            currentIngredient.name &&
+            currentIngredient.quantity > 0 &&
+            currentIngredient.unit
+        ) {
+            setData("ingredients", [...data.ingredients, currentIngredient]);
+            setCurrentIngredient({
+                name: "",
                 product_id: null,
-            };
-            setData({
-                ...data,
-                ingredients: [...data.ingredients, newIngredient],
-                customIngredient: "",
+                quantity: 0,
+                unit: "",
             });
+            setIsCustomIngredient(false);
         }
     };
 
     const handleIngredientChange = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        const selectedIngredientName = e.target.value;
-        if (
-            selectedIngredientName &&
-            !data.ingredients.some(
-                (ingredient) => ingredient.name === selectedIngredientName
-            )
-        ) {
+        const selectedValue = e.target.value;
+        if (selectedValue === "other") {
+            setIsCustomIngredient(true);
+            setCurrentIngredient({ ...currentIngredient, product_id: null });
+        } else {
             const product = shopIngredients.find(
-                (item) => item.name === selectedIngredientName
+                (item) => String(item.id) === selectedValue
             );
             if (product) {
-                const newIngredient = {
+                setIsCustomIngredient(false);
+                setCurrentIngredient({
                     name: product.name,
                     product_id: product.id,
-                };
-                setData("ingredients", [...data.ingredients, newIngredient]);
+                    quantity: 0,
+                    unit: "",
+                });
             }
         }
     };
@@ -223,23 +238,58 @@ const RecipeCreate: FC = () => {
                                 Select from shop ingredients
                             </option>
                             {shopIngredients.map((item) => (
-                                <option key={item.id} value={item.name}>
+                                <option key={item.id} value={item.id}>
                                     {item.name}
                                 </option>
                             ))}
+                            <option value="other">Add custom ingredient</option>
                         </select>
+                        {isCustomIngredient && (
+                            <input
+                                type="text"
+                                placeholder="Custom ingredient name"
+                                value={currentIngredient.name}
+                                onChange={(e) =>
+                                    setCurrentIngredient({
+                                        ...currentIngredient,
+                                        name: e.target.value,
+                                    })
+                                }
+                                className="block w-full p-2 border border-gray-300 rounded-lg"
+                            />
+                        )}
                         <input
-                            type="text"
-                            placeholder="Add custom ingredient"
-                            value={data.customIngredient}
+                            type="number"
+                            placeholder="Quantity"
+                            value={currentIngredient.quantity}
                             onChange={(e) =>
-                                setData("customIngredient", e.target.value)
+                                setCurrentIngredient({
+                                    ...currentIngredient,
+                                    quantity: parseFloat(e.target.value),
+                                })
                             }
-                            className="block w-full p-2 border border-gray-300 rounded-lg"
+                            className="block w-1/3 p-2 border border-gray-300 rounded-lg"
                         />
+                        <select
+                            value={currentIngredient.unit}
+                            onChange={(e) =>
+                                setCurrentIngredient({
+                                    ...currentIngredient,
+                                    unit: e.target.value,
+                                })
+                            }
+                            className="block w-1/3 p-2 border border-gray-300 rounded-lg"
+                        >
+                            <option value="">Select unit</option>
+                            {unitOptions.map((unit) => (
+                                <option key={unit} value={unit}>
+                                    {unit}
+                                </option>
+                            ))}
+                        </select>
                         <button
                             type="button"
-                            onClick={addCustomIngredient}
+                            onClick={addIngredient}
                             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                         >
                             Add
@@ -252,7 +302,8 @@ const RecipeCreate: FC = () => {
                                 key={index}
                                 className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm flex items-center"
                             >
-                                {ingredient.name}
+                                {ingredient.name} - {ingredient.quantity}{" "}
+                                {ingredient.unit}
                                 <button
                                     type="button"
                                     onClick={() => removeIngredient(index)}
@@ -263,11 +314,6 @@ const RecipeCreate: FC = () => {
                             </span>
                         ))}
                     </div>
-                    {errors.ingredients && (
-                        <div className="text-red-500 text-sm mt-1">
-                            {errors.ingredients}
-                        </div>
-                    )}
                 </div>
 
                 <div>

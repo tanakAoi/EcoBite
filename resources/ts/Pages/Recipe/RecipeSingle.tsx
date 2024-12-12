@@ -61,7 +61,7 @@ const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
                                                 )}
                                                 className="text-blue-500 underline"
                                             >
-                                                {ingredient.product.name}
+                                                {ingredient.name}
                                             </Link>
                                         ) : (
                                             ingredient.name

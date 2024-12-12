@@ -30,13 +30,14 @@ class RecipeController extends Controller
 
     public function store(Request $request)
     {
-        Log::info($request->all());
-
         $request->validate([
             'user_id' => 'required|string|exists:users,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'ingredients' => 'required|array',
+            'ingredients.*.name' => 'required|string|max:255',
+            'ingredients.*.quantity' => 'required|numeric|min:0',
+            'ingredients.*.unit' => 'required|string|max:50',
             'instructions' => 'required|array',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:10240',
         ]);
@@ -48,9 +49,9 @@ class RecipeController extends Controller
             $imageUrl = null;
         }
 
-        $instructionsString = implode("\n", array_map(function($instruction) {
-        return "{$instruction['number']}. {$instruction['text']}";
-    }, $request->input('instructions')));
+        $instructionsString = implode("\n", array_map(function ($instruction) {
+            return "{$instruction['number']}. {$instruction['text']}";
+        }, $request->input('instructions')));
 
         $recipe = Recipe::create([
             'user_id' => $request->input('user_id'),
@@ -64,8 +65,9 @@ class RecipeController extends Controller
             $recipe->ingredients()->create([
                 'product_id' => $ingredient['product_id'] ?? null,
                 'recipe_id' => $recipe->id,
-                'quantity' => 0,
-                'unit' => 'grams'
+                'name' => $ingredient['name'],
+                'quantity' => $ingredient['quantity'],
+                'unit' => $ingredient['unit'],
             ]);
         }
 
