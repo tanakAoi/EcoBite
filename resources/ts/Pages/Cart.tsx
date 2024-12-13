@@ -22,9 +22,12 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
     ) => {
         setIsLoading(true);
         try {
-            const response = await axios.put(`/cart/update/${cartItemId}`, {
-                quantity: newQuantity,
-            });
+            const response = await axios.put(
+                route("cart.item.update", cartItemId),
+                {
+                    quantity: newQuantity,
+                }
+            );
 
             if (response.status === 200) {
                 const updatedItem = response.data[0];
@@ -72,7 +75,9 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
     const RemoveItem = async (cartItemId: number) => {
         setIsLoading(true);
         try {
-            const response = await axios.delete(`/cart/delete/${cartItemId}`);
+            const response = await axios.delete(
+                route("cart.item.delete", cartItemId)
+            );
 
             if (response.status === 200) {
                 const updatedTotalPrice = response.data[0];
@@ -88,6 +93,8 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                         total_price: updatedTotalPrice,
                     };
                 });
+
+                window.location.reload();
             }
         } catch (error) {
             console.error("Error removing item:", error);

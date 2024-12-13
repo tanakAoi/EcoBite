@@ -1,6 +1,8 @@
 import { Link, usePage } from "@inertiajs/react";
 import React from "react";
 import { Cart, User } from "../types";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 interface HeaderProps {
     user: User | null;
@@ -8,34 +10,18 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = () => {
-    const { user, cart } = usePage().props;
+    const { user } = usePage().props;
 
-    const handleLogout = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleLogout = async () => {
+        const response = await axios.post(route("logout"));
 
-        const token = document.head
-            .querySelector('meta[name="csrf-token"]')
-            ?.getAttribute("content");
-
-        if (!token) {
-            console.error("CSRF token is missing");
-            return;
-        }
-
-        const response = await fetch("logout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": token,
-            },
-            body: JSON.stringify({}),
-        });
-        console.log(response);
-
-        if (response.ok) {
-            window.location.href = "/";
-        } else {
-            console.error("Failed to logout");
+        if (response.status === 200) {
+            if (response.status === 200) {
+                toast.success("You have been logged out!");
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 5000);
+            }
         }
     };
 
@@ -99,9 +85,7 @@ const Header: React.FC<HeaderProps> = () => {
             </ul>
             <div className="flex gap-6">
                 {user ? (
-                    <form onSubmit={handleLogout}>
-                        <button type="submit">Logout</button>
-                    </form>
+                    <button onClick={handleLogout}>Logout</button>
                 ) : (
                     <Link href={route("login")}>Login</Link>
                 )}

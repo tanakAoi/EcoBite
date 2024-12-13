@@ -76,6 +76,9 @@ class CartItemController extends Controller
             $cart = Cart::find($cartItem->cart_id);
             $totalPrice = $cart->updateTotalPrice();
 
+            session()->flash('type', 'success');
+            session()->flash('message', 'Item removed from cart!');
+
             return response()->json([$totalPrice], 200);
         }
 

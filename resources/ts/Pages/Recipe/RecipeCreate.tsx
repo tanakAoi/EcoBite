@@ -162,16 +162,8 @@ const RecipeCreate: FC = () => {
             formData.append("image", data.image);
         }
 
-        console.log("formData", formData);
-
         post(route("recipe.store"), {
             data: formData,
-            onSuccess: () => {
-                toast.success("Recipe submitted successfully!");
-            },
-            onError: () => {
-                toast.error("Something went wrong. Please try again.");
-            },
         });
     };
 

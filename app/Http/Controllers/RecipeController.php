@@ -6,8 +6,6 @@ use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Product;
-use Illuminate\Support\Facades\Log;
 
 class RecipeController extends Controller
 {
@@ -71,7 +69,8 @@ class RecipeController extends Controller
             ]);
         }
 
-        session()->flash('success', 'Recipe submitted successfully!');
+        session()->flash('type', 'success');
+        session()->flash('message', 'Recipe saved successfully!');
 
         return redirect()->route('recipe.show', ['id' => $recipe->id]);
     }

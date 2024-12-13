@@ -14,18 +14,21 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
     console.log(usePage().props);
 
     useEffect(() => {
-        if (flash.message) {
-            toast.success(flash.message);
+        if (flash.message && flash.type) {
+            const toastType = {
+                success: toast.success,
+                error: toast.error,
+                info: toast.info,
+                warning: toast.warn,
+            };
+
+            (toastType[flash.type] || toast)(flash.message); 
         }
-    }, [flash.message]);
+    }, [flash.message, flash.type]);
 
     return (
         <div className="bg-glittery-yellow/20">
-            {user ? (
-                <Header user={user} cart={cart} />
-            ) : (
-                <Header user={null} cart={cart} />
-            )}
+            <Header user={user || null} cart={cart} />
             <main className="my-10 mx-auto px-10 pb-32 min-h-screen">
                 {children}
             </main>
