@@ -12,18 +12,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     productQuantities,
     inStock,
 }) => {
-    const { success, error } = usePage().props;
-    
-    useEffect(() => {
-        if (typeof success === "string") {
-            toast.success(success);
-        }
-
-        if (typeof error === "string") {
-            toast.error(error);
-        }
-    }, [success, error]);
-
     const handleAddToCart = async (e: any) => {
         e.preventDefault();
 
@@ -39,7 +27,9 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
                 ...product[0],
             });
 
-            toast.success(response.data.message);
+            if(response.status === 200){
+                window.location.reload();
+            }
 
         } catch (error: any) {
             toast.error("Failed to add product to cart. Please try again.");

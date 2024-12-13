@@ -30,10 +30,8 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
 
         Inertia::share([
-            'auth' => function () {
-                return [
-                    'user' => Auth::user() ? Auth::user()->only('id', 'username', 'email') : null,
-                ];
+            'user' => function () {
+                return Auth::user() ? Auth::user() : null;
             },
             'cart' => function () {
                 $sessionId = Session::getId();
@@ -46,12 +44,12 @@ class AppServiceProvider extends ServiceProvider
                     })
                     ->first();
             },
-            'success' => function () {
+            /* 'success' => function () {
                 return Session::get('success');
             },
             'error' => function () {
                 return Session::get('error');
-            },
+            }, */
         ]);
     }
 }

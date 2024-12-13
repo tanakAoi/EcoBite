@@ -3,14 +3,12 @@ import React from "react";
 import { Cart, User } from "../types";
 
 interface HeaderProps {
-    auth: { user: User | null };
+    user: User | null;
     cart: Cart;
 }
 
 const Header: React.FC<HeaderProps> = () => {
-    const { auth, cart } = usePage().props;
-    console.log("auth", auth);
-    console.log("cart", cart);
+    const { user, cart } = usePage().props;
 
     const handleLogout = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -84,7 +82,7 @@ const Header: React.FC<HeaderProps> = () => {
                 <li>
                     <Link href={route("recipe.index")}>Recipes</Link>
                 </li>
-                {auth && auth.user ? (
+                {user ? (
                     <li>
                         <Link href={route("user.index")}>Account</Link>
                     </li>
@@ -93,14 +91,14 @@ const Header: React.FC<HeaderProps> = () => {
                         <Link href={route("register")}>Create account</Link>
                     </li>
                 )}
-                {auth && auth.user && auth.user.role === "admin" && (
+                {user && user.role === "admin" && (
                     <li>
                         <Link href={route("admin.index")}>Admin</Link>
                     </li>
                 )}
             </ul>
             <div className="flex gap-6">
-                {auth && auth.user ? (
+                {user ? (
                     <form onSubmit={handleLogout}>
                         <button type="submit">Logout</button>
                     </form>

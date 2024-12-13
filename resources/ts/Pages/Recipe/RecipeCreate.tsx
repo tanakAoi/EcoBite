@@ -30,10 +30,10 @@ interface Instruction {
 }
 
 const RecipeCreate: FC = () => {
-    const { auth } = usePage().props;
+    const { user } = usePage().props;
     const { data, setData, post, processing, errors } = useForm<RecipeFormData>(
         {
-            user_id: auth.user.id,
+            user_id: user.id,
             title: "",
             description: "",
             ingredients: [],

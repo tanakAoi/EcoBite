@@ -6,48 +6,63 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\CartItem;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 
 class CartItemController extends Controller
 {
     public function addItem(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
-        ]);
+        try {
+            $request->validate([
+                'product_id' => 'required|exists:products,id',
+                'quantity' => 'required|integer|min:1',
+            ]);
 
-        if (!$request->user()) {
-            $cart = Cart::firstOrCreate([
-                'session_id' => session()->getId(),
-                'status' => 'pending',
-            ]);
-        } else {
-            $cart = Cart::firstOrCreate([
-                'user_id' => $request->user()->id,
-                'status' => 'pending',
-            ]);
+            if (!$request->user()) {
+                $cart = Cart::firstOrCreate([
+                    'session_id' => session()->getId(),
+                    'status' => 'pending',
+                ]);
+            } else {
+                $cart = Cart::firstOrCreate([
+                    'user_id' => $request->user()->id,
+                    'status' => 'pending',
+                ]);
+            }
+
+            $product = Product::find($request->product_id);
+
+            if (!$product) {
+                session()->flash('type', 'error');
+                session()->flash('message', 'Product not found!');
+            }
+
+            $item = $cart->items()->where('product_id', $request->product_id)->first();
+            if ($item) {
+                $item->quantity += $request->quantity;
+                $item->item_price = $product->price;
+                $item->save();
+            } else {
+                $cart->items()->create([
+                    'product_id' => $request->product_id,
+                    'quantity' => $request->quantity,
+                    'item_price' => $product->price,
+                ]);
+            }
+
+            $cart->updateTotalPrice();
+
+            session()->flash('type', 'success');
+            session()->flash('message', 'Product added to cart!');
+
+            return response()->json(['message' => 'Product added to cart'], 200);
+        } catch (\Exception $e) {
+            session()->flash('type', 'error');
+            session()->flash('message', 'Something went wrong. Please try again later.');
+            Log::error('Error adding item to cart: ' . $e->getMessage());
+            return response()->json(['message' => 'Something went wrong. Please try again later.'], 500);
         }
-
-        $product = Product::find($request->product_id);
-
-        $item = $cart->items()->where('product_id', $request->product_id)->first();
-        if ($item) {
-            $item->quantity += $request->quantity;
-            $item->item_price = $product->price;
-            $item->save();
-        } else {
-            $cart->items()->create([
-                'product_id' => $request->product_id,
-                'quantity' => $request->quantity,
-                'item_price' => $product->price,
-            ]);
-        }
-
-        $cart->updateTotalPrice();
-
-        session()->flash('success', 'Product added to cart!');
-
-        return response()->json($item, 201);
     }
 
     public function removeItem(Request $request)

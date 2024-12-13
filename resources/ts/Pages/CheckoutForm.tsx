@@ -17,7 +17,7 @@ interface CheckoutFormProps {
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
     const stripe = useStripe();
     const elements = useElements();
-    const { auth } = usePage().props;
+    const { user } = usePage().props;
     const [isProcessing, setIsProcessing] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [userEmail, setUserEmail] = useState<string>("");
@@ -40,7 +40,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
         }
 
         const response = await axios.post("/checkout/create-payment-intent", {
-            email: auth.user ? auth.user.email : userEmail,
+            email: user ? user.email : userEmail,
             totalPrice: cart.total_price,
         });
 
@@ -65,10 +65,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
         <form className="flex flex-col gap-10 px-20" onSubmit={handleSubmit}>
             <input
                 type="email"
-                value={auth.user ? auth.user.email : userEmail}
+                value={user ? user.email : userEmail}
                 onChange={(e) => setUserEmail(e.target.value)}
                 placeholder="Please provide your email address."
-                disabled={!!auth.user}
+                disabled={!!user}
                 required
             />
             <div>

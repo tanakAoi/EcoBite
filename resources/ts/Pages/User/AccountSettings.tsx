@@ -3,12 +3,12 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const AccountSetting = () => {
-    const { auth } = usePage().props;
+    const { user } = usePage().props;
     const [tab, setTab] = useState("profile");
     const [isEditing, setIsEditing] = useState(false);
     const [profile, setProfile] = useState({
-        username: auth.user.username,
-        email: auth.user.email,
+        username: user.username,
+        email: user.email,
     });
     const [password, setPassword] = useState({
         newPassword: "",

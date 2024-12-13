@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
 
 const OrderConfirmation: FC = ({}) => {
-    const { cart, auth } = usePage().props;
+    const { cart, user } = usePage().props;
     const [orderId, setOrderId] = useState<number | null>(null);
     const [orderPlaced, setOrderPlaced] = useState(false);
 
@@ -14,8 +14,8 @@ const OrderConfirmation: FC = ({}) => {
 
             try {
                 const response = await axios.post(route("order.store"), {
-                    user_id: auth.user ? auth.user.id : null,
-                    session_id: auth.user ? null : cart.session_id,
+                    user_id: user ? user.id : null,
+                    session_id: user ? null : cart.session_id,
                     total_price: cart.total_price,
                     items: cart.items,
                 });
@@ -25,8 +25,8 @@ const OrderConfirmation: FC = ({}) => {
 
                     await axios.delete(route("cart.clear"), {
                         params: {
-                            user_id: auth.user ? auth.user.id : null,
-                            session_id: auth.user ? null : cart.session_id,
+                            user_id: user ? user.id : null,
+                            session_id: user ? null : cart.session_id,
                         },
                     });
                 }
