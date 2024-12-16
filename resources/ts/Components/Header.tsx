@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = () => {
     };
 
     return (
-        <header className="bg-chinese-leaf px-8 py-4 flex justify-between text-white">
+        <header className="bg-dark text-light px-8 py-4 flex justify-between font-serif">
             <Link href="/">
                 <svg
                     width="132"
@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = () => {
                     />
                 </svg>
             </Link>
-            <ul className="flex gap-10">
+            <ul className="md:flex gap-10 hidden">
                 <li>
                     <Link href={route("product.index")}>Products</Link>
                 </li>

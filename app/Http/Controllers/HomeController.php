@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Product;
+use App\Models\Recipe;
 
 class HomeController extends Controller
 {
@@ -22,5 +24,16 @@ class HomeController extends Controller
         }
 
         return Inertia::render('AppLayout', []);
+    }
+
+    public function index()
+    {
+        $latestProducts = Product::latest()->take(3)->get();
+        $featuredRecipes = Recipe::latest()->take(3)->get();
+
+        return inertia::render('Home', [
+            'latestProducts' => $latestProducts,
+            'featuredRecipes' => $featuredRecipes,
+        ]);
     }
 }

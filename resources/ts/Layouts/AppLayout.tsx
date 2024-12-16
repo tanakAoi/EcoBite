@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface AppLayoutProps {
     children: ReactNode;
+    noMargin?: boolean;
 }
 
 const AppLayout: FC<AppLayoutProps> = ({ children }) => {
@@ -22,14 +23,21 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
                 warning: toast.warn,
             };
 
-            (toastType[flash.type] || toast)(flash.message); 
+            (toastType[flash.type] || toast)(flash.message);
         }
     }, [flash.message, flash.type]);
 
+    const isHomePage = usePage().component === "Home";
+
     return (
-        <div className="bg-glittery-yellow/20">
+        <div className="bg-light/10">
             <Header user={user || null} cart={cart} />
-            <main className="my-10 mx-auto px-10 pb-32 min-h-screen">
+            <main
+                className={
+                    "min-h-screen pb-12 md:pb-24" +
+                    (isHomePage ? "" : " max-w-7xl mx-auto my-10 px-10")
+                }
+            >
                 {children}
             </main>
             <Footer />

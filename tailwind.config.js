@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import { text } from 'stream/consumers';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -13,14 +14,15 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Be Vietnam Pro", ...defaultTheme.fontFamily.sans],
+                sans: ["Albert Sans", ...defaultTheme.fontFamily.sans],
+                serif: ["Playfair", ...defaultTheme.fontFamily.serif],
             },
             colors: {
-                "chinese-leaf": "#CCD5AE",
-                "green-essence": "#E9EDC9",
-                "beaming-sun": "#FEFAE0",
-                "glittery-yellow": "#FAEDCD",
-                "muntok-white-pepper": "#D4A373"
+                primary: "#C0AC5D",
+                secondary: "#90AAC6",
+                dark: "#011C27",
+                light: "#F2F2F2",
+                text: "#222222",
             },
         },
     },

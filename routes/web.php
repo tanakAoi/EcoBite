@@ -22,14 +22,13 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RecipeIngredientController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Authentication
 Route::middleware('guest')->group(function () {

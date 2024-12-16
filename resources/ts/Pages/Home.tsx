@@ -1,33 +1,134 @@
+import { Product, Recipe } from "@/types";
 import { Link } from "@inertiajs/react";
-import React from "react";
+import { FC } from "react";
 import { route } from "ziggy-js";
-interface DashboardProps {
-    error?: string;
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+
+interface HomeProps {
+    latestProducts: Product[];
+    featuredRecipes: Recipe[];
 }
 
-const Home: React.FC<DashboardProps> = ({ error }) => {
-    console.log(error);
+const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
+    console.log(featuredRecipes);
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">Welcome to EcoBite!</h1>
-            <section>Hero</section>
-            <section>
-                <h2 className="text-2xl font-semibold">Latest Products</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                </div>
-                <Link href={route("product.index")} className="text-blue-500">
-                    View All Products
-                </Link>
-            </section>
-            <section className="mt-8">
-                <h2 className="text-2xl font-semibold">Featured Recipes</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                </div>
-                <Link href={route("recipe.index")} className="text-blue-500">
-                    Browse Recipes
-                </Link>
-            </section>
+        <div className="">
+            <div className="flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[30rem] bg-[url('../assets/images/hero-bg-1.jpg')]">
+                <h1 className="font-serif text-light text-6xl md:text-7xl pl-10 py-24 md:pt-32">
+                    It's a holiday time!
+                </h1>
+            </div>
+            <div className="max-w-7xl mt-16 mx-auto px-6 md:px-10">
+                <section className="mt-8 mb-16 flex flex-col gap-8">
+                    <div className="flex items-center">
+                        <div className="flex-grow border-t border-dark"></div>
+                        <h2 className="text-2xl font-bold font-serif text-center mx-4">
+                            Featured Recipes
+                        </h2>
+                        <div className="flex-grow border-t border-dark"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-5 md:gap-4">
+                        <div className="md:col-span-3 relative flex flex-col mb-4 md:mb-0">
+                            {featuredRecipes[0] && (
+                                <Link
+                                    href={route(
+                                        "recipe.show",
+                                        featuredRecipes[0].id
+                                    )}
+                                    className="h-full"
+                                >
+                                    <img
+                                        src={featuredRecipes[0].image}
+                                        alt={featuredRecipes[0].title}
+                                        className="w-full object-cover"
+                                    />
+                                    <div className="flex justify-between items-center absolute bottom-0 left-0 right-0 bg-dark text-primary p-4">
+                                        <h3 className="font-light text-2xl">
+                                            {featuredRecipes[0].title}
+                                        </h3>
+                                        <p>
+                                            {new Date(
+                                                featuredRecipes[0].created_at
+                                            ).toLocaleDateString()}
+                                        </p>
+                                    </div>
+                                </Link>
+                            )}
+                        </div>
+                        <div className="col-span-2 space-y-4 flex flex-col">
+                            {featuredRecipes.slice(1, 3).map((recipe) => (
+                                <Link
+                                    href={route("recipe.show", recipe.id)}
+                                    key={recipe.id}
+                                    className="relative flex-1"
+                                >
+                                    <div className="bg-dark"></div>
+                                    <img
+                                        src={recipe.image}
+                                        alt={recipe.title}
+                                        className="w-full min-h-48 h-full object-cover"
+                                    />
+                                    <div className="w-full flex justify-between items-center absolute bottom-0 bg-dark text-primary p-4">
+                                        <h3 className="font-light text-xl">
+                                            {recipe.title}
+                                        </h3>
+
+                                        <p>
+                                            {new Date(
+                                                recipe.created_at
+                                            ).toLocaleDateString()}
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                    <Link
+                        href={route("recipe.index")}
+                        className="text-secondary text-lg hover:text-secondary/50 transition-all flex items-center gap-2 justify-end"
+                    >
+                        <span>All Recipes</span>
+
+                        <ArrowRightIcon className="w-4 h-4" />
+                    </Link>
+                </section>
+                <section className="flex flex-col gap-8">
+                    <div className="flex items-center">
+                        <div className="flex-grow border-t border-dark"></div>
+                        <h2 className="text-2xl font-bold font-serif text-center mx-4">
+                            Latest Products
+                        </h2>
+                        <div className="flex-grow border-t border-dark"></div>
+                    </div>
+                    <div className="h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+                        {latestProducts.map((product) => (
+                            <Link
+                                href={route("product.show", product.id)}
+                                key={product.id}
+                                className="h-full flex flex-col items-center justify-between gap-3"
+                            >
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className="w-full object-cover object-center"
+                                />
+                                <h3 className="text-xl font-medium uppercase">
+                                    {product.name}
+                                </h3>
+                            </Link>
+                        ))}
+                    </div>
+                    <Link
+                        href={route("product.index")}
+                        className="text-secondary text-lg hover:text-secondary/50 transition-all flex items-center gap-2 justify-end"
+                    >
+                        <span>All Products</span>
+
+                        <ArrowRightIcon className="w-4 h-4" />
+                    </Link>
+                </section>
+            </div>
         </div>
     );
 };
