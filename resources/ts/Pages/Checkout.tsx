@@ -10,16 +10,23 @@ const stripePromise = loadStripe(
 const Checkout = () => {
     const { cartData } = usePage().props;
 
-    const cart = JSON.parse(cartData);
+    const cart = JSON.parse(cartData as string);
     
-    const options = {
+/*     const options = {
         mode: "payment",
         amount: cart.total_price * 1000 as number,
         currency: "sek",
-    };
+    }; */
 
     return (
-        <Elements stripe={stripePromise} options={options}>
+        <Elements
+            stripe={stripePromise}
+            options={{
+                mode: "payment",
+                amount: (cart.total_price * 1000) as number,
+                currency: "sek",
+            }}
+        >
             <h1>Checkout</h1>
             <CheckoutForm cart={cart} />
         </Elements>

@@ -9,7 +9,7 @@ const UserDashboard: FC = () => {
             <div className="max-w-7xl mx-auto rounded-lg p-8">
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-3xl font-semibold text-gray-800">
-                        Welcome back, {user.username}!
+                        Welcome back, {user?.username}!
                     </h2>
                 </div>
                 <div className="flex w-full gap-6">
@@ -27,7 +27,7 @@ const UserDashboard: FC = () => {
                             Go to Account Settings
                         </Link>
                     </div>
-                    {user.role === "customer" && (
+                    {user?.role === "customer" && (
                         <div className="bg-white p-6 rounded-lg shadow-md">
                             <h3 className="text-xl font-semibold text-gray-700 mb-4">
                                 Order History

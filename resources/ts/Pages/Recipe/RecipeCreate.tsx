@@ -31,6 +31,11 @@ interface Instruction {
 
 const RecipeCreate: FC = () => {
     const { user } = usePage().props;
+    
+    if (!user) {
+        return <div>Loading...</div>;
+    }
+
     const { data, setData, post, processing, errors } = useForm<RecipeFormData>(
         {
             user_id: user.id,
@@ -44,7 +49,12 @@ const RecipeCreate: FC = () => {
         }
     );
     const [isCustomIngredient, setIsCustomIngredient] = useState(false);
-    const [currentIngredient, setCurrentIngredient] = useState({
+    const [currentIngredient, setCurrentIngredient] = useState<{
+        name: string;
+        product_id: number | null;
+        quantity: number;
+        unit: string;
+    }>({
         name: "",
         product_id: null,
         quantity: 0,

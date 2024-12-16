@@ -55,7 +55,7 @@ const OrderConfirmation: FC = ({}) => {
                     Order Summary
                 </h3>
                                 <ul className="list-none space-y-4 mt-4">
-                    {cart.items.map((item: CartItemProduct, index: number) => (
+                    {cart.items?.map((item: CartItemProduct, index: number) => (
                         <li
                             key={index}
                             className="flex justify-between text-gray-700"

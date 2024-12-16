@@ -20,20 +20,22 @@ export interface Product {
 export interface RecipeIngredient {
     id: number;
     name: string;
+    product_id: number | null;
+    recipe_id: number;
     quantity: number;
     unit: string;
-    pivot: RecipeIngredientPivot;
+/*     pivot: RecipeIngredientPivot; */
     product: Product;
 }
 
-export interface RecipeIngredientPivot {
+/* export interface RecipeIngredientPivot {
     name: string;
     recipe_id: number;
     product_id: number;
     quantity: number;
     unit: string;
     product?: Product;
-}
+} */
 
 export interface Recipe {
     id: number;

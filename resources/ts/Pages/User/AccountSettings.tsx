@@ -7,8 +7,8 @@ const AccountSetting = () => {
     const [tab, setTab] = useState("profile");
     const [isEditing, setIsEditing] = useState(false);
     const [profile, setProfile] = useState({
-        username: user.username,
-        email: user.email,
+        username: user?.username,
+        email: user?.email,
     });
     const [password, setPassword] = useState({
         newPassword: "",
