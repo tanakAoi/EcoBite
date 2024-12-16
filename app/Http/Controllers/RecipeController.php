@@ -87,9 +87,18 @@ class RecipeController extends Controller
                 ->pluck('recipe_id')
                 ->unique();
 
-            $recipes = Recipe::whereIn('id', $matchingRecipeIds)->get();
+            $recipes = Recipe::with(['ingredients' => function ($query) use ($selectedIngredientIds) {
+                $query->whereIn('id', $selectedIngredientIds);
+            }])
+                ->whereIn('id', $matchingRecipeIds)
+                ->get();
 
-            return response()->json(['recipes' => $recipes], 200);
+            $ingredientNames = RecipeIngredient::whereIn('id', $selectedIngredientIds)->pluck('name');
+
+            return response()->json([
+                'recipes' => $recipes,
+                'ingredient_names' => $ingredientNames,
+            ], 200);
         }
 
         return response()->json(['message' => 'No ingredients selected'], 400);

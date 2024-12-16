@@ -9,10 +9,15 @@ interface RecipeListProps {
 
 const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
     const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
+    const [ingredientNames, setIngredientNames] = useState<string[]>([]);
     const [isSearchActive, setIsSearchActive] = useState(false);
 
-    const updateRecipeList = (newRecipes: Recipe[]) => {
+    const updateRecipeList = (
+        newRecipes: Recipe[],
+        newIngredientNames: string[]
+    ) => {
         setRecipes(newRecipes);
+        setIngredientNames(newIngredientNames);
         setIsSearchActive(true);
     };
 
@@ -30,7 +35,10 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
             <div>
                 {isSearchActive ? (
                     <>
-                        <h2 className="text-2xl mb-4">Search Results</h2>
+                        <h2 className="text-2xl mb-4">
+                            Search Results for{" "}
+                            <strong>{ingredientNames.join(", ")}</strong>
+                        </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {recipes.length > 0 ? (
                                 recipes.map((recipe) => (
@@ -74,6 +82,15 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
                                                     recipe.created_at
                                                 ).toLocaleDateString()}
                                             </p>
+                                            <p>
+                                                Ingredients:{" "}
+                                                {recipe.ingredients
+                                                    .map(
+                                                        (ingredient) =>
+                                                            ingredient.name
+                                                    )
+                                                    .join(", ")}
+                                            </p>
                                         </Link>
                                     </div>
                                 ))
@@ -87,7 +104,6 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
                     </>
                 ) : (
                     <>
-                        <h2 className="text-2xl mb-4">All Recipes</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {recipes.map((recipe) => (
                                 <div
