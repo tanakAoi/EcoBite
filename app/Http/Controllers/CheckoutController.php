@@ -35,7 +35,8 @@ class CheckoutController extends Controller
             'currency' => 'sek',
             'automatic_payment_methods' => ['enabled' => true],
         ]);
-        $returnUrl = config('app.url') . '/checkout/order-confirmation';
+
+        $returnUrl = config('app.url') . 'checkout/order-confirmation';
 
         return response()->json([
             'client_secret' => $intent->client_secret, 
