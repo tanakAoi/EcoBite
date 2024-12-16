@@ -23,6 +23,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RecipeIngredientController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -81,10 +82,14 @@ Route::middleware('auth')->group(function () {
 // Recipes
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipe.index');
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipe.show');
+Route::post('/recipes/search', [RecipeController::class, 'search'])->name('recipe.search');
 Route::middleware('auth')->group(function () {
     Route::get('/recipe/create', [RecipeController::class, 'create'])->name('recipe.create');
     Route::post('/recipe/store', [RecipeController::class, 'store'])->name('recipe.store');
 });
+
+// Recipe ingredients
+Route::get('/api/recipe-ingredients', [RecipeIngredientController::class, 'getAllIngredients'])->name('api.recipe-ingredients');
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');

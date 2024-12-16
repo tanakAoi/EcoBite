@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recipe;
+use App\Models\RecipeIngredient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,7 +14,7 @@ class RecipeController extends Controller
     public function index()
     {
         $recipes = Recipe::all();
-        return Inertia::render('Recipe/RecipeList', ['recipes' => $recipes]);
+        return Inertia::render('Recipe/RecipeList', ['initialRecipes' => $recipes]);
     }
 
     public function show($id)
@@ -73,5 +75,23 @@ class RecipeController extends Controller
         session()->flash('message', 'Recipe saved successfully!');
 
         return redirect()->route('recipe.show', ['id' => $recipe->id]);
+    }
+
+    public function search(Request $request)
+    {
+        $selectedIngredientIds = $request->input('selectedIngredients', []);
+
+        if (count($selectedIngredientIds) > 0) {
+            $matchingRecipeIds = RecipeIngredient::whereIn('id', $selectedIngredientIds)
+                ->groupBy('recipe_id')
+                ->pluck('recipe_id')
+                ->unique();
+
+            $recipes = Recipe::whereIn('id', $matchingRecipeIds)->get();
+
+            return response()->json(['recipes' => $recipes], 200);
+        }
+
+        return response()->json(['message' => 'No ingredients selected'], 400);
     }
 }

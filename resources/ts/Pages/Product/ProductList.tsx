@@ -1,17 +1,16 @@
 import AddToCartButton from "../../Components/AddToCartButton";
 import { Product } from "@/types";
 import { Link } from "@inertiajs/react";
-import React, { useState } from "react";
+import { FC, useState } from "react";
 
 interface ProductListProps {
     products: Product[];
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
+const ProductList: FC<ProductListProps> = ({ products }) => {
     const [productQuantities, setProductQuantities] = useState<{
         [key: number]: number;
     }>({});
-    console.log(productQuantities);
 
     const handleQuantityChange = (id: number, quantity: number) => {
         setProductQuantities((prevProductQuantities) => ({
