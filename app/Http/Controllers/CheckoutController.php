@@ -9,11 +9,7 @@ class CheckoutController extends Controller
 {
     public function index(Request $request)
     {
-        $cartData = $request->input('cartData', []);
-
-        return Inertia::render('Checkout', [
-            'cartData' => $cartData,
-        ]);
+        return Inertia::render('Checkout');
     }
 
     public function createPaymentIntent(Request $request)

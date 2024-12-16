@@ -104,11 +104,6 @@ Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'crea
 Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
 
 // Order
-Route::middleware('auth')->group(
-    function () {
-        /*         Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show'); */
-    }
-);
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 
 // User (Admin & Customer)
@@ -148,6 +143,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'show' => 'admin.order.show',
             'edit' => 'admin.order.edit',
             'update' => 'admin.order.update',
+            'store' => 'admin.order.store',
         ]);
     Route::resource('/admin/user', AdminUserController::class)
         ->names([

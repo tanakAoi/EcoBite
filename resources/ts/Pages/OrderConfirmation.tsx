@@ -54,7 +54,7 @@ const OrderConfirmation: FC = ({}) => {
                 <h3 className="text-2xl font-semibold text-gray-800">
                     Order Summary
                 </h3>
-                                <ul className="list-none space-y-4 mt-4">
+                <ul className="list-none space-y-4 mt-4">
                     {cart.items?.map((item: CartItemProduct, index: number) => (
                         <li
                             key={index}
@@ -64,7 +64,10 @@ const OrderConfirmation: FC = ({}) => {
                                 {item.product.name} (x{item.quantity})
                             </span>
                             <span>
-                                {(item.product.price * item.quantity).toFixed(2)} SEK
+                                {(item.product.price * item.quantity).toFixed(
+                                    2
+                                )}{" "}
+                                SEK
                             </span>
                         </li>
                     ))}

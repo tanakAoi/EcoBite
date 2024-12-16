@@ -10,14 +10,11 @@ import { Cart } from "@/types";
 import { StripeError } from "@stripe/stripe-js";
 import { usePage } from "@inertiajs/react";
 
-interface CheckoutFormProps {
-    cart: Cart;
-}
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
+const CheckoutForm: React.FC = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const { user } = usePage().props;
+    const { user, cart } = usePage().props;
     const [isProcessing, setIsProcessing] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [userEmail, setUserEmail] = useState<string>("");
@@ -39,10 +36,13 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
             return;
         }
 
-        const response = await axios.post("/checkout/create-payment-intent", {
-            email: user ? user.email : userEmail,
-            totalPrice: cart.total_price,
-        });
+        const response = await axios.post(
+            route("checkout.create-payment-intent"),
+            {
+                email: user ? user.email : userEmail,
+                totalPrice: cart.total_price,
+            }
+        );
 
         const { client_secret: clientSecret } = response.data;
 
@@ -50,7 +50,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart }) => {
             elements,
             clientSecret,
             confirmParams: {
-                return_url: "http://ecobite.test/checkout/order-confirmation",
+                return_url: `${process.env.APP_URL}/checkout/order-confirmation`,
             },
         });
 
