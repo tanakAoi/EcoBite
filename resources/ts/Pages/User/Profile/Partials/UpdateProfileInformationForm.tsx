@@ -19,7 +19,7 @@ export default function UpdateProfileInformation({
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
-            name: user?.username,
+            username: user?.username,
             email: user?.email,
         });
 
@@ -43,19 +43,19 @@ export default function UpdateProfileInformation({
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="username" value="username" />
 
                     <TextInput
-                        id="name"
+                        id="username"
                         className="mt-1 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData("name", e.target.value)}
+                        value={data.username}
+                        onChange={(e) => setData("username", e.target.value)}
                         required
                         isFocused
-                        autoComplete="name"
+                        autoComplete="username"
                     />
 
-                    <InputError className="mt-2" message={errors.name} />
+                    <InputError className="mt-2" message={errors.username} />
                 </div>
 
                 <div>
@@ -74,7 +74,7 @@ export default function UpdateProfileInformation({
                     <InputError className="mt-2" message={errors.email} />
                 </div>
 
-                {mustVerifyEmail && user?.email_verified_at === null && (
+                {user?.email_verified_at === null && (
                     <div>
                         <p className="mt-2 text-sm text-gray-800 dark:text-gray-200">
                             Your email address is unverified.

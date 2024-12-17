@@ -1,9 +1,10 @@
 import Button from "../../Components/Button";
 import { Link, usePage } from "@inertiajs/react";
 import React, { FC } from "react";
+import Edit from "./Profile/Edit";
 
 const UserDashboard: FC = () => {
-    const { user } = usePage().props;
+    const { user, cart } = usePage().props;
 
     return (
         <div className=" min-h-screen p-6">
@@ -22,7 +23,7 @@ const UserDashboard: FC = () => {
                             Manage your account settings and profile.
                         </p>
                         <Link
-                            href={route("user.account")}
+                            href={route("profile.edit")}
                             className="text-blue-500 hover:underline font-semibold"
                         >
                             Go to Account Settings

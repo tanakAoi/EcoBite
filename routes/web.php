@@ -26,6 +26,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RecipeIngredientController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -113,9 +114,10 @@ Route::post('/order/store', [OrderController::class, 'store'])->name('order.stor
 // User (Admin & Customer)
 Route::middleware('auth')->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
-    Route::get('/user/account-settings', [UserController::class, 'showAccount'])->name('user.account');
-    Route::put('/user/account-settings/update/profile', [UserController::class, 'updateAccount'])->name('user.account.update.profile');
-    Route::put('/user/account-settings/update/password', [UserController::class, 'updatePassword'])->name('user.account.update.password');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/password/update', [PasswordController::class, 'index'])->name('user.password.index');
+    Route::delete('/user/delete', [ProfileController::class, 'destroy'])->name('user.delete');
 });
 
 // Customer
