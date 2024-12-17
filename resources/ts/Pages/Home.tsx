@@ -10,7 +10,6 @@ interface HomeProps {
 }
 
 const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
-    console.log(featuredRecipes);
 
     return (
         <div className="">

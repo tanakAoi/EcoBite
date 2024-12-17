@@ -9,9 +9,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Mail\UserNotificationMail;
 
 class RegisteredUserController extends Controller
 {
@@ -43,6 +45,8 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        Mail::to($user->email)->send(new UserNotificationMail($user));
 
         Auth::login($user);
 
