@@ -14,13 +14,19 @@ class UserNotificationMail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $type;
+    public $order;
+    public $orderItems;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($user)
+    public function __construct($data)
     {
-        $this->user = $user;
+        $this->user = $data['user'];
+        $this->order = $data['order'];
+        $this->orderItems = $data['orderItems'];
+        $this->type = $data['type'];
     }
 
     /**
@@ -28,9 +34,21 @@ class UserNotificationMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope(
-            subject: 'User Notification Mail',
-        );
+        switch ($this->type) {
+            case 'user_registered':
+                $subject = 'Welcome to EcoBite!';
+                break;
+            case 'order_confirmed':
+                $subject = 'Order Confirmation';
+                break;
+            case 'order_shipped':
+                $subject = 'Order Shipped!';
+                break;
+            default:
+                $subject = 'Notification';
+        }
+
+        return new Envelope(subject: $subject);
     }
 
     /**
@@ -38,9 +56,21 @@ class UserNotificationMail extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
-            view: 'emails.user_registered',
-        );
+        switch ($this->type) {
+            case 'user_registered':
+                $view = 'emails.user_registered';
+                break;
+            case 'order_confirmed':
+                $view = 'emails.order_confirmed';
+                break;
+            case 'order_shipped':
+                $view = 'emails.order_shipped';
+                break;
+            default:
+                $view = 'emails.default';
+        }
+
+        return new Content(view: $view);
     }
 
     /**

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to EcoBite!</title>
 </head>
 <body>
-    <h1>Hello, {{ $user->name }}!</h1>
-    <p>Thank you for registering at EcoBite. We're excited to have you onboard!</p>
+    <h1>Welcome, {{ $user->username }}!</h1>
+    <p>Thank you for joining EcoBite. We're thrilled to have you on board!</p>
+    <p>Start exploring our platform to find recipes, ingredients, and much more.</p>
+    <p>If you have any questions, feel free to reach out to us.</p>
+    <p>Happy cooking! 🍽️</p>
 </body>
 </html>

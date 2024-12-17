@@ -46,8 +46,8 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Mail::to($user->email)->send(new UserNotificationMail($user));
-
+        Mail::to($user->email)->send(new UserNotificationMail($user, 'user_registered'));
+        
         Auth::login($user);
 
         return redirect(route('home', absolute: false));
