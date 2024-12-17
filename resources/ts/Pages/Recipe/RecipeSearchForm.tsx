@@ -31,10 +31,12 @@ const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
                 const allIngredients = response.data;
 
                 const shopProducts = allIngredients.filter(
-                    (ingredient: { product_id: number }) => ingredient.product_id
+                    (ingredient: { product_id: number }) =>
+                        ingredient.product_id
                 );
                 const otherIngredients = allIngredients.filter(
-                    (ingredient: { product_id: number }) => !ingredient.product_id
+                    (ingredient: { product_id: number }) =>
+                        !ingredient.product_id
                 );
 
                 setShopProducts(shopProducts);
@@ -77,53 +79,69 @@ const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
     };
 
     return (
-        <div>
-            <h2>Search recipes by ingredients</h2>
-            <form onSubmit={handleSearch}>
-                <select onChange={(e) => addIngredient(Number(e.target.value))}>
-                    <option value="">Select from shop products</option>
-                    {shopProducts.map((item) => (
-                        <option key={item.id} value={item.id}>
-                            {item.name}
-                        </option>
-                    ))}
-                </select>
-                <select onChange={(e) => addIngredient(Number(e.target.value))}>
-                    <option value="">Select from other ingredients</option>
-                    {otherIngredients.map((item) => (
-                        <option key={item.id} value={item.id}>
-                            {item.name}
-                        </option>
-                    ))}
-                </select>
-                <div>
-                    {data.selectedIngredients.map((id) => {
-                        const ingredient =
-                            shopProducts.find((item) => item.id === id) ||
-                            otherIngredients.find((item) => item.id === id);
-                        return ingredient ? (
-                            <span key={id} className="">
-                                {ingredient.name}{" "}
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        setData(
-                                            "selectedIngredients",
-                                            data.selectedIngredients.filter(
-                                                (item) => item !== id
-                                            )
-                                        )
-                                    }
-                                    className=""
-                                >
-                                    &times;
-                                </button>
-                            </span>
-                        ) : null;
-                    })}
+        <div className="bg-light p-6 rounded-lg shadow-lg my-6">
+            <h2 className="text-xl text-center md:text-2xl font-bold font-serif mb-4">
+                Search recipes by ingredients
+            </h2>
+            <form
+                className="flex flex-col md:flex-row justify-between gap-2"
+                onSubmit={handleSearch}
+            >
+                <div className="flex flex-col md:flex-row gap-1 w-full">
+                    <select
+                        onChange={(e) => addIngredient(Number(e.target.value))}
+                        className="bg-white border md:w-1/2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-dark focus:border-transparent transition duration-300"
+                    >
+                        <option value="">Select from shop products</option>
+                        {shopProducts.map((item) => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        onChange={(e) => addIngredient(Number(e.target.value))}
+                        className="bg-white border md:w-1/2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-dark focus:border-transparent transition duration-300"
+                    >
+                        <option value="">Select from other ingredients</option>
+                        {otherIngredients.map((item) => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <Button label="Search" type="submit" disabled={processing} />
             </form>
+            <div className="mt-2 flex gap-1 overflow-hidden flex-wrap">
+                {data.selectedIngredients.map((id) => {
+                    const ingredient =
+                        shopProducts.find((item) => item.id === id) ||
+                        otherIngredients.find((item) => item.id === id);
+                    return ingredient ? (
+                        <span
+                            key={id}
+                            className="bg-dark text-light px-4 py-1 rounded-full flex items-center justify-center gap-2 w-fit"
+                        >
+                            {ingredient.name}{" "}
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    setData(
+                                        "selectedIngredients",
+                                        data.selectedIngredients.filter(
+                                            (item) => item !== id
+                                        )
+                                    )
+                                }
+                                className=""
+                            >
+                                &times;
+                            </button>
+                        </span>
+                    ) : null;
+                })}
+            </div>
         </div>
     );
 };

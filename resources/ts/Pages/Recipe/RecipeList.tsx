@@ -23,11 +23,17 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
 
     return (
         <div className="max-w-4xl mx-auto">
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold mb-6">All Recipe</h1>
-                <Link href={route("recipe.create")}>Create a new recipe</Link>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+                <h1 className="text-5xl font-bold font-serif">
+                    All Recipe
+                </h1>
+                <Link
+                    className="w-full md:w-fit text-center bg-dark text-primary px-4 py-2 rounded font-semibold transition hover:bg-primary hover:text-dark"
+                    href={route("recipe.create")}
+                >
+                    Create a new recipe
+                </Link>
             </div>
-
             <div>
                 <RecipeSearchForm onSearch={updateRecipeList} />
             </div>

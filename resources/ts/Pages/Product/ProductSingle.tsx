@@ -17,24 +17,23 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
         );
         setQuantity(newQuantity);
     };
-    
+
     return (
-        <div className="product-detail-container max-w-4xl mx-auto p-6">
-            <div className="flex flex-col md:flex-row">
+        <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center md:items-start">
                 <div className="md:w-1/2">
                     <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-96 object-cover rounded-lg shadow-lg"
+                        className="w-full md:h-96 object-cover rounded-lg shadow-lg"
                     />
                 </div>
-
                 <div className="md:w-1/2 md:pl-8 mt-6 md:mt-0">
                     <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
                     <p className="text-xl text-gray-600 mb-4">
                         {product.description}
                     </p>
-                    <div className="flex items-center mb-4">
+                    <div className="flex items-center mb-4 justify-between md:justify-start">
                         <span className="text-2xl font-semibold text-green-600">
                             ${product.price}
                         </span>
@@ -54,8 +53,7 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
                             )}
                         </div>
                     </div>
-
-                    <div className="mb-6">
+                    <div className="flex items-center gap-4">
                         <input
                             id="quantity"
                             type="number"
@@ -65,11 +63,11 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
                             onChange={handleQuantityChange}
                             className="w-20 p-2 border rounded-lg"
                         />
+                        <AddToCartButton
+                            productQuantities={{ [product.id]: quantity }}
+                            inStock={product.stock_quantity > 0 ? true : false}
+                        />
                     </div>
-                    <AddToCartButton
-                        productQuantities={{ [product.id]: quantity }}
-                        inStock={product.stock_quantity > 0 ? true : false}
-                    />
                 </div>
             </div>
         </div>
