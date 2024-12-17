@@ -1,3 +1,4 @@
+import Button from "../../Components/Button";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
 import React, { useState } from "react";
@@ -81,12 +82,7 @@ const AccountSetting = () => {
                                 <p>
                                     <strong>Email:</strong> {profile.email}
                                 </p>
-                                <button
-                                    onClick={() => setIsEditing(true)}
-                                    className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-500"
-                                >
-                                    Edit Profile
-                                </button>
+                                <Button label="Edit Profile" onClick={() => setIsEditing(true)} />
                             </div>
                         ) : (
                             <form className="space-y-4">
@@ -116,13 +112,7 @@ const AccountSetting = () => {
                                         placeholder="Your Email"
                                     />
                                 </div>
-                                <button
-                                    type="button"
-                                    onClick={saveProfile}
-                                    className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-500"
-                                >
-                                    Save Changes
-                                </button>
+                                <Button label="Save Changes" onClick={saveProfile} />
                             </form>
                         )}
                     </div>
@@ -160,12 +150,7 @@ const AccountSetting = () => {
                                     placeholder="Confirm Password"
                                 />
                             </div>
-                            <button
-                                type="submit"
-                                className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-500"
-                            >
-                                Update Password
-                            </button>
+                            <Button label="Update Password" type="submit" />
                         </form>
                     </div>
                 );
@@ -176,13 +161,13 @@ const AccountSetting = () => {
 
     return (
         <div className="max-w-4xl mx-auto mt-10 bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="flex border-b border-gray-200">
+            <div className="flex border-b border-dark/10">
                 <button
                     onClick={() => setTab("profile")}
                     className={`flex-1 px-6 py-4 text-center font-semibold ${
                         tab === "profile"
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            ? "bg-dark text-primary"
+                            : "bg-light text-dark hover:bg-light/50"
                     }`}
                 >
                     Profile
@@ -191,8 +176,8 @@ const AccountSetting = () => {
                     onClick={() => setTab("account")}
                     className={`flex-1 px-6 py-4 text-center font-semibold ${
                         tab === "account"
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            ? "bg-dark text-primary"
+                            : "bg-light text-dark hover:bg-light/50"
                     }`}
                 >
                     Account Settings

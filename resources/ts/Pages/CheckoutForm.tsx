@@ -9,6 +9,7 @@ import axios from "axios";
 import { Cart } from "@/types";
 import { StripeError } from "@stripe/stripe-js";
 import { usePage } from "@inertiajs/react";
+import Button from "../Components/Button";
 
 const CheckoutForm: React.FC = () => {
     const stripe = useStripe();
@@ -78,9 +79,7 @@ const CheckoutForm: React.FC = () => {
                 <h2>Payment</h2>
                 <PaymentElement />
             </div>
-            <button type="submit" disabled={!stripe || isProcessing}>
-                {isProcessing ? "Processing..." : "Pay"}
-            </button>
+            <Button label="Pay" type="submit" disabled={!stripe || isProcessing} />
         </form>
     );
 };

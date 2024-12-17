@@ -1,3 +1,4 @@
+import Button from "../../Components/Button";
 import { Recipe } from "@/types";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
@@ -121,9 +122,7 @@ const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
                         ) : null;
                     })}
                 </div>
-                <button type="submit" disabled={processing}>
-                    {processing ? "Searching..." : "Search"}
-                </button>
+                <Button label="Search" type="submit" disabled={processing} />
             </form>
         </div>
     );

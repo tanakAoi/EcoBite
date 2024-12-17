@@ -1,3 +1,4 @@
+import Button from "../../Components/Button";
 import { useForm } from "@inertiajs/react";
 import { FormEventHandler, useState } from "react";
 
@@ -80,13 +81,7 @@ const ProductCreate: React.FC = () => {
                     required
                 />
             </div>
-            <button
-                type="submit"
-                disabled={processing}
-                className="bg-blue-500 text-white p-2 rounded"
-            >
-                {processing ? "Saving..." : "Save"}
-            </button>
+            <Button label="Save" type="submit" disabled={processing} />
 
             {errors.name && <div className="text-red-500">{errors.name}</div>}
             {errors.description && (

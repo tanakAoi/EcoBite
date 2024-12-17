@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useForm } from "@inertiajs/react";
 import { OrderDetails, OrderItem } from "@/types";
+import Button from "../../Components/Button";
 
 interface OrderUpdateProps {
     order: OrderDetails;
@@ -51,13 +52,7 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
                 </div>
 
                 <div>
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                        disabled={processing}
-                    >
-                        {processing ? "Saving..." : "Save Changes"}
-                    </button>
+                    <Button label="Save Changes" type="submit" disabled={processing} />
                 </div>
             </form>
 

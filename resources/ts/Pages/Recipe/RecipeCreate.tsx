@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC, FormEventHandler } from "react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import Button from "../../Components/Button";
 
 interface RecipeFormData {
     user_id: number;
@@ -31,7 +31,7 @@ interface Instruction {
 
 const RecipeCreate: FC = () => {
     const { user } = usePage().props;
-    
+
     if (!user) {
         return <div>Loading...</div>;
     }
@@ -294,13 +294,11 @@ const RecipeCreate: FC = () => {
                                 </option>
                             ))}
                         </select>
-                        <button
+                        <Button
+                            label="Add"
                             type="button"
                             onClick={addIngredient}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                        >
-                            Add
-                        </button>
+                        />
                     </div>
 
                     <div className="flex flex-wrap gap-2">
@@ -337,13 +335,11 @@ const RecipeCreate: FC = () => {
                             }
                             className="block w-full p-2 border border-gray-300 rounded-lg"
                         />
-                        <button
+                        <Button
+                            label="Add"
                             type="button"
                             onClick={addInstruction}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                        >
-                            Add
-                        </button>
+                        />
                     </div>
                     <ol className="list-decimal pl-5">
                         {data.instructions.map((instruction, index) => (
@@ -371,13 +367,11 @@ const RecipeCreate: FC = () => {
                     )}
                 </div>
                 <div>
-                    <button
+                    <Button
+                        label="Submit Recipe"
                         type="submit"
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                         disabled={processing}
-                    >
-                        {processing ? "Submitting..." : "Submit Recipe"}
-                    </button>
+                    />
                 </div>
             </form>
 

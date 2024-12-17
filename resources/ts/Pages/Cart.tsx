@@ -1,6 +1,8 @@
 import { Cart } from "@/types";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import Button from "../Components/Button";
 import { Link } from "@inertiajs/react";
 
 interface CartProps {
@@ -141,7 +143,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                 <div className="flex items-center space-x-4">
                                     <div className="flex items-center space-x-2 text-lg">
                                         <button
-                                            className="px-2 py-1 bg-gray-200 rounded-full"
+                                            className="px-2 py-0 bg-gray-200 rounded-full"
                                             onClick={() =>
                                                 handleDecrement(
                                                     item.id,
@@ -153,7 +155,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                         </button>
                                         <span>{item.quantity}</span>
                                         <button
-                                            className="px-2 py-1 bg-gray-200 rounded-full"
+                                            className="px-2 py-0 bg-gray-200 rounded-full"
                                             onClick={() =>
                                                 handleIncrement(
                                                     item.id,
@@ -177,7 +179,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                                 RemoveItem(item.id);
                                             }}
                                         >
-                                            Remove
+                                            <TrashIcon className="h-6 w-6" />
                                         </button>
                                     </div>
                                 </div>
@@ -191,7 +193,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                         <Link
                             method="post"
                             href={route("checkout.index")}
-                            className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition"
+                            className="bg-secondary hover:bg-primary text-light px-6 py-2 rounded-md transition"
                         >
                             Checkout
                         </Link>

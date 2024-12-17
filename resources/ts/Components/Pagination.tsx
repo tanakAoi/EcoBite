@@ -27,7 +27,7 @@ const Pagination: FC<PaginationProps> = ({ pageData, itemLabel }) => {
                             <Link
                                 key={index}
                                 href={link.url}
-                                className={`px-4 py-2 ml-1 border rounded-md ${
+                                className={`px-4 py-2 ml-1 last-of-type:mr-1 border rounded-md ${
                                     link.active
                                         ? "bg-primary text-white"
                                         : "bg-white text-gray-700 hover:bg-gray-100"

@@ -1,3 +1,4 @@
+import Button from "../../Components/Button";
 import { Link, usePage } from "@inertiajs/react";
 import React, { FC } from "react";
 
@@ -43,12 +44,6 @@ const UserDashboard: FC = () => {
                             </Link>
                         </div>
                     )}
-                </div>
-
-                <div className="mt-8 text-center">
-                    <button className="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition">
-                        Logout
-                    </button>
                 </div>
             </div>
         </div>

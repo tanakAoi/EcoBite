@@ -1,3 +1,4 @@
+import Button from "../../Components/Button";
 import { useForm } from "@inertiajs/react";
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 
@@ -98,8 +99,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                     <img src={data.image} alt="Product" width={100} />
                 </div>
             )}
-
-            <button type="submit">Save</button>
+            <Button label="Save" type="submit" />
         </form>
     );
 };
