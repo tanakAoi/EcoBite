@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { Link } from "@inertiajs/react";
-import axios from "axios";
 import { Order } from "@/types";
+import Pagination from "../../Components/Pagination";
 
 interface PaginatedOrders {
     data: Order[];
@@ -18,18 +18,12 @@ interface OrderListProps {
 }
 
 const OrderList: FC<OrderListProps> = ({ ordersData }) => {
-    const { data, links, current_page, last_page, total } = ordersData;
+    const { data } = ordersData;
     const [editingOrderId, setEditingOrderId] = useState<number | null>(null);
     const [updatedStatus, setUpdatedStatus] = useState<Record<number, string>>(
         {}
     );
     const statuses = ["pending", "processing", "completed", "cancelled"];
-
-    const decodeHtml = (html: string) => {
-        const txt = document.createElement("textarea");
-        txt.innerHTML = html;
-        return txt.value;
-    };
 
     const handleStatusChange = (
         e: React.ChangeEvent<HTMLSelectElement>,
@@ -106,39 +100,7 @@ const OrderList: FC<OrderListProps> = ({ ordersData }) => {
                     ))}
                 </tbody>
             </table>
-            <div className="mt-6 flex justify-center">
-                {links.map((link, index) => {
-                    const label = decodeHtml(link.label);
-                    if (link.url) {
-                        return (
-                            <Link
-                                key={index}
-                                href={link.url}
-                                className={`px-4 py-2 border rounded-md ${
-                                    link.active
-                                        ? "bg-blue-500 text-white"
-                                        : "bg-white text-gray-700 hover:bg-gray-100"
-                                }`}
-                            >
-                                {label}
-                            </Link>
-                        );
-                    } else {
-                        return (
-                            <span
-                                key={index}
-                                className="px-4 py-2 border rounded-md text-gray-300"
-                            >
-                                {label}
-                            </span>
-                        );
-                    }
-                })}
-            </div>
-
-            <div className="mt-4 text-center text-sm text-gray-500">
-                Page {current_page} of {last_page} ({total} orders)
-            </div>
+            <Pagination pageData={ordersData} itemLabel="order" />
         </div>
     );
 };

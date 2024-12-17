@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import { Product } from "@/types";
 import DeleteForm from "../../Components/DeleteForm";
+import Pagination from "../../Components/Pagination";
 
 interface PaginatedProducts {
     data: Product[];
@@ -16,15 +17,11 @@ interface PaginatedProducts {
 
 interface AdminProductProps {
     productsData: PaginatedProducts;
-    success?: string;
 }
 
-const ProductList: React.FC<AdminProductProps> = ({
-    productsData,
-    success,
-}) => {
+const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
     const [products, setProducts] = useState<Product[]>([]);
-    const { data, links, current_page, last_page, total } = productsData;
+    const { data } = productsData;
 
     useEffect(() => {
         setProducts(data);
@@ -34,12 +31,6 @@ const ProductList: React.FC<AdminProductProps> = ({
         setProducts((prevProducts) =>
             prevProducts.filter((product) => product.id !== id)
         );
-    };
-
-    const decodeHtml = (html: string) => {
-        const txt = document.createElement("textarea");
-        txt.innerHTML = html;
-        return txt.value;
     };
 
     return (
@@ -131,39 +122,7 @@ const ProductList: React.FC<AdminProductProps> = ({
                     ))}
                 </tbody>
             </table>
-            <div className="mt-6 flex justify-center space-x-2">
-                {links.map((link, index) => {
-                    const label = decodeHtml(link.label);
-                    if (link.url) {
-                        return (
-                            <Link
-                                key={index}
-                                href={link.url}
-                                className={`px-4 py-2 border rounded-md ${
-                                    link.active
-                                        ? "bg-blue-500 text-white"
-                                        : "bg-white text-gray-700 hover:bg-gray-100"
-                                }`}
-                            >
-                                {label}
-                            </Link>
-                        );
-                    } else {
-                        return (
-                            <span
-                                key={index}
-                                className="px-4 py-2 border rounded-md text-gray-300"
-                            >
-                                {label}
-                            </span>
-                        );
-                    }
-                })}
-            </div>
-
-            <div className="mt-4 text-center text-sm text-gray-500">
-                Page {current_page} of {last_page} ({total} products)
-            </div>
+            <Pagination pageData={productsData} itemLabel="product" />
         </div>
     );
 };

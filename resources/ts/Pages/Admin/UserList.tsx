@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
+import Pagination from "../../Components/Pagination";
 
 interface PaginatedUsers {
     data: User[];
@@ -16,14 +17,8 @@ interface UserListProps {
 }
 
 const UserList: FC<UserListProps> = ({ usersData }) => {
-    const { data, links, current_page, last_page, total } = usersData;
+    const { data } = usersData;
     const [isEditing, setIsEditing] = useState<boolean>(false);
-
-    const decodeHtml = (html: string) => {
-        const txt = document.createElement("textarea");
-        txt.innerHTML = html;
-        return txt.value;
-    };
 
     return (
         <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
@@ -65,40 +60,7 @@ const UserList: FC<UserListProps> = ({ usersData }) => {
                     ))}
                 </tbody>
             </table>
-            <div className="mt-6 flex justify-center">
-                {links.map((link, index) => {
-                    const label = decodeHtml(link.label);
-                    if (link.url) {
-                        return (
-                            <Link
-                                key={index}
-                                href={link.url}
-                                className={`px-4 py-2 border rounded-md ${
-                                    link.active
-                                        ? "bg-blue-500 text-white"
-                                        : "bg-white text-gray-700 hover:bg-gray-100"
-                                }`}
-                            >
-                                {label}
-                            </Link>
-                        );
-                    } else {
-                        return (
-                            <span
-                                key={index}
-                                className="px-4 py-2 border rounded-md text-gray-300"
-                            >
-                                {label}
-                            </span>
-                        );
-                    }
-                })}
-            </div>
-
-            <div className="mt-4 text-center text-sm text-gray-500">
-                Page {current_page} of {last_page} ({total} orders)
-            </div>
-
+            <Pagination pageData={usersData} itemLabel="user" />
             <div className="mt-4">
                 <Link
                     href={route("admin.user.index")}

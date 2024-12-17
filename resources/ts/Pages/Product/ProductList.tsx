@@ -1,13 +1,23 @@
+import Pagination from "../../Components/Pagination";
 import AddToCartButton from "../../Components/AddToCartButton";
 import { Product } from "@/types";
 import { Link } from "@inertiajs/react";
 import { FC, useState } from "react";
 
+interface PaginatedProducts {
+    data: Product[];
+    links: any[];
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+}
 interface ProductListProps {
-    products: Product[];
+    productsData: PaginatedProducts;
 }
 
-const ProductList: FC<ProductListProps> = ({ products }) => {
+const ProductList: FC<ProductListProps> = ({ productsData }) => {
+    const { data } = productsData;
     const [productQuantities, setProductQuantities] = useState<{
         [key: number]: number;
     }>({});
@@ -21,9 +31,11 @@ const ProductList: FC<ProductListProps> = ({ products }) => {
 
     return (
         <div className="">
-            <h1 className="text-3xl font-bold mb-6">Product List</h1>
+            <h1 className="text-5xl text-center font-bold mb-10 font-serif">
+                Our products
+            </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {products.map((product) => (
+                {data.map((product) => (
                     <div
                         key={product.id}
                         className="flex flex-col items-center justify-center gap-5 border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow"
@@ -42,7 +54,7 @@ const ProductList: FC<ProductListProps> = ({ products }) => {
                             </h2>
                             <div className="flex justify-between items-center gap-6">
                                 <span className="text-xl font-bold">
-                                    ${product.price}
+                                    {product.price} SEK
                                 </span>
                                 {product.stock_quantity === 0 ? (
                                     <span className="text-red-600 font-semibold">
@@ -89,6 +101,7 @@ const ProductList: FC<ProductListProps> = ({ products }) => {
                     </div>
                 ))}
             </div>
+            <Pagination pageData={productsData} itemLabel="product" />
         </div>
     );
 };
