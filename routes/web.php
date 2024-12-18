@@ -27,6 +27,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RecipeIngredientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -172,6 +173,9 @@ Route::get('/contact', function () {
     return Inertia::render('Contact');
 });
 Route::post('/contact', 'ContactController@send');
+
+// Localization
+Route::post('/lang-switch', [LanguageController::class, 'switchLanguage'])->name('lang.switch');
 
 Route::get('/{any}', function () {
     return view('app');

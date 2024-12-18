@@ -5,6 +5,7 @@ import { PageProps as AppPageProps } from './';
 
 declare global {
     interface Window {
+        locale: string;
         axios: AxiosInstance;
     }
 

@@ -5,6 +5,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Logo from "./Logo";
 import { Bars3BottomLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useLaravelReactI18n } from "laravel-react-i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface HeaderProps {
     user: User | null;
@@ -13,13 +15,14 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = () => {
     const { user } = usePage().props;
+    const { t } = useLaravelReactI18n();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleLogout = async () => {
         const response = await axios.post(route("logout"));
 
         if (response.status === 200) {
-            toast.success("You have been logged out!");
+            toast.success(t("You have been logged out!"));
             setTimeout(() => {
                 window.location.href = "/";
             }, 5000);
@@ -39,34 +42,38 @@ const Header: React.FC<HeaderProps> = () => {
             </button>
             <ul className="md:flex gap-10 hidden">
                 <li>
-                    <Link href={route("product.index")}>Products</Link>
+                    <Link href={route("product.index")}>{t("Products")}</Link>
                 </li>
                 <li>
-                    <Link href={route("recipe.index")}>Recipes</Link>
+                    <Link href={route("recipe.index")}>{t("Recipes")}</Link>
                 </li>
                 {user ? (
                     <li>
-                        <Link href={route("user.index")}>Account</Link>
+                        <Link href={route("user.index")}>{t("Account")}</Link>
                     </li>
                 ) : (
                     <li>
-                        <Link href={route("register")}>Create account</Link>
+                        <Link href={route("register")}>
+                            {t("Create account")}
+                        </Link>
                     </li>
                 )}
                 {user && user.role === "admin" && (
                     <li>
-                        <Link href={route("admin.index")}>Admin</Link>
+                        <Link href={route("admin.index")}>{t("Admin")}</Link>
                     </li>
                 )}
             </ul>
             <div className="md:flex gap-6 hidden">
                 {user ? (
-                    <button onClick={handleLogout}>Logout</button>
+                    <button onClick={handleLogout}>{t("Logout")}</button>
                 ) : (
-                    <Link href={route("login")}>Login</Link>
+                    <Link href={route("login")}>{t("Login")}</Link>
                 )}
-                <Link href={route("cart.index")}>Cart</Link>
+                <Link href={route("cart.index")}>{t("Cart")}</Link>
+                <LanguageSwitcher />
             </div>
+            {/* Mobile menu */}
             <ul
                 className={`absolute top-0 left-0 h-screen w-full py-10 z-10 bg-dark/95 text-3xl flex flex-col items-center justify-center gap-8  ${
                     isMenuOpen ? "block" : "hidden"
@@ -83,7 +90,7 @@ const Header: React.FC<HeaderProps> = () => {
                         href={route("product.index")}
                         onClick={() => setIsMenuOpen(false)}
                     >
-                        Products
+                        {t("Products")}
                     </Link>
                 </li>
                 <li>
@@ -91,7 +98,7 @@ const Header: React.FC<HeaderProps> = () => {
                         href={route("recipe.index")}
                         onClick={() => setIsMenuOpen(false)}
                     >
-                        Recipes
+                        {t("Recipes")}
                     </Link>
                 </li>
                 {user ? (
@@ -100,7 +107,7 @@ const Header: React.FC<HeaderProps> = () => {
                             href={route("user.index")}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Account
+                            {t("Account")}
                         </Link>
                     </li>
                 ) : (
@@ -109,7 +116,7 @@ const Header: React.FC<HeaderProps> = () => {
                             href={route("register")}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Create account
+                            {t("Create account")}
                         </Link>
                     </li>
                 )}
@@ -119,7 +126,7 @@ const Header: React.FC<HeaderProps> = () => {
                             href={route("admin.index")}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Admin
+                            {t("Admin")}
                         </Link>
                     </li>
                 )}
@@ -128,18 +135,18 @@ const Header: React.FC<HeaderProps> = () => {
                         href={route("cart.index")}
                         onClick={() => setIsMenuOpen(false)}
                     >
-                        Cart
+                        {t("Cart")}
                     </Link>
                 </li>
                 <li>
                     {user ? (
-                        <button onClick={handleLogout}>Logout</button>
+                        <button onClick={handleLogout}>{t("Logout")}</button>
                     ) : (
                         <Link
                             href={route("login")}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Login
+                            {t("Login")}
                         </Link>
                     )}
                 </li>

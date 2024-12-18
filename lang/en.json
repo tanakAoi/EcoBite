@@ -1,0 +1,11 @@
+{
+    "Products"  : "Products",
+    "Recipes"   : "Recipes",
+    "Create account" : "Create account",
+    "Account" : "Account",
+    "Login" : "Login",
+    "Logout" : "Logout",
+    "Cart" : "Cart",
+    "Admin" : "Admin",
+    "You have been logged out!" : "You have been logged out!"
+}

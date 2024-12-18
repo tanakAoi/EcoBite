@@ -24,6 +24,9 @@
 
 <body class="font-sans antialiased">
     @inertia
+    <script>
+        window.locale = @json(session('locale', 'en'));
+    </script>
 </body>
 
 </html>
