@@ -4,7 +4,7 @@ import { Cart, User } from "../types";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Logo from "./Logo";
-import { Bars3BottomLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3BottomLeftIcon, ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
 
@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = () => {
     };
 
     return (
-        <header className="bg-dark text-light px-8 py-4 flex justify-between font-serif relative">
+        <header className="bg-dark text-light px-8 py-4 flex justify-between items-center font-serif relative">
             <Link href="/">
                 <Logo />
             </Link>
@@ -64,13 +64,15 @@ const Header: React.FC<HeaderProps> = () => {
                     </li>
                 )}
             </ul>
-            <div className="md:flex gap-6 hidden">
+            <div className="md:flex items-center gap-6 hidden">
                 {user ? (
                     <button onClick={handleLogout}>{t("Logout")}</button>
                 ) : (
                     <Link href={route("login")}>{t("Login")}</Link>
                 )}
-                <Link href={route("cart.index")}>{t("Cart")}</Link>
+                <Link href={route("cart.index")}>
+                    <ShoppingCartIcon className="h-6 w-6" />
+                </Link>
                 <LanguageSwitcher />
             </div>
             {/* Mobile menu */}

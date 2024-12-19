@@ -45,6 +45,9 @@ class AppServiceProvider extends ServiceProvider
                     })
                     ->first();
             },
+            'locale' => function () {
+                return session('locale', config('app.locale')); 
+            },
             /* 'success' => function () {
                 return Session::get('success');
             },

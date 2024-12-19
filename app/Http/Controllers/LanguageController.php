@@ -13,6 +13,7 @@ class LanguageController extends Controller
         ]);
 
         session(['locale' => $request->language]);
+        app()->setLocale($request->language); 
 
         return response()->json(['message' => 'Language switched successfully']);
     }
