@@ -1,11 +1,11 @@
 import Button from "../../Components/Button";
-import { Recipe } from "@/types";
+import { PaginatedRecipes, Recipe } from "@/types";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 
 interface RecipeSearchFormProps {
-    onSearch: (recipes: Recipe[], ingredientNames: string[]) => void;
+    onSearch: (searchedRecipesData: PaginatedRecipes, ingredientNames: string[]) => void;
 }
 
 const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
@@ -70,8 +70,8 @@ const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
             );
 
             if (response.status === 200) {
-                const { recipes, ingredient_names } = response.data;
-                onSearch(recipes, ingredient_names);
+                const { searchedRecipesData, ingredientNames } = response.data;
+                onSearch(searchedRecipesData, ingredientNames);
             }
         } catch (error) {
             console.error("Search error:", error);
@@ -92,7 +92,7 @@ const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
                         onChange={(e) => addIngredient(Number(e.target.value))}
                         className="bg-white border md:w-1/2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-dark focus:border-transparent transition duration-300"
                     >
-                        <option value="">Select from shop products</option>
+                        <option value="">Shop products</option>
                         {shopProducts.map((item) => (
                             <option key={item.id} value={item.id}>
                                 {item.name}
@@ -103,7 +103,7 @@ const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
                         onChange={(e) => addIngredient(Number(e.target.value))}
                         className="bg-white border md:w-1/2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-dark focus:border-transparent transition duration-300"
                     >
-                        <option value="">Select from other ingredients</option>
+                        <option value="">Other ingredients</option>
                         {otherIngredients.map((item) => (
                             <option key={item.id} value={item.id}>
                                 {item.name}

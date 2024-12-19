@@ -38,17 +38,29 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
                 {data.map((product) => (
                     <div
                         key={product.id}
-                        className="flex flex-col items-center justify-center gap-5 border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow"
+                        className="flex flex-col items-center justify-center gap-5 border rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
                     >
                         <Link
                             href={route("product.show", product.id)}
-                            className="flex flex-col items-center justify-between gap-4"
+                            className="w-full flex flex-col items-center justify-between gap-4"
                         >
-                            <img
-                                src={product.image}
-                                alt={product.name}
-                                className="w-full h-64 object-cover rounded-lg"
-                            />
+                            <div
+                                className={`w-full aspect-square overflow-hidden rounded-lg ${
+                                    !product.image ? "bg-secondary/20" : ""
+                                }`}
+                            >
+                                {product.image ? (
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="flex justify-center items-center w-full h-full text-gray-500">
+                                        No Image Available
+                                    </div>
+                                )}
+                            </div>
                             <h2 className="text-xl font-semibold">
                                 {product.name}
                             </h2>
@@ -72,7 +84,7 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
                                 )}
                             </div>
                         </Link>
-                        <div className="flex  gap-4">
+                        <div className="flex gap-4">
                             <input
                                 type="number"
                                 value={productQuantities[product.id] || 1}

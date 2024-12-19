@@ -2,7 +2,6 @@ import { Cart } from "@/types";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import Button from "../Components/Button";
 import { Link } from "@inertiajs/react";
 
 interface CartProps {
@@ -111,7 +110,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <h2 className="text-3xl font-semibold mb-6">Your Cart</h2>
+            <h2 className="text-4xl font-serif font-bold mb-6">Your Cart</h2>
 
             {updatedCart.items && updatedCart.items.length > 0 ? (
                 <div>
@@ -119,7 +118,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                         {updatedCart.items.map((item) => (
                             <li
                                 key={item.id}
-                                className="bg-white shadow-lg rounded-lg p-4 flex justify-between items-center"
+                                className="bg-white shadow-lg rounded-lg p-4 flex flex-col gap-5 md:gap-0 md:flex-row md:justify-between md:items-center"
                             >
                                 <div className="flex items-center space-x-4">
                                     {item.product.image ? (
@@ -140,7 +139,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex items-center space-x-4">
+                                <div className="flex items-center justify-between space-x-4">
                                     <div className="flex items-center space-x-2 text-lg">
                                         <button
                                             className="px-2 py-0 bg-gray-200 rounded-full"
@@ -165,6 +164,14 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                         >
                                             +
                                         </button>
+                                        <button
+                                            className="text-red-500 hover:text-red-700"
+                                            onClick={() => {
+                                                RemoveItem(item.id);
+                                            }}
+                                        >
+                                            <TrashIcon className="h-6 w-6 ml-1" />
+                                        </button>
                                     </div>
                                     <div className="text-lg font-medium">
                                         <span>Total:</span> $
@@ -172,21 +179,11 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                             item.product.price * item.quantity
                                         ).toFixed(2)}
                                     </div>
-                                    <div>
-                                        <button
-                                            className="text-red-500 hover:text-red-700"
-                                            onClick={() => {
-                                                RemoveItem(item.id);
-                                            }}
-                                        >
-                                            <TrashIcon className="h-6 w-6" />
-                                        </button>
-                                    </div>
                                 </div>
                             </li>
                         ))}
                     </ul>
-                    <div className="mt-6 flex justify-between items-center">
+                    <div className="mt-10 flex justify-between items-center">
                         <p className="text-xl font-semibold">
                             Total: ${updatedCart.total_price}
                         </p>

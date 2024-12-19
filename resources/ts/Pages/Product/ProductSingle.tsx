@@ -20,14 +20,31 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
 
     return (
         <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center md:items-start">
-                <div className="md:w-1/2">
+            <div className="flex flex-col gap-4 md:flex-row items-center md:items-start">
+                <div
+                    className={`md:w-1/2 aspect-square ${
+                        !product.image ? "bg-secondary/20 rounded" : ""
+                    }`}
+                >
+                    {product.image ? (
+                        <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover rounded"
+                        />
+                    ) : (
+                        <div className="flex justify-center items-center w-full h-full text-gray-500 bg-secondary/20">
+                            No Image Available
+                        </div>
+                    )}
+                </div>
+                {/* <div className="md:w-1/2">
                     <img
                         src={product.image}
                         alt={product.name}
                         className="w-full md:h-96 object-cover rounded-lg shadow-lg"
                     />
-                </div>
+                </div> */}
                 <div className="md:w-1/2 md:pl-8 mt-6 md:mt-0">
                     <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
                     <p className="text-xl text-gray-600 mb-4">

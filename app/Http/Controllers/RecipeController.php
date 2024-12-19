@@ -13,8 +13,8 @@ class RecipeController extends Controller
 {
     public function index()
     {
-        $recipes = Recipe::all();
-        return Inertia::render('Recipe/RecipeList', ['initialRecipes' => $recipes]);
+        $recipes = Recipe::paginate(12);
+        return Inertia::render('Recipe/RecipeList', ['recipesData' => $recipes]);
     }
 
     public function show($id)
@@ -87,17 +87,17 @@ class RecipeController extends Controller
                 ->pluck('recipe_id')
                 ->unique();
 
-            $recipes = Recipe::with(['ingredients' => function ($query) use ($selectedIngredientIds) {
+            $searchedRecipesData = Recipe::with(['ingredients' => function ($query) use ($selectedIngredientIds) {
                 $query->whereIn('id', $selectedIngredientIds);
             }])
                 ->whereIn('id', $matchingRecipeIds)
-                ->get();
+                ->paginate(12);
 
             $ingredientNames = RecipeIngredient::whereIn('id', $selectedIngredientIds)->pluck('name');
 
             return response()->json([
-                'recipes' => $recipes,
-                'ingredient_names' => $ingredientNames,
+                'searchedRecipesData' => $searchedRecipesData,
+                'ingredientNames' => $ingredientNames,
             ], 200);
         }
 

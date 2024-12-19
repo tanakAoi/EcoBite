@@ -2,6 +2,7 @@ import React, { useState, useEffect, FC, FormEventHandler } from "react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
 import Button from "../../Components/Button";
+import { ArrowLeftIcon, ArrowTrendingDownIcon, ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 
 interface RecipeFormData {
     user_id: number;
@@ -179,7 +180,7 @@ const RecipeCreate: FC = () => {
 
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            <h2 className="text-4xl font-bold text-gray-800 mb-8 font-serif">
                 Create a New Recipe
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -375,11 +376,12 @@ const RecipeCreate: FC = () => {
                 </div>
             </form>
 
-            <div className="mt-4">
+            <div className="mt-8">
                 <Link
                     href={route("recipe.index")}
-                    className="text-blue-500 hover:underline"
+                    className="text-secondary hover:underline"
                 >
+                    <ArrowUturnLeftIcon className="h-5 w-5 inline-block -mt-1 mr-2" />
                     Back to Recipe List
                 </Link>
             </div>

@@ -35,13 +35,19 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
             <main
                 className={
                     "min-h-screen pb-12 md:pb-24" +
-                    (isHomePage ? "" : " max-w-7xl mx-auto mt-16 mb-10 px-10")
+                    (isHomePage
+                        ? ""
+                        : " max-w-7xl mx-auto mt-10 md:mt-16 mb-10 md:px-10 px-6")
                 }
             >
                 {children}
             </main>
             <Footer />
-            <ToastContainer position="top-right" newestOnTop closeOnClick />
+            <ToastContainer
+                position="top-right"
+                newestOnTop
+                closeOnClick
+            />
         </div>
     );
 };

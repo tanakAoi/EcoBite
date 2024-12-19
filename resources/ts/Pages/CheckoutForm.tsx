@@ -44,7 +44,8 @@ const CheckoutForm: React.FC = () => {
             }
         );
 
-        const { client_secret: clientSecret, return_url: returnUrl } = response.data;
+        const { client_secret: clientSecret, return_url: returnUrl } =
+            response.data;
 
         const { error } = await stripe.confirmPayment({
             elements,
@@ -62,24 +63,35 @@ const CheckoutForm: React.FC = () => {
     };
 
     return (
-        <form className="flex flex-col gap-10 px-20" onSubmit={handleSubmit}>
-            <input
-                type="email"
-                value={user ? user.email : userEmail}
-                onChange={(e) => setUserEmail(e.target.value)}
-                placeholder="Please provide your email address."
-                disabled={!!user}
-                required
-            />
-            <div>
-                <h2>Address</h2>
+        <form className="flex flex-col px-20" onSubmit={handleSubmit}>
+            <div className="mb-6 flex flex-col">
+                <label htmlFor="" className="font-serif">
+                    Email
+                </label>
+                <input
+                    type="email"
+                    value={user ? user.email : userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                    placeholder="Please provide your email address."
+                    disabled={!!user}
+                    required
+                    className="p-2 border border-gray-300 rounded-md"
+                />
+            </div>
+            <div className="mb-6">
+                <h3 className="font-serif mb-2">Address</h3>
                 <AddressElement options={{ mode: "shipping" }} />
             </div>
             <div>
-                <h2>Payment</h2>
+                <h3  className="font-serif mb-2">Payment</h3>
                 <PaymentElement />
             </div>
-            <Button label="Pay" type="submit" disabled={!stripe || isProcessing} />
+            <Button
+                label="Pay"
+                type="submit"
+                disabled={!stripe || isProcessing}
+                className="mt-6"
+            />
         </form>
     );
 };

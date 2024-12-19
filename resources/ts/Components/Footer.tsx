@@ -3,35 +3,33 @@ import React from "react";
 const Footer: React.FC = () => {
     return (
         <footer className="bg-dark text-light font-serif py-8">
-            <div className="max-w-6xl mx-auto px-4">
-                <div className="text-center mb-6">
+            <div className="max-w-6xl mx-auto px-4 flex flex-col justify-between items-center gap-6">
+                <div className="text-center md:mb-6">
                     <p>
                         &copy; {new Date().getFullYear()} EcoBite. All rights
                         reserved.
                     </p>
                 </div>
-
-                <div className="flex justify-center space-x-8 mb-6">
-                    <a href="/about" className="hover:text-glittery-yellow">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-5">
+                    <a href="/about" className="hover:text-primary">
                         About Us
                     </a>
                     <a
                         href={route("product.index")}
-                        className="hover:text-glittery-yellow"
+                        className="hover:text-primary"
                     >
                         Shop
                     </a>
                     <a
                         href={route("recipe.index")}
-                        className="hover:text-glittery-yellow"
+                        className="hover:text-primary"
                     >
                         Recipes
                     </a>
-                    <a href="/contact" className="hover:text-glittery-yellow">
+                    <a href="/contact" className="hover:text-primary">
                         Contact
                     </a>
                 </div>
-
                 <div className="flex justify-center space-x-6">
                     <a
                         href="https://www.instagram.com"

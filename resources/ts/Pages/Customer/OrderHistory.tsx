@@ -15,11 +15,11 @@ const OrderHistory: FC<OrderHistoryProps> = ({ orders }) => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        <div className="max-w-7xl mx-auto mt-10 px-5 md:px-10">
+            <h2 className="text-5xl font-serif font-bold text-gray-800 mb-8">
                 Order History
             </h2>
-             <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {orders.map((order) => (
                     <div
                         key={order.id}
@@ -37,8 +37,7 @@ const OrderHistory: FC<OrderHistoryProps> = ({ orders }) => {
                         </div>
                         <div className="text-gray-600">
                             <p>
-                                <strong>Total:</strong> $
-                                {order.total_price}
+                                <strong>Total:</strong> ${order.total_price}
                             </p>
                             <p>
                                 <strong>Status:</strong> {order.order_status}

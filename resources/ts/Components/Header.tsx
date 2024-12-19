@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { Cart, User } from "../types";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Logo from "./Logo";
 import { Bars3BottomLeftIcon, ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
+import LogoVertical from "./LogoVertical";
 
 interface HeaderProps {
     user: User | null;
@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = () => {
     return (
         <header className="bg-dark text-light px-8 py-4 flex justify-between items-center font-serif relative">
             <Link href="/">
-                <Logo />
+                <LogoVertical />
             </Link>
             <button
                 className="md:hidden flex flex-col items-center"

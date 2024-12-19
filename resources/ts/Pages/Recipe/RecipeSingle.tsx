@@ -8,24 +8,14 @@ interface RecipeSingleProps {
 }
 
 const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
-    const {success, error} = usePage().props;
-
-    useEffect(() => {
-        if (typeof success === 'string') {
-            toast.success(success); 
-        }
-
-        if (typeof error === 'string') {
-            toast.error(error);
-        }
-    }, [success, error]);
+    console.log(recipe);
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="max-w-4xl mx-auto">
             <div className="">
                 <div
                     className={`w-full h-64 overflow-hidden rounded-lg mb-8 ${
-                        !recipe.image ? "bg-green-100" : ""
+                        !recipe.image ? "bg-secondary/20" : ""
                     }`}
                 >
                     {recipe.image ? (
@@ -43,7 +33,7 @@ const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
 
                 <div className="flex flex-col gap-8">
                     <div>
-                        <h1 className="text-4xl font-bold mb-4">
+                        <h1 className="text-4xl font-bold mb-2 font-serif">
                             {recipe.title}
                         </h1>
                         <span className="text-sm text-gray-500">
@@ -56,44 +46,55 @@ const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
                         {recipe.description}
                     </p>
 
-                    <div>
-                        <h2 className="text-2xl font-semibold mb-3">
-                            Ingredients
-                        </h2>
-                        <ul className="list-disc pl-6 text-lg text-gray-700">
-                            {recipe.ingredients &&
-                            recipe.ingredients.length > 0 ? (
-                                recipe.ingredients.map((ingredient) => (
-                                    <li key={ingredient.id}>
-                                        {ingredient.product_id ? (
-                                            <Link
-                                                href={route(
-                                                    "product.show",
-                                                    ingredient.product.id
-                                                )}
-                                                className="text-blue-500 underline"
-                                            >
-                                                {ingredient.name}
-                                            </Link>
-                                        ) : (
-                                            ingredient.name
-                                        )}
-                                        {" : "}
-                                        {ingredient.quantity}
-                                        {ingredient.unit}
-                                    </li>
-                                ))
-                            ) : (
-                                <p>No ingredients available.</p>
-                            )}
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 className="text-2xl font-semibold mb-3">
-                            Instructions
-                        </h2>
-                        <div className="text-lg text-gray-700">
-                            {recipe.instructions}
+                    <div className="flex flex-col gap-4">
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-2">
+                                Ingredients
+                            </h2>
+                            <ul className="list-disc pl-6 text-lg text-gray-700">
+                                {recipe.ingredients &&
+                                recipe.ingredients.length > 0 ? (
+                                    recipe.ingredients.map((ingredient) => (
+                                        <li key={ingredient.id}>
+                                            {ingredient.product_id ? (
+                                                <Link
+                                                    href={route(
+                                                        "product.show",
+                                                        ingredient.product.id
+                                                    )}
+                                                    className="text-dark/80 underline"
+                                                >
+                                                    {ingredient.product.name}
+                                                </Link>
+                                            ) : (
+                                                ingredient.name
+                                            )}
+                                            {" : "}
+                                            {ingredient.quantity}{" "}
+                                            {(ingredient.unit === "cup" &&
+                                                ingredient.quantity > 1) ||
+                                            (ingredient.unit === "piece" &&
+                                                ingredient.quantity > 1)
+                                                ? `${ingredient.unit}s`
+                                                : ingredient.unit}
+                                        </li>
+                                    ))
+                                ) : (
+                                    <p>No ingredients available.</p>
+                                )}
+                            </ul>
+                        </div>
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-2">
+                                Instructions
+                            </h2>
+                            <div className="text-lg text-gray-700 flex flex-col gap-3">
+                                {recipe.instructions
+                                    .split("\n")
+                                    .map((instruction, index) => (
+                                        <p key={index}>{instruction}</p>
+                                    ))}
+                            </div>
                         </div>
                     </div>
                 </div>

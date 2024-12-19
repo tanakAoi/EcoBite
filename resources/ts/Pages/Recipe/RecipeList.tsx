@@ -1,32 +1,33 @@
-import { Recipe } from "@/types";
+import { PaginatedRecipes, Recipe } from "@/types";
 import { Link } from "@inertiajs/react";
 import { FC, useState } from "react";
 import RecipeSearchForm from "./RecipeSearchForm";
+import Pagination from "../../Components/Pagination";
 
 interface RecipeListProps {
-    initialRecipes: Recipe[];
+    recipesData: PaginatedRecipes;
 }
 
-const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
-    const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
+const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
+    const { data } = recipesData;
+    const [newRecipesData, setNewRecipesData] =
+        useState<PaginatedRecipes>(recipesData);
     const [ingredientNames, setIngredientNames] = useState<string[]>([]);
     const [isSearchActive, setIsSearchActive] = useState(false);
 
     const updateRecipeList = (
-        newRecipes: Recipe[],
-        newIngredientNames: string[]
+        searchedRecipesData: PaginatedRecipes,
+        ingredientNames: string[]
     ) => {
-        setRecipes(newRecipes);
-        setIngredientNames(newIngredientNames);
+        setNewRecipesData(searchedRecipesData);
+        setIngredientNames(ingredientNames);
         setIsSearchActive(true);
     };
 
     return (
-        <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-                <h1 className="text-5xl font-bold font-serif">
-                    All Recipe
-                </h1>
+        <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-6">
+                <h1 className="text-5xl font-bold font-serif">Recipes</h1>
                 <Link
                     className="w-full md:w-fit text-center bg-dark text-primary px-4 py-2 rounded font-semibold transition hover:bg-primary hover:text-dark"
                     href={route("recipe.create")}
@@ -46,8 +47,8 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
                             <strong>{ingredientNames.join(", ")}</strong>
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {recipes.length > 0 ? (
-                                recipes.map((recipe) => (
+                            {newRecipesData.data.length > 0 ? (
+                                newRecipesData.data.map((recipe) => (
                                     <div
                                         key={recipe.id}
                                         className="border rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
@@ -63,7 +64,7 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
                                             <div
                                                 className={`w-full h-48 overflow-hidden rounded-lg ${
                                                     !recipe.image
-                                                        ? "bg-green-100"
+                                                        ? "bg-secondary/20"
                                                         : ""
                                                 }`}
                                             >
@@ -107,11 +108,15 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
                                 </p>
                             )}
                         </div>
+                        <Pagination
+                            pageData={newRecipesData}
+                            itemLabel="recipe"
+                        />
                     </>
                 ) : (
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {recipes.map((recipe) => (
+                            {data.map((recipe) => (
                                 <div
                                     key={recipe.id}
                                     className="border rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
@@ -124,7 +129,7 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
                                         <div
                                             className={`w-full h-48 overflow-hidden rounded-lg ${
                                                 !recipe.image
-                                                    ? "bg-green-100"
+                                                    ? "bg-secondary/20"
                                                     : ""
                                             }`}
                                         >
@@ -153,6 +158,7 @@ const RecipeList: FC<RecipeListProps> = ({ initialRecipes }) => {
                                 </div>
                             ))}
                         </div>
+                        <Pagination pageData={recipesData} itemLabel="recipe" />
                     </>
                 )}
             </div>

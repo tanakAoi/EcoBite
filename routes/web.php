@@ -21,6 +21,7 @@ use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -164,14 +165,12 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
 // Other Pages
 Route::get('/about', function () {
-    return Inertia::render('About');
+    return Inertia::render('Other/About');
 });
-Route::get('/about/faqs', function () {
-    return Inertia::render('FAQs');
+Route::get('/faq', function () {
+    return Inertia::render('Other/FAQ');
 });
-Route::get('/contact', function () {
-    return Inertia::render('Contact');
-});
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', 'ContactController@send');
 
 // Localization

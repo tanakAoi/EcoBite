@@ -19,7 +19,7 @@ const Checkout = () => {
                 currency: "sek",
             }}
         >
-            <h1>Checkout</h1>
+            <h1 className="font-serif text-4xl font-bold mb-10 text-center">Checkout</h1>
             <CheckoutForm />
         </Elements>
     );

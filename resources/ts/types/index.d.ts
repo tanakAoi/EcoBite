@@ -9,4 +9,5 @@ export type PageProps<
         message: string; 
         type: "success" | "error" | "info" | "warning" 
     };
+    locale: string;
 };

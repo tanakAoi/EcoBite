@@ -34,16 +34,18 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                Product Management
-            </h2>
-            <Link
-                href={route("admin.product.create")}
-                className="mb-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            >
-                Add New Product
-            </Link>
+        <div className="max-w-6xl mx-auto mt-10 p-6">
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-4xl font-serif font-semibold text-gray-800 mb-4">
+                    Product Management
+                </h2>
+                <Link
+                    href={route("admin.product.create")}
+                    className="mb-4 inline-block bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition"
+                >
+                    Add New Product
+                </Link>
+            </div>
             <table className="min-w-full table-auto border-collapse border border-gray-300">
                 <thead>
                     <tr className="bg-gray-100">
@@ -72,7 +74,12 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                             <td className="px-4 py-2 border">{product.id}</td>
                             <td className="px-4 py-2 border">{product.name}</td>
                             <td className="px-4 py-2 border">
-                                {product.description}
+                                {product.description.length > 50
+                                    ? `${product.description.substring(
+                                          0,
+                                          50
+                                      )}...`
+                                    : product.description}
                             </td>
                             <td className="px-4 py-2 border">
                                 ${product.price}
@@ -104,7 +111,7 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                                             "admin.product.edit",
                                             product.id
                                         )}
-                                        className=" bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 w-full text-center"
+                                        className=" bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center"
                                     >
                                         Edit
                                     </Link>

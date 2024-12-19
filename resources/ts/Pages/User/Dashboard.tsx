@@ -7,40 +7,42 @@ const UserDashboard: FC = () => {
     const { user, cart } = usePage().props;
 
     return (
-        <div className=" min-h-screen p-6">
-            <div className="max-w-7xl mx-auto rounded-lg p-8">
+        <div className=" min-h-screen">
+            <div className="max-w-7xl mx-auto rounded-lg px-3">
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-3xl font-semibold text-gray-800">
+                    <h2 className="text-5xl font-serif font-bold text-dark">
                         Welcome back, {user?.username}!
                     </h2>
                 </div>
-                <div className="flex w-full gap-6">
-                    <div className="p-6 rounded-lg bg-white shadow-md">
-                        <h3 className="text-xl font-semibold text-gray-700 mb-4">
+                <div className="flex flex-col md:flex-row w-full gap-6">
+                    <div className="p-6 rounded-lg bg-light shadow-md relative">
+                        <h3 className="text-2xl font-bold text-text mb-4 font-serif">
                             Account Settings
                         </h3>
-                        <p className="text-gray-600 mb-4">
+                        <p className="text-text/85 mb-4">
                             Manage your account settings and profile.
                         </p>
                         <Link
                             href={route("profile.edit")}
-                            className="text-blue-500 hover:underline font-semibold"
+                            className="text-primary hover:underline font-semibold"
                         >
+                            <span className="absolute inset-0"></span>
                             Go to Account Settings
                         </Link>
                     </div>
                     {user?.role === "customer" && (
-                        <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h3 className="text-xl font-semibold text-gray-700 mb-4">
+                        <div className="p-6 rounded-lg bg-light shadow-md relative">
+                            <h3 className="text-2xl font-bold text-text mb-4 font-serif">
                                 Order History
                             </h3>
-                            <p className="text-gray-600 mb-4">
+                            <p className="text-text/85 mb-4">
                                 View your past orders and details.
                             </p>
                             <Link
                                 href={route("customer.order.index")}
-                                className="text-blue-500 hover:underline font-semibold"
+                                className="text-primary hover:underline font-semibold"
                             >
+                                <span className="absolute inset-0"></span>
                                 View Order History
                             </Link>
                         </div>

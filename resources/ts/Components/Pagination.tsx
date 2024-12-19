@@ -19,7 +19,7 @@ const Pagination: FC<PaginationProps> = ({ pageData, itemLabel }) => {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <div className="mt-8 flex justify-center">
+            <div className="mt-6 md:mt-8 flex md:justify-center items-center gap-1.5">
                 {links.map((link, index) => {
                     const label = decodeHtml(link.label);
                     if (link.url) {
@@ -27,10 +27,10 @@ const Pagination: FC<PaginationProps> = ({ pageData, itemLabel }) => {
                             <Link
                                 key={index}
                                 href={link.url}
-                                className={`px-4 py-2 ml-1 last-of-type:mr-1 border rounded-md ${
+                                className={`p-2 md:px-4 md:py-2 md:border md:rounded-md ${
                                     link.active
-                                        ? "bg-primary text-white"
-                                        : "bg-white text-gray-700 hover:bg-gray-100"
+                                        ? "md:bg-primary md:text-white text-primary font-extrabold"
+                                        : "md:bg-white text-gray-700 md:hover:bg-gray-100"
                                 }`}
                             >
                                 {label}
@@ -40,7 +40,7 @@ const Pagination: FC<PaginationProps> = ({ pageData, itemLabel }) => {
                         return (
                             <span
                                 key={index}
-                                className="px-4 py-2 border rounded-md text-gray-300"
+                                className="md:px-4 md:py-2 md:border md:rounded-md text-gray-300"
                             >
                                 {label}
                             </span>
