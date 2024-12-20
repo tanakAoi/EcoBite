@@ -29,6 +29,7 @@ use App\Http\Controllers\RecipeIngredientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\UploadController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -144,7 +145,10 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'edit' => 'admin.product.edit',
             'update' => 'admin.product.update',
             'destroy' => 'admin.product.destroy',
-        ]);
+        ])
+        ->except(['update']);
+    Route::post('/admin/product/update/{id}', [AdminProductController::class, 'update'])
+    ->name('admin.product.update');
     Route::resource('/admin/order', AdminOrderController::class)
         ->names([
             'index' => 'admin.order.index',
@@ -172,6 +176,9 @@ Route::get('/faq', function () {
 });
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', 'ContactController@send');
+
+// Image Upload
+Route::post('/image-upload', [UploadController::class, 'store'])->name('upload.store');
 
 // Localization
 Route::post('/lang-switch', [LanguageController::class, 'switchLanguage'])->name('lang.switch');

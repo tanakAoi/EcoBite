@@ -26,32 +26,26 @@ class AdminProductController extends Controller
 
     public function store(Request $request)
     {
-        Log::info($request->all());
-
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'stock_quantity' => 'required|integer',
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif,webp|max:10240', // max 10MB
+            'name' => 'string|max:255',
+            'description' => 'string',
+            'price' => 'numeric',
+            'stock_quantity' => 'integer',
+            'image_url' => 'nullable|string|url',
         ]);
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 's3', 'public');
-            $imageUrl = Storage::disk('s3')->url($imagePath);
-        } else {
-            $imageUrl = null;
-        }
-
-        $product = Product::create([
+        Product::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'price' => $request->input('price'),
             'stock_quantity' => $request->input('stock_quantity'),
-            'image' => $imageUrl,
+            'image' => $request->input('image_url'),
         ]);
 
-        return redirect()->route('admin.product.index')->with('success', 'Product created successfully!');;
+        session()->flash('type', 'success');
+        session()->flash('message', 'Product saved successfully!');
+
+        return redirect()->route('admin.product.index');
     }
 
     public function show($id)
@@ -74,20 +68,30 @@ class AdminProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        Log::info($request->all());
+
         $product = Product::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'stock_quantity' => 'required|integer|min:0',
+        $request->validate([
+            'name' => 'string|max:255',
+            'description' => 'string',
+            'price' => 'numeric|min:0',
+            'stock_quantity' => 'integer|min:0',
+            'image_url' => 'nullable|string|url',
         ]);
 
-        $product->update($validatedData);
+        $product->update([
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => $request->price,
+        'stock_quantity' => $request->stock_quantity,
+        'image' => $request->image_url,
+    ]);
 
-        return redirect()
-            ->route('admin.product.index')
-            ->with('success', 'Product updated successfully.');
+        session()->flash('type', 'success');
+        session()->flash('message', 'Product updated successfully!');
+
+        return redirect()->route('admin.product.index');
     }
 
     public function destroy($id)
@@ -100,6 +104,9 @@ class AdminProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('admin.product.index')->with('success', 'Product deleted successfully!');
+        session()->flash('type', 'success');
+        session()->flash('message', 'Product deleted successfully!');
+
+        return redirect()->route('admin.product.index');
     }
 }
