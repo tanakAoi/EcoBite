@@ -1,34 +1,65 @@
 import Button from "../../Components/Button";
 import { useForm } from "@inertiajs/react";
-import { FormEventHandler, useState } from "react";
+import axios from "axios";
+import { FormEventHandler, useEffect, useState } from "react";
 
 const ProductCreate: React.FC = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         description: "",
         price: 0,
         stock_quantity: 0,
         image: null as File | null,
+        image_url: "",
     });
 
-    const handleSubmit: FormEventHandler = (e) => {
+    console.log(data);
+
+    const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-
-        formData.append("name", data.name);
-        formData.append("description", data.description);
-        formData.append("price", String(data.price));
-        formData.append("stock_quantity", String(data.stock_quantity));
-
         if (data.image) {
-            formData.append("image", data.image);
+            const imageFormData = new FormData();
+
+            imageFormData.append("image", data.image);
+
+            try {
+                const response = await axios.post(
+                    route("upload.store"),
+                    imageFormData
+                );
+                console.log(response.data.url);
+                setData("image_url", response.data.url);
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            setData("image_url", ""); 
         }
 
-        post(route("admin.product.store"), {
-            data: formData,
-        });
+        setIsSubmitting(true);
     };
+
+    useEffect(() => {
+        if (isSubmitting) {
+            const formData = new FormData();
+
+            formData.append("name", data.name);
+            formData.append("description", data.description);
+            formData.append("price", String(data.price));
+            formData.append("stock_quantity", String(data.stock_quantity));
+            if (data.image_url) {
+                formData.append("image_url", data.image_url);
+            }
+
+            post(route("admin.product.store"), {
+                data: formData,
+            });
+
+            setIsSubmitting(false);
+        }
+    }, [isSubmitting, data.image_url]);
 
     return (
         <form
@@ -78,11 +109,9 @@ const ProductCreate: React.FC = () => {
                     onChange={(e) =>
                         setData("image", e.target.files?.[0] || null)
                     }
-                    required
                 />
             </div>
             <Button label="Save" type="submit" disabled={processing} />
-
             {errors.name && <div className="text-red-500">{errors.name}</div>}
             {errors.description && (
                 <div className="text-red-500">{errors.description}</div>
