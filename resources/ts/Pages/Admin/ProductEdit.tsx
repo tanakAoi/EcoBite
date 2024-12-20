@@ -46,6 +46,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
         if (data.image) {
             const imageFormData = new FormData();
 
+            imageFormData.append("category", "products");
             imageFormData.append("image", data.image);
 
             try {

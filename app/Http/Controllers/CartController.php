@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -26,6 +26,8 @@ class CartController extends Controller
 
     public function clearCart(Request $request)
     {
+        Log::info($request->all());
+
         $cart = Cart::where('user_id', $request->input('user_id'))
             ->orWhere('session_id', $request->input('session_id'))
             ->first();

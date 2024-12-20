@@ -45,7 +45,10 @@ class AdminOrderController extends Controller
 
         $order->order_status = $request->input('order_status');
         $order->save();
+        
+        session()->flash('type', 'success');
+        session()->flash('message', 'Order updated successfully!');
 
-        return redirect()->route('admin.order.index')->with('success', 'Order updated successfully!');
+        return redirect()->route('admin.order.index');
     }
 }

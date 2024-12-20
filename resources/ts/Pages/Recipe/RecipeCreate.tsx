@@ -2,7 +2,11 @@ import React, { useState, useEffect, FC, FormEventHandler } from "react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
 import Button from "../../Components/Button";
-import { ArrowLeftIcon, ArrowTrendingDownIcon, ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
+import {
+    ArrowLeftIcon,
+    ArrowTrendingDownIcon,
+    ArrowUturnLeftIcon,
+} from "@heroicons/react/24/outline";
 
 interface RecipeFormData {
     user_id: number;
@@ -18,6 +22,7 @@ interface RecipeFormData {
     customIngredient: string;
     currentInstruction: string;
     image: File | null;
+    image_url: string | null;
 }
 
 interface ShopProduct {
@@ -37,6 +42,7 @@ const RecipeCreate: FC = () => {
         return <div>Loading...</div>;
     }
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const { data, setData, post, processing, errors } = useForm<RecipeFormData>(
         {
             user_id: user.id,
@@ -47,6 +53,7 @@ const RecipeCreate: FC = () => {
             customIngredient: "",
             currentInstruction: "",
             image: null,
+            image_url: "",
         }
     );
     const [isCustomIngredient, setIsCustomIngredient] = useState(false);
@@ -159,24 +166,51 @@ const RecipeCreate: FC = () => {
         }
     };
 
-    const handleSubmit: FormEventHandler = (e) => {
+    const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-
-        formData.append("user_id", String(data.user_id));
-        formData.append("title", data.title);
-        formData.append("description", data.description);
-        formData.append("ingredients", JSON.stringify(data.ingredients));
-        formData.append("instructions", JSON.stringify(data.instructions));
         if (data.image) {
-            formData.append("image", data.image);
+            const imageFormData = new FormData();
+
+            imageFormData.append("category", "recipes");
+            imageFormData.append("image", data.image);
+
+            try {
+                const response = await axios.post(
+                    route("upload.store"),
+                    imageFormData
+                );
+                setData("image_url", response.data.url);
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            setData("image_url", "");
         }
 
-        post(route("recipe.store"), {
-            data: formData,
-        });
+        setIsSubmitting(true);
     };
+
+    useEffect(() => {
+        if (isSubmitting) {
+            const formData = new FormData();
+
+            formData.append("user_id", String(data.user_id));
+            formData.append("title", data.title);
+            formData.append("description", data.description);
+            formData.append("ingredients", JSON.stringify(data.ingredients));
+            formData.append("instructions", JSON.stringify(data.instructions));
+            if (data.image_url) {
+                formData.append("image_url", data.image_url);
+            }
+
+            post(route("recipe.store"), {
+                data: formData,
+            });
+
+            setIsSubmitting(false);
+        }
+    }, [isSubmitting, data.image_url]);
 
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
@@ -250,7 +284,9 @@ const RecipeCreate: FC = () => {
                                     {item.name}
                                 </option>
                             ))}
-                            <option value="other">Add custom ingredient</option>
+                            <option value="other" className="font-bold">
+                                Add custom ingredient
+                            </option>
                         </select>
                         {isCustomIngredient && (
                             <input

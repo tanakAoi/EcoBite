@@ -1,9 +1,7 @@
-import { CartItem, CartItemProduct, Product } from "@/types";
-import { Button } from "@headlessui/react";
-import { HomeIcon } from "@heroicons/react/24/outline";
+import { CartItemProduct } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import axios from "axios";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 const OrderConfirmation: FC = ({}) => {
     const { cart, user } = usePage().props;

@@ -50,7 +50,11 @@ class AdminUserController extends Controller
         $user->role = $request->input('role');
         $user->save();
 
-        return redirect()->route('admin.user.index')->with('success', 'User updated successfully!');
+        
+        session()->flash('type', 'success');
+        session()->flash('message', 'User updated successfully!');
+
+        return redirect()->route('admin.user.index');
     }
 }
 

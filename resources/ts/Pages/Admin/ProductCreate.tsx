@@ -22,6 +22,7 @@ const ProductCreate: React.FC = () => {
         if (data.image) {
             const imageFormData = new FormData();
 
+            imageFormData.append("category", "products");
             imageFormData.append("image", data.image);
 
             try {
@@ -29,7 +30,7 @@ const ProductCreate: React.FC = () => {
                     route("upload.store"),
                     imageFormData
                 );
-                console.log(response.data.url);
+                
                 setData("image_url", response.data.url);
             } catch (error) {
                 console.error(error);

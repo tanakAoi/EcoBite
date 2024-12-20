@@ -39,15 +39,8 @@ class RecipeController extends Controller
             'ingredients.*.quantity' => 'required|numeric|min:0',
             'ingredients.*.unit' => 'required|string|max:50',
             'instructions' => 'required|array',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:10240',
+            'image_url' => 'nullable|string|url',
         ]);
-
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('recipes', 's3', 'public');
-            $imageUrl = Storage::disk('s3')->url($imagePath);
-        } else {
-            $imageUrl = null;
-        }
 
         $instructionsString = implode("\n", array_map(function ($instruction) {
             return "{$instruction['number']}. {$instruction['text']}";
@@ -58,7 +51,7 @@ class RecipeController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'instructions' => $instructionsString,
-            'image' => $imageUrl,
+            'image' => $request->input('image_url'),
         ]);
 
         foreach ($request->input('ingredients') as $ingredient) {
