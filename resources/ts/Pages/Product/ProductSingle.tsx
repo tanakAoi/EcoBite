@@ -2,6 +2,9 @@ import BackLink from "../../Components/BackLink";
 import AddToCartButton from "../../Components/AddToCartButton";
 import { Product } from "@/types";
 import React, { useState } from "react";
+import { useLaravelReactI18n } from "laravel-react-i18n";
+import { usePage } from "@inertiajs/react";
+import { formatCurrency } from "../../../utils/formatCurrency";
 
 interface ProductSingleProps {
     product: Product;
@@ -9,6 +12,8 @@ interface ProductSingleProps {
 
 const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
     const [quantity, setQuantity] = useState<number>(1);
+    const { exchangeRates, locale, currency } = usePage().props;
+    const { t } = useLaravelReactI18n();
 
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newQuantity = Math.max(
@@ -20,7 +25,10 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
 
     return (
         <div className="max-w-4xl mx-auto">
-            <BackLink href={route("product.index")} label="Back to Products" />
+            <BackLink
+                href={route("product.index")}
+                label={t("Back to Products")}
+            />
             <div className="flex flex-col gap-4 md:flex-row items-center md:items-start">
                 <div
                     className={`md:w-1/2 aspect-square ${
@@ -35,7 +43,7 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
                         />
                     ) : (
                         <div className="flex justify-center items-center w-full h-full text-gray-500 bg-secondary/20">
-                            No Image Available
+                            {t("No Image Available")}
                         </div>
                     )}
                 </div>
@@ -46,20 +54,28 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
                     </p>
                     <div className="flex items-center mb-4 justify-between md:justify-start">
                         <span className="text-2xl font-semibold text-green-600">
-                            ${product.price}
+                            {formatCurrency(
+                                product.price,
+                                locale,
+                                "USD",
+                                currency,
+                                exchangeRates
+                            )}
                         </span>
                         <div className="ml-4">
                             {product.stock_quantity === 0 ? (
                                 <span className="text-red-600 font-semibold">
-                                    Out of stock
+                                    {t("Out of stock")}
                                 </span>
                             ) : product.stock_quantity <= 5 ? (
                                 <span className="text-yellow-600 font-semibold">
-                                    Only {product.stock_quantity} left in stock!
+                                    {t("low_stock", {
+                                        quantity: product.stock_quantity,
+                                    })}
                                 </span>
                             ) : (
                                 <span className="text-green-600">
-                                    In stock: {product.stock_quantity}
+                                    {t("In stock")}: {product.stock_quantity}
                                 </span>
                             )}
                         </div>

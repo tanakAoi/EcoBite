@@ -48,6 +48,15 @@ class AppServiceProvider extends ServiceProvider
             'locale' => function () {
                 return session('locale', config('app.locale'));
             },
+            'currency' => function () {
+                $currencyMap = [
+                    'sv' => 'SEK',
+                    'en' => 'USD',
+                    'jp' => 'JPY',
+                ];
+                $currency = $currencyMap[session('locale')] ?? 'USD';
+                return session('currency', $currency);
+            },
             'exchangeRates' => function () {
                 $exchangeRateService = app(ExchangeRateService::class);
                 return $exchangeRateService->getRates();

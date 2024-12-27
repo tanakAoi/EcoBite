@@ -3,6 +3,7 @@ import { Link } from "@inertiajs/react";
 import { FC } from "react";
 import { route } from "ziggy-js";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface HomeProps {
     latestProducts: Product[];
@@ -10,6 +11,8 @@ interface HomeProps {
 }
 
 const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
+    const { t } = useLaravelReactI18n();
+
     return (
         <div className="">
             <div className="flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[30rem] bg-[url('../assets/images/hero-bg-1.jpg')]">
@@ -22,7 +25,7 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                     <div className="flex items-center">
                         <div className="flex-grow border-t border-dark"></div>
                         <h2 className="text-2xl font-bold font-serif text-center mx-4">
-                            Featured Recipes
+                            {t("Featured Recipes")}
                         </h2>
                         <div className="flex-grow border-t border-dark"></div>
                     </div>
@@ -74,7 +77,7 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                                         />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center bg-secondary/20">
-                                            <span>No image</span>
+                                            <span>{t("No Image Available")}</span>
                                         </div>
                                     )}
                                     <div className="w-full flex justify-between items-center absolute bottom-0 bg-dark text-primary p-4">
@@ -96,7 +99,7 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                         href={route("recipe.index")}
                         className="text-secondary text-lg hover:text-secondary/50 transition-all flex items-center gap-2 justify-end"
                     >
-                        <span>All Recipes</span>
+                        <span>{t("All Recipes")}</span>
 
                         <ArrowRightIcon className="w-4 h-4" />
                     </Link>
@@ -105,7 +108,7 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                     <div className="flex items-center">
                         <div className="flex-grow border-t border-dark"></div>
                         <h2 className="text-2xl font-bold font-serif text-center mx-4">
-                            Latest Products
+                            {t("Latest Products")}
                         </h2>
                         <div className="flex-grow border-t border-dark"></div>
                     </div>
@@ -123,7 +126,9 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                                         className="w-full object-cover object-center"
                                     />
                                 ) : (
-                                    <div className="w-full h-48 bg-secondary/20"></div>
+                                    <div className="w-full h-48 bg-secondary/20">
+                                        <span>{t("No Image Available")}</span>
+                                    </div>
                                 )}
                                 <h3 className="text-xl font-medium uppercase">
                                     {product.name}
@@ -135,7 +140,7 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                         href={route("product.index")}
                         className="text-secondary text-lg hover:text-secondary/50 transition-all flex items-center gap-2 justify-end"
                     >
-                        <span>All Products</span>
+                        <span>{t("All Products")}</span>
 
                         <ArrowRightIcon className="w-4 h-4" />
                     </Link>

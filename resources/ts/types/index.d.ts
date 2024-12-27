@@ -9,5 +9,6 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
             type: "success" | "error" | "info" | "warning";
         };
         locale: string;
+        currency: string;
         exchangeRates: { [key: string]: number };
     };

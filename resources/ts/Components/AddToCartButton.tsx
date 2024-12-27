@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import Button from "../Components/Button";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface AddToCartButtonProps {
     productQuantities: { [key: number]: number };
@@ -11,6 +12,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     productQuantities,
     inStock,
 }) => {
+    const { t } = useLaravelReactI18n();
+
     const handleAddToCart = async (e: any) => {
         e.preventDefault();
 
@@ -37,7 +40,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
 
     return (
         <Button
-            label="Add to Cart"
+            label={t("Add to Cart")}
             onClick={handleAddToCart}
             disabled={!inStock}
             className="text-light"

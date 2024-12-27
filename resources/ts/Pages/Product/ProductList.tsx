@@ -20,18 +20,11 @@ interface ProductListProps {
 
 const ProductList: FC<ProductListProps> = ({ productsData }) => {
     const { data } = productsData;
-    const { exchangeRates, locale } = usePage().props;
+    const { exchangeRates, locale, currency } = usePage().props;
     const [productQuantities, setProductQuantities] = useState<{
         [key: number]: number;
     }>({});
     const { t } = useLaravelReactI18n();
-
-    const currencyMap: { [key: string]: string } = {
-        sv: "SEK",
-        en: "USD",
-        jp: "JPY",
-    };
-    const currency = currencyMap[locale] || "SEK";
 
     const handleQuantityChange = (id: number, quantity: number) => {
         setProductQuantities((prevProductQuantities) => ({
@@ -43,7 +36,7 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
     return (
         <div className="">
             <h1 className="text-5xl text-center font-bold mb-10 font-serif">
-                {t("Our products")}
+                {t("Our Products")}
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {data.map((product) => (
@@ -68,7 +61,7 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
                                     />
                                 ) : (
                                     <div className="flex justify-center items-center w-full h-full text-gray-500">
-                                        No Image Available
+                                        {t("No Image Available")}
                                     </div>
                                 )}
                             </div>
@@ -80,23 +73,24 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
                                     {formatCurrency(
                                         product.price,
                                         locale,
-                                        "SEK",
+                                        "USD",
                                         currency,
                                         exchangeRates
                                     )}
                                 </span>
                                 {product.stock_quantity === 0 ? (
                                     <span className="text-red-600 font-semibold">
-                                        Out of stock
+                                        {t("Out of stock")}
                                     </span>
                                 ) : product.stock_quantity <= 5 ? (
                                     <span className="text-yellow-600 font-semibold">
-                                        Only {product.stock_quantity} left in
-                                        stock!
+                                        {t("low_stock", {
+                                            quantity: product.stock_quantity,
+                                        })}
                                     </span>
                                 ) : (
                                     <span className="text-green-600">
-                                        In stock
+                                        {t("In stock")}
                                     </span>
                                 )}
                             </div>
@@ -130,7 +124,7 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
                     </div>
                 ))}
             </div>
-            <Pagination pageData={productsData} itemLabel="product" />
+            <Pagination pageData={productsData} itemLabel={t("product")} />
         </div>
     );
 };
