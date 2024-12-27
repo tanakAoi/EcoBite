@@ -1,8 +1,10 @@
 import Pagination from "../../Components/Pagination";
 import AddToCartButton from "../../Components/AddToCartButton";
 import { Product } from "@/types";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { FC, useState } from "react";
+import { useLaravelReactI18n } from "laravel-react-i18n";
+import { formatCurrency } from "../../../utils/formatCurrency";
 
 interface PaginatedProducts {
     data: Product[];
@@ -18,9 +20,18 @@ interface ProductListProps {
 
 const ProductList: FC<ProductListProps> = ({ productsData }) => {
     const { data } = productsData;
+    const { exchangeRates, locale } = usePage().props;
     const [productQuantities, setProductQuantities] = useState<{
         [key: number]: number;
     }>({});
+    const { t } = useLaravelReactI18n();
+
+    const currencyMap: { [key: string]: string } = {
+        sv: "SEK",
+        en: "USD",
+        jp: "JPY",
+    };
+    const currency = currencyMap[locale] || "SEK";
 
     const handleQuantityChange = (id: number, quantity: number) => {
         setProductQuantities((prevProductQuantities) => ({
@@ -32,7 +43,7 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
     return (
         <div className="">
             <h1 className="text-5xl text-center font-bold mb-10 font-serif">
-                Our products
+                {t("Our products")}
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {data.map((product) => (
@@ -66,7 +77,13 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
                             </h2>
                             <div className="flex justify-between items-center gap-6">
                                 <span className="text-xl font-bold">
-                                    {product.price} SEK
+                                    {formatCurrency(
+                                        product.price,
+                                        locale,
+                                        "SEK",
+                                        currency,
+                                        exchangeRates
+                                    )}
                                 </span>
                                 {product.stock_quantity === 0 ? (
                                     <span className="text-red-600 font-semibold">

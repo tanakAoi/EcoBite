@@ -3,13 +3,13 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Session;
 use App\Models\Cart;
+use App\Services\ExchangeRateService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,7 +46,11 @@ class AppServiceProvider extends ServiceProvider
                     ->first();
             },
             'locale' => function () {
-                return session('locale', config('app.locale')); 
+                return session('locale', config('app.locale'));
+            },
+            'exchangeRates' => function () {
+                $exchangeRateService = app(ExchangeRateService::class);
+                return $exchangeRateService->getRates();
             },
             /* 'success' => function () {
                 return Session::get('success');
