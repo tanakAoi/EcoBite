@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import { User } from "@/types";
 import Button from "../../Components/Button";
+import BackLink from "../../Components/BackLink";
 
 interface UserEditProps {
     user: User;
@@ -84,18 +85,14 @@ const UserEdit: React.FC<UserEditProps> = ({ user }) => {
                 </div>
 
                 <div>
-                    <Button label="Save Changes" type="submit" disabled={processing} />
+                    <Button
+                        label="Save Changes"
+                        type="submit"
+                        disabled={processing}
+                    />
                 </div>
             </form>
-
-            <div className="mt-4">
-                <Link
-                    href={route("admin.user.index")}
-                    className="text-blue-500 hover:underline"
-                >
-                    Back to User List
-                </Link>
-            </div>
+            <BackLink href={route("admin.user.index")} label="Back to Users" className="mb-0" />
         </div>
     );
 };

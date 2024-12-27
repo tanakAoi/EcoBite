@@ -2,6 +2,7 @@ import React from "react";
 import DeleteForm from "../../Components/DeleteForm";
 import { Link } from "@inertiajs/react";
 import { Product } from "@/types";
+import BackLink from "../../Components/BackLink";
 
 interface ProductShowProps {
     product: Product;
@@ -13,8 +14,8 @@ const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
     };
 
     return (
-        <div className="bg-gray-100 min-h-screen p-6">
-            <div className="bg-white shadow-md rounded-lg max-w-4xl mx-auto p-6">
+        <div className="max-w-4xl mx-auto min-h-screen p-6">
+            <div className="bg-white shadow-md rounded-lg p-6">
                 <div className="flex flex-col items-center gap-6">
                     <img
                         src={product.image}
@@ -44,6 +45,10 @@ const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
                     />
                 </div>
             </div>
+            <BackLink
+                href={route("admin.product.index")}
+                label="Back to Products"
+            />
         </div>
     );
 };

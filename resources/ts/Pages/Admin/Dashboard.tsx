@@ -9,7 +9,7 @@ const Dashboard: React.FC = () => {
             <h1 className="font-serif text-4xl font-bold">Admin Dashboard</h1>
             <p>
                 Welcome to the admin dashboard. Here you can manage your
-                application.
+                shop.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 <Link

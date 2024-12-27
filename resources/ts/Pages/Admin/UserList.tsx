@@ -1,7 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 import Pagination from "../../Components/Pagination";
+import BackLink from "../../Components/BackLink";
+import DeleteForm from "../../Components/DeleteForm";
 
 interface PaginatedUsers {
     data: User[];
@@ -18,12 +20,20 @@ interface UserListProps {
 
 const UserList: FC<UserListProps> = ({ usersData }) => {
     const { data } = usersData;
-    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [users, setUsers] = useState<User[]>([]);
+
+    useEffect(() => {
+        setUsers(data);
+    }, [data]);
+
+    const handleDelete = (id: number) => {
+        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+    };
 
     return (
         <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                User List
+            <h2 className="text-4xl font-serif font-semibold text-gray-800 mb-6">
+                User Management
             </h2>
             <table className="min-w-full table-auto border">
                 <thead>
@@ -39,18 +49,23 @@ const UserList: FC<UserListProps> = ({ usersData }) => {
                     {data.map((user) => (
                         <tr key={user.id} className="relative">
                             <td className="px-4 py-2 border">{user.id}</td>
-                            <td className="px-4 py-2 border">
-                                {user.username}
-                            </td>
+                            <td className="px-4 py-2 border">{user.username}</td>
                             <td className="px-4 py-2 border">{user.email}</td>
                             <td className="px-4 py-2 border">{user.role}</td>
-                            <td className="px-4 py-2 border relative">
-                                <Link
-                                    href={route("admin.user.edit", user.id)}
-                                    className="text-blue-500 hover:underline absolute inset-0 z-10"
-                                >
-                                    Edit
-                                </Link>
+                            <td className="px-4 py-2 border">
+                                <div className="flex flex-col items-center gap-2 relative z-10">
+                                    <Link
+                                        href={route("admin.user.edit", user.id)}
+                                        className=" bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center"
+                                    >
+                                        Edit
+                                    </Link>
+                                    <DeleteForm
+                                        deleteObject="user"
+                                        userId={user.id}
+                                        onDelete={handleDelete}
+                                    />
+                                </div>
                             </td>
                             <Link
                                 href={route("admin.user.show", user.id)}
@@ -61,14 +76,11 @@ const UserList: FC<UserListProps> = ({ usersData }) => {
                 </tbody>
             </table>
             <Pagination pageData={usersData} itemLabel="user" />
-            <div className="mt-4">
-                <Link
-                    href={route("admin.user.index")}
-                    className="text-blue-500 hover:underline"
-                >
-                    Back to Dashboard
-                </Link>
-            </div>
+            <BackLink
+                href={route("admin.index")}
+                label="Back to Dashboard"
+                className="mb-0"
+            />
         </div>
     );
 };

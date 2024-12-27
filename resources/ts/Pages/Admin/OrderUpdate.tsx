@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useForm } from "@inertiajs/react";
 import { OrderDetails, OrderItem } from "@/types";
 import Button from "../../Components/Button";
+import BackLink from "../../Components/BackLink";
 
 interface OrderUpdateProps {
     order: OrderDetails;
@@ -52,10 +53,13 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
                 </div>
 
                 <div>
-                    <Button label="Save Changes" type="submit" disabled={processing} />
+                    <Button
+                        label="Save Changes"
+                        type="submit"
+                        disabled={processing}
+                    />
                 </div>
             </form>
-
             <div className="mt-8">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">
                     Order Items
@@ -89,15 +93,11 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
                     </tbody>
                 </table>
             </div>
-
-            <div className="mt-4">
-                <Link
-                    href={route("admin.order.index")}
-                    className="text-blue-500 hover:underline"
-                >
-                    Back to Orders List
-                </Link>
-            </div>
+            <BackLink
+                href={route("admin.order.index")}
+                label="Back to Orders"
+                className="mt-6 mb-0"
+            />
         </div>
     );
 };

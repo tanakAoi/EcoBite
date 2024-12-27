@@ -5,6 +5,11 @@ import { Link } from "@inertiajs/react";
 import { Product } from "@/types";
 import DeleteForm from "../../Components/DeleteForm";
 import Pagination from "../../Components/Pagination";
+import {
+    ArrowLeftEndOnRectangleIcon,
+    ArrowUturnLeftIcon,
+} from "@heroicons/react/24/outline";
+import BackLink from "../../Components/BackLink";
 
 interface PaginatedProducts {
     data: Product[];
@@ -116,6 +121,7 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                                         Edit
                                     </Link>
                                     <DeleteForm
+                                        deleteObject="product"
                                         productId={product.id}
                                         onDelete={handleDelete}
                                     />
@@ -130,6 +136,11 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                 </tbody>
             </table>
             <Pagination pageData={productsData} itemLabel="product" />
+            <BackLink
+                href={route("admin.index")}
+                label="Back to Dashboard"
+                className="i"
+            />
         </div>
     );
 };

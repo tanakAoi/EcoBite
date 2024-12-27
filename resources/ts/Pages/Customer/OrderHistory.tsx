@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { usePage } from "@inertiajs/react";
 import { Order } from "@/types";
+import BackLink from "../../Components/BackLink";
 
 interface OrderHistoryProps {
     orders: Order[];
@@ -9,16 +10,22 @@ interface OrderHistoryProps {
 
 const OrderHistory: FC<OrderHistoryProps> = ({ orders }) => {
     console.log(orders);
-    
+
     if (orders.length === 0) {
         return <div className="text-center mt-10">No orders found.</div>;
     }
 
     return (
         <div className="max-w-7xl mx-auto mt-10 px-5 md:px-10">
-            <h2 className="text-5xl font-serif font-bold text-gray-800 mb-8">
-                Order History
-            </h2>
+            <div className="flex justify-between">
+                <h2 className="text-5xl font-serif font-bold text-gray-800 mb-8">
+                    Order History
+                </h2>
+                <BackLink
+                    href={route("user.index")}
+                    label="Back to Dashboard"
+                />
+            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {orders.map((order) => (
                     <div

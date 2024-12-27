@@ -149,6 +149,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         ->except(['update']);
     Route::post('/admin/product/update/{id}', [AdminProductController::class, 'update'])
     ->name('admin.product.update');
+
     Route::resource('/admin/order', AdminOrderController::class)
         ->names([
             'index' => 'admin.order.index',
@@ -157,6 +158,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'update' => 'admin.order.update',
             'store' => 'admin.order.store',
         ]);
+        
     Route::resource('/admin/user', AdminUserController::class)
         ->names([
             'index' => 'admin.user.index',

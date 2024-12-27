@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
 import { User } from "@/types";
+import BackLink from "../../Components/BackLink";
 
 interface UserShowProps {
     user: User;
@@ -17,7 +17,8 @@ const UserShow: React.FC<UserShowProps> = ({ user }) => {
                     <strong className="text-gray-700">ID:</strong> {user.id}
                 </div>
                 <div>
-                    <strong className="text-gray-700">Name:</strong> {user.username}
+                    <strong className="text-gray-700">Name:</strong>{" "}
+                    {user.username}
                 </div>
                 <div>
                     <strong className="text-gray-700">Email:</strong>{" "}
@@ -27,14 +28,11 @@ const UserShow: React.FC<UserShowProps> = ({ user }) => {
                     <strong className="text-gray-700">Role:</strong> {user.role}
                 </div>
             </div>
-            <div className="mt-4">
-                <Link
-                    href={route("admin.user.index")}
-                    className="text-blue-500 hover:underline"
-                >
-                    Back to User List
-                </Link>
-            </div>
+            <BackLink
+                href={route("admin.user.index")}
+                label="Back to Users"
+                className="mb-0"
+            />
         </div>
     );
 };

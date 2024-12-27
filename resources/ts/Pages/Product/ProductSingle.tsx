@@ -1,6 +1,6 @@
+import BackLink from "../../Components/BackLink";
 import AddToCartButton from "../../Components/AddToCartButton";
 import { Product } from "@/types";
-import { usePage } from "@inertiajs/react";
 import React, { useState } from "react";
 
 interface ProductSingleProps {
@@ -20,6 +20,7 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
 
     return (
         <div className="max-w-4xl mx-auto">
+            <BackLink href={route("product.index")} label="Back to Products" />
             <div className="flex flex-col gap-4 md:flex-row items-center md:items-start">
                 <div
                     className={`md:w-1/2 aspect-square ${
@@ -38,13 +39,6 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
                         </div>
                     )}
                 </div>
-                {/* <div className="md:w-1/2">
-                    <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full md:h-96 object-cover rounded-lg shadow-lg"
-                    />
-                </div> */}
                 <div className="md:w-1/2 md:pl-8 mt-6 md:mt-0">
                     <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
                     <p className="text-xl text-gray-600 mb-4">

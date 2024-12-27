@@ -1,3 +1,4 @@
+import BackLink from "../../Components/BackLink";
 import Button from "../../Components/Button";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
@@ -85,8 +86,8 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
     }, [isSubmitting, data.image_url]);
 
     return (
-        <div className="bg-gray-100 min-h-screen p-6">
-            <div className="bg-white shadow-md rounded-lg max-w-4xl mx-auto p-6">
+        <div className="min-h-screen p-6 max-w-4xl mx-auto">
+            <div className="bg-white shadow-md rounded-lg p-6">
                 <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
                     Edit Product
                 </h1>
@@ -212,6 +213,10 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                     </div>
                 </form>
             </div>
+            <BackLink
+                href={route("admin.product.index")}
+                label="Back to Products"
+            />
         </div>
     );
 };

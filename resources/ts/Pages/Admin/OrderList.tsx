@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { Link } from "@inertiajs/react";
 import { Order } from "@/types";
 import Pagination from "../../Components/Pagination";
+import BackLink from "../../Components/BackLink";
 
 interface PaginatedOrders {
     data: Order[];
@@ -36,28 +37,32 @@ const OrderList: FC<OrderListProps> = ({ ordersData }) => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                Orders
+        <div className="max-w-6xl mx-auto mt-10 p-6">
+            <h2 className="text-4xl font-serif font-semibold text-gray-800 mb-6">
+                Order Management
             </h2>
-            <table className="min-w-full table-auto">
+            <table className="min-w-full table-auto border-collapse border border-gray-300">
                 <thead>
                     <tr className="bg-gray-100">
-                        <th className="px-4 py-2 text-left">Order ID</th>
-                        <th className="px-4 py-2 text-left">User ID</th>
-                        <th className="px-4 py-2 text-left">Total Price</th>
-                        <th className="px-4 py-2 text-left">Status</th>
-                        <th className="px-4 py-2 text-left">Created At</th>
-                        <th className="px-4 py-2 text-left">Actions</th>
+                        <th className="px-4 py-2 text-left border">Order ID</th>
+                        <th className="px-4 py-2 text-left border">User ID</th>
+                        <th className="px-4 py-2 text-left border">
+                            Total Price
+                        </th>
+                        <th className="px-4 py-2 text-left border">Status</th>
+                        <th className="px-4 py-2 text-left border">
+                            Created At
+                        </th>
+                        <th className="px-4 py-2 text-left border">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((order) => (
                         <tr key={order.id} className="border-b relative z-0">
-                            <td className="px-4 py-2">{order.id}</td>
-                            <td className="px-4 py-2">{order.user_id}</td>
-                            <td className="px-4 py-2">${order.total_price}</td>
-                            <td className="px-4 py-2">
+                            <td className="p-4 border">{order.id}</td>
+                            <td className="p-4 border">{order.user_id}</td>
+                            <td className="p-4 border">${order.total_price}</td>
+                            <td className="p-4 border">
                                 {editingOrderId === order.id ? (
                                     <select
                                         value={
@@ -79,28 +84,27 @@ const OrderList: FC<OrderListProps> = ({ ordersData }) => {
                                     order.order_status
                                 )}
                             </td>
-                            <td className="px-4 py-2">
+                            <td className="px-4 py-2 border">
                                 {new Date(order.created_at).toLocaleString()}
                             </td>
-                            <td className="px-4 py-2 relative">
+                            <td className="px-4 py-2 relative z-10">
                                 <Link
                                     href={route("admin.order.edit", order.id)}
-                                    className="text-blue-500 hover:text-blue-700 absolute top-2 inset-0 z-10"
+                                    className=" bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center"
                                 >
                                     Update
                                 </Link>
                             </td>
-                            {!editingOrderId && (
-                                <Link
-                                    href={route("admin.order.show", order.id)}
-                                    className="absolute inset-0 z-0"
-                                ></Link>
-                            )}
+                            <Link
+                                href={route("admin.order.show", order.id)}
+                                className="absolute inset-0 z-0"
+                            ></Link>
                         </tr>
                     ))}
                 </tbody>
             </table>
             <Pagination pageData={ordersData} itemLabel="order" />
+            <BackLink href={route("admin.index")} label="Back to Dashboard" />
         </div>
     );
 };

@@ -10,7 +10,6 @@ interface HomeProps {
 }
 
 const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
-
     return (
         <div className="">
             <div className="flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[30rem] bg-[url('../assets/images/hero-bg-1.jpg')]">
@@ -37,11 +36,15 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                                     )}
                                     className="h-full"
                                 >
-                                    <img
-                                        src={featuredRecipes[0].image}
-                                        alt={featuredRecipes[0].title}
-                                        className="w-full object-cover"
-                                    />
+                                    {featuredRecipes[0].image ? (
+                                        <img
+                                            src={featuredRecipes[0].image}
+                                            alt={featuredRecipes[0].title}
+                                            className="w-full object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-gray-200"></div>
+                                    )}
                                     <div className="flex justify-between items-center absolute bottom-0 left-0 right-0 bg-dark text-primary p-4">
                                         <h3 className="font-light text-2xl">
                                             {featuredRecipes[0].title}
@@ -63,11 +66,17 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                                     className="relative flex-1"
                                 >
                                     <div className="bg-dark"></div>
-                                    <img
-                                        src={recipe.image}
-                                        alt={recipe.title}
-                                        className="w-full min-h-48 h-full object-cover"
-                                    />
+                                    {recipe.image ? (
+                                        <img
+                                            src={recipe.image}
+                                            alt={recipe.title}
+                                            className="w-full min-h-48 h-full object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center bg-secondary/20">
+                                            <span>No image</span>
+                                        </div>
+                                    )}
                                     <div className="w-full flex justify-between items-center absolute bottom-0 bg-dark text-primary p-4">
                                         <h3 className="font-light text-xl">
                                             {recipe.title}
@@ -107,11 +116,15 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                                 key={product.id}
                                 className="h-full flex flex-col items-center justify-between gap-3"
                             >
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="w-full object-cover object-center"
-                                />
+                                {product.image ? (
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        className="w-full object-cover object-center"
+                                    />
+                                ) : (
+                                    <div className="w-full h-48 bg-secondary/20"></div>
+                                )}
                                 <h3 className="text-xl font-medium uppercase">
                                     {product.name}
                                 </h3>

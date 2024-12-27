@@ -1,12 +1,8 @@
 import React, { useState, useEffect, FC, FormEventHandler } from "react";
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
 import Button from "../../Components/Button";
-import {
-    ArrowLeftIcon,
-    ArrowTrendingDownIcon,
-    ArrowUturnLeftIcon,
-} from "@heroicons/react/24/outline";
+import BackLink from "../../Components/BackLink";
 
 interface RecipeFormData {
     user_id: number;
@@ -411,16 +407,11 @@ const RecipeCreate: FC = () => {
                     />
                 </div>
             </form>
-
-            <div className="mt-8">
-                <Link
-                    href={route("recipe.index")}
-                    className="text-secondary hover:underline"
-                >
-                    <ArrowUturnLeftIcon className="h-5 w-5 inline-block -mt-1 mr-2" />
-                    Back to Recipe List
-                </Link>
-            </div>
+            <BackLink
+                href={route("recipe.index")}
+                label="Back to Recipes"
+                className="mb-0"
+            />
         </div>
     );
 };

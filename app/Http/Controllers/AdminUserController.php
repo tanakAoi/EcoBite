@@ -8,6 +8,7 @@ use Inertia\Inertia;
 
 class AdminUserController extends Controller
 {
+
     public function index()
     {
         $users = User::paginate(10);
@@ -50,11 +51,21 @@ class AdminUserController extends Controller
         $user->role = $request->input('role');
         $user->save();
 
-        
+
         session()->flash('type', 'success');
         session()->flash('message', 'User updated successfully!');
 
         return redirect()->route('admin.user.index');
     }
-}
 
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+
+        session()->flash('type', 'success');
+        session()->flash('message', 'User deleted successfully!');
+
+        return redirect()->route('admin.user.index');
+    }
+}

@@ -3,6 +3,7 @@
 import React from "react";
 import { Link } from "@inertiajs/react";
 import { OrderDetails, OrderItem } from "@/types";
+import BackLink from "../../Components/BackLink";
 
 interface OrderShowProps {
     order: OrderDetails;
@@ -77,14 +78,11 @@ const OrderShow: React.FC<OrderShowProps> = ({ order }) => {
                     </tbody>
                 </table>
             </div>
-            <div className="mt-4">
-                <Link
-                    href={route("admin.order.index")}
-                    className="text-blue-500 hover:underline"
-                >
-                    Back to Orders List
-                </Link>
-            </div>
+            <BackLink
+                href={route("admin.order.index")}
+                label="Back to Orders"
+                className="mb-0 mt-6"
+            />
         </div>
     );
 };

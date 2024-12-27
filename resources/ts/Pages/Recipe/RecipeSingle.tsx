@@ -1,17 +1,18 @@
+import BackLink from "../../Components/BackLink";
 import { Recipe } from "@/types";
-import { Link, usePage } from "@inertiajs/react";
-import React, { useEffect } from "react";
-import { toast } from "react-toastify";
+import { Link } from "@inertiajs/react";
+import  { FC } from "react";
 
 interface RecipeSingleProps {
     recipe: Recipe;
 }
 
-const RecipeSingle: React.FC<RecipeSingleProps> = ({ recipe }) => {
+const RecipeSingle: FC<RecipeSingleProps> = ({ recipe }) => {
     console.log(recipe);
 
     return (
         <div className="max-w-4xl mx-auto">
+            <BackLink href={route("recipe.index")} label="Back to Recipes" />
             <div className="">
                 <div
                     className={`w-full h-64 overflow-hidden rounded-lg mb-8 ${

@@ -2,15 +2,30 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 interface DeleteFormProps {
-    productId: number;
+    deleteObject: string;
+    productId?: number;
+    userId?: number;
     onDelete: (id: number) => void;
 }
 
-const DeleteForm: React.FC<DeleteFormProps> = ({ productId, onDelete }) => {
+const DeleteForm: React.FC<DeleteFormProps> = ({
+    productId,
+    userId,
+    deleteObject,
+    onDelete,
+}) => {
     const { delete: destroy } = useForm();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (deleteObject === "product" && productId) {
+            handleProductDelete(productId);
+        } else if (deleteObject === "user" && userId) {
+            handleUserDelete(userId);
+        }
+    };
+
+    const handleProductDelete = (productId: number) => {
         if (confirm("Are you sure you want to delete this product?")) {
             destroy(route("admin.product.destroy", productId), {
                 onSuccess: () => {
@@ -19,6 +34,20 @@ const DeleteForm: React.FC<DeleteFormProps> = ({ productId, onDelete }) => {
                 onError: (errors) => {
                     console.error(errors);
                     alert("Failed to delete the product.");
+                },
+            });
+        }
+    };
+
+    const handleUserDelete = (userId: number) => {
+        if (confirm("Are you sure you want to delete this user?")) {
+            destroy(route("admin.user.destroy", userId), {
+                onSuccess: () => {
+                    onDelete(userId);
+                },
+                onError: (errors) => {
+                    console.error(errors);
+                    alert("Failed to delete the user.");
                 },
             });
         }

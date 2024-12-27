@@ -1,3 +1,4 @@
+import BackLink from "../../../Components/BackLink";
 import DeleteUserForm from "../Profile/Partials/DeleteUserForm";
 import UpdatePasswordForm from "../Profile/Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "../Profile/Partials/UpdateProfileInformationForm";
@@ -9,7 +10,16 @@ export default function Edit({
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
         <div className="md:px-6">
-            <h1 className="text-4xl font-serif font-bold">Account Settings</h1>
+            <div className="flex justify-between">
+                <h1 className="text-4xl font-serif font-bold">
+                    Account Settings
+                </h1>
+                <BackLink
+                    href={route("user.index")}
+                    label="Back to Dashboard"
+                    className="mb-0"
+                />
+            </div>
             <div className="py-6 md:py-12">
                 <div className="mx-auto max-w-7xl space-y-6">
                     <div className="bg-light p-4 shadow sm:rounded-lg sm:p-8">
@@ -29,8 +39,5 @@ export default function Edit({
                 </div>
             </div>
         </div>
-         
-
-        
     );
 }
