@@ -1,7 +1,8 @@
-import Button from "../../Components/Button";
+import React, { useState, useEffect, FormEventHandler } from "react";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
-import { FormEventHandler, useEffect, useState } from "react";
+import Button from "../../Components/Button";
+import BackLink from "../../Components/BackLink";
 
 const ProductCreate: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,8 +14,6 @@ const ProductCreate: React.FC = () => {
         image: null as File | null,
         image_url: "",
     });
-
-    console.log(data);
 
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
@@ -30,13 +29,13 @@ const ProductCreate: React.FC = () => {
                     route("upload.store"),
                     imageFormData
                 );
-                
+
                 setData("image_url", response.data.url);
             } catch (error) {
                 console.error(error);
             }
         } else {
-            setData("image_url", ""); 
+            setData("image_url", "");
         }
 
         setIsSubmitting(true);
@@ -63,66 +62,118 @@ const ProductCreate: React.FC = () => {
     }, [isSubmitting, data.image_url]);
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-            className="flex flex-col"
-        >
-            <input
-                type="text"
-                name="name"
-                value={data.name}
-                onChange={(e) => setData("name", e.target.value)}
-                placeholder="Product Name"
-                required
+        <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+            <h2 className="text-4xl font-bold text-gray-800 mb-8 font-serif">
+                Create a New Product
+            </h2>
+            <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                className="space-y-6"
+            >
+                <div>
+                    <label className="block text-gray-700 font-medium mb-2">
+                        Product Name
+                    </label>
+                    <input
+                        type="text"
+                        value={data.name}
+                        onChange={(e) => setData("name", e.target.value)}
+                        className="block w-full p-2 border border-gray-300 rounded-lg"
+                        required
+                    />
+                    {errors.name && (
+                        <div className="text-red-500 text-sm mt-1">
+                            {errors.name}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-medium mb-2">
+                        Description
+                    </label>
+                    <textarea
+                        value={data.description}
+                        onChange={(e) => setData("description", e.target.value)}
+                        className="block w-full p-2 border border-gray-300 rounded-lg"
+                        required
+                    ></textarea>
+                    {errors.description && (
+                        <div className="text-red-500 text-sm mt-1">
+                            {errors.description}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-medium mb-2">
+                        Price
+                    </label>
+                    <input
+                        type="number"
+                        value={data.price}
+                        onChange={(e) =>
+                            setData("price", parseFloat(e.target.value))
+                        }
+                        className="block w-full p-2 border border-gray-300 rounded-lg"
+                        required
+                    />
+                    {errors.price && (
+                        <div className="text-red-500 text-sm mt-1">
+                            {errors.price}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-medium mb-2">
+                        Stock Quantity
+                    </label>
+                    <input
+                        type="number"
+                        value={data.stock_quantity}
+                        onChange={(e) =>
+                            setData("stock_quantity", parseInt(e.target.value))
+                        }
+                        className="block w-full p-2 border border-gray-300 rounded-lg"
+                        required
+                    />
+                    {errors.stock_quantity && (
+                        <div className="text-red-500 text-sm mt-1">
+                            {errors.stock_quantity}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-medium mb-2">
+                        Product Image
+                    </label>
+                    <input
+                        type="file"
+                        onChange={(e) =>
+                            setData("image", e.target.files?.[0] || null)
+                        }
+                        accept="image/*"
+                        className="block w-full p-2 border border-gray-300 rounded-lg"
+                    />
+                    {errors.image && (
+                        <div className="text-red-500 text-sm mt-1">
+                            {errors.image}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <Button
+                        label="Save Product"
+                        type="submit"
+                        disabled={processing}
+                    />
+                </div>
+            </form>
+            <BackLink
+                href={route("admin.product.index")}
+                label="Back to Products"
+                className="mb-0"
             />
-            <textarea
-                name="description"
-                value={data.description}
-                onChange={(e) => setData("description", e.target.value)}
-                placeholder="Product Description"
-                required
-            />
-            <input
-                type="number"
-                name="price"
-                value={data.price}
-                onChange={(e) => setData("price", parseFloat(e.target.value))}
-                placeholder="Product Price"
-                required
-            />
-            <input
-                type="number"
-                name="stock_quantity"
-                value={data.stock_quantity}
-                onChange={(e) =>
-                    setData("stock_quantity", parseInt(e.target.value))
-                }
-                placeholder="Stock quantity"
-                required
-            />
-            <div>
-                <label htmlFor="">Product image</label>
-                <input
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    onChange={(e) =>
-                        setData("image", e.target.files?.[0] || null)
-                    }
-                />
-            </div>
-            <Button label="Save" type="submit" disabled={processing} />
-            {errors.name && <div className="text-red-500">{errors.name}</div>}
-            {errors.description && (
-                <div className="text-red-500">{errors.description}</div>
-            )}
-            {errors.price && <div className="text-red-500">{errors.price}</div>}
-            {errors.stock_quantity && (
-                <div className="text-red-500">{errors.stock_quantity}</div>
-            )}
-            {errors.image && <div className="text-red-500">{errors.image}</div>}
-        </form>
+        </div>
     );
 };
 
