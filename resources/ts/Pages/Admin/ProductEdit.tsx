@@ -10,7 +10,8 @@ interface ProductEditProps {
         description: string;
         price: number;
         stock_quantity: number;
-        image: File | string;
+        image: null;
+        image_url: string;
     };
 }
 
@@ -22,8 +23,8 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
         description: product.description,
         price: product.price,
         stock_quantity: product.stock_quantity,
-        image: product.image,
-        image_url: "",
+        image: null as File | null,
+        image_url: product.image ?? "",
     });
 
     const handleChange = (
@@ -57,9 +58,8 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                 setData("image_url", response.data.url);
             } catch (error) {
                 console.error(error);
+                return;
             }
-        } else {
-            setData("image_url", product.image as string);
         }
 
         setIsSubmitting(true);
@@ -74,10 +74,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
             formData.append("description", data.description);
             formData.append("price", String(data.price));
             formData.append("stock_quantity", String(data.stock_quantity));
-
-            if (data.image_url) {
-                formData.append("image_url", data.image_url);
-            }
+            formData.append("image_url", data.image_url);
 
             post(route("admin.product.update", product.id), {
                 data: formData,
