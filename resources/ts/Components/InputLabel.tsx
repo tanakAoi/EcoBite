@@ -1,4 +1,5 @@
 import { LabelHTMLAttributes } from 'react';
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 export default function InputLabel({
     value,
@@ -6,6 +7,8 @@ export default function InputLabel({
     children,
     ...props
 }: LabelHTMLAttributes<HTMLLabelElement> & { value?: string }) {
+    const { t } = useLaravelReactI18n();
+
     return (
         <label
             {...props}
@@ -14,7 +17,7 @@ export default function InputLabel({
                 className
             }
         >
-            {value ? value : children}
+            {t(value ? value : String(children))}
         </label>
     );
 }

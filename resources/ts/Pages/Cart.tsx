@@ -2,7 +2,9 @@ import { Cart } from "@/types";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
+import { useLaravelReactI18n } from "laravel-react-i18n";
+import { formatCurrency } from "../utils/formatCurrency";
 
 interface CartProps {
     cart: Cart;
@@ -11,6 +13,8 @@ interface CartProps {
 const CartContent: React.FC<CartProps> = ({ cart }) => {
     const [updatedCart, setUpdatedCart] = useState<Cart>(cart);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { t } = useLaravelReactI18n();
+    const { exchangeRates, locale, currency } = usePage().props;
 
     useEffect(() => {
         setUpdatedCart(cart);
@@ -105,12 +109,14 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
     };
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <p>{t("Loading...")}</p>;
     }
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <h2 className="text-4xl font-serif font-bold mb-6">Your Cart</h2>
+            <h2 className="text-4xl font-serif font-bold mb-6">
+                {t("Your Cart")}
+            </h2>
 
             {updatedCart.items && updatedCart.items.length > 0 ? (
                 <div>
@@ -135,7 +141,14 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                             {item.product.name}
                                         </h3>
                                         <p className="text-gray-600">
-                                            Price: ${item.product.price}
+                                            {t("Price")}:{" "}
+                                            {formatCurrency(
+                                                item.product.price,
+                                                locale,
+                                                "USD",
+                                                currency,
+                                                exchangeRates
+                                            )}
                                         </p>
                                     </div>
                                 </div>
@@ -174,10 +187,15 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                         </button>
                                     </div>
                                     <div className="text-lg font-medium">
-                                        <span>Total:</span> $
-                                        {(
-                                            item.product.price * item.quantity
-                                        ).toFixed(2)}
+                                        <span>{t("Total")}: </span>
+                                        {formatCurrency(
+                                            item.product.price,
+                                            locale,
+                                            "USD",
+                                            currency,
+                                            exchangeRates,
+                                            item.quantity
+                                        )}
                                     </div>
                                 </div>
                             </li>
@@ -185,19 +203,26 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                     </ul>
                     <div className="mt-10 flex justify-between items-center">
                         <p className="text-xl font-semibold">
-                            Total: ${updatedCart.total_price}
+                            {t("Total")}:{" "}
+                            {formatCurrency(
+                                updatedCart.total_price ?? 0,
+                                locale,
+                                "USD",
+                                currency,
+                                exchangeRates
+                            )}
                         </p>
                         <Link
                             method="post"
                             href={route("checkout.index")}
                             className="bg-secondary hover:bg-primary text-light px-6 py-2 rounded-md transition"
                         >
-                            Checkout
+                            {t("Checkout")}
                         </Link>
                     </div>
                 </div>
             ) : (
-                <p className="text-lg text-gray-600">Your cart is empty</p>
+                <p className="text-lg text-gray-600">{t("Your cart is empty")}</p>
             )}
         </div>
     );

@@ -1,6 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import { FC } from "react";
-import { decodeHtml } from "../../utils/decodeHtml";
+import { decodeHtml } from "../utils/decodeHtml";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface PaginationProps {
@@ -59,8 +59,10 @@ const Pagination: FC<PaginationProps> = ({ pageData, itemLabel }) => {
                     ? itemLabel
                     : locale === "en"
                     ? `${itemLabel}s`
-                    : locale === "sv"
+                    : locale === "sv" && itemLabel === "product"
                     ? `${itemLabel}er`
+                    : locale === "sv" && itemLabel === "recipe"
+                    ? `${itemLabel}`
                     : locale === "jp"
                     ? `${itemLabel}`
                     : itemLabel}

@@ -4,7 +4,7 @@ import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 
 interface BackLinkProps {
     href: string;
-    label?: string;
+    label: string;
     className?: string;
 }
 

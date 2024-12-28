@@ -4,7 +4,7 @@ import { Product } from "@/types";
 import React, { useState } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import { usePage } from "@inertiajs/react";
-import { formatCurrency } from "../../../utils/formatCurrency";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 interface ProductSingleProps {
     product: Product;

@@ -3,20 +3,23 @@ import DeleteUserForm from "../Profile/Partials/DeleteUserForm";
 import UpdatePasswordForm from "../Profile/Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "../Profile/Partials/UpdateProfileInformationForm";
 import { PageProps } from "@/types/index";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 export default function Edit({
     mustVerifyEmail,
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+    const { t } = useLaravelReactI18n();
+
     return (
         <div className="md:px-6">
             <div className="flex justify-between">
                 <h1 className="text-4xl font-serif font-bold">
-                    Account Settings
+                    {t("Account Settings")}
                 </h1>
                 <BackLink
                     href={route("user.index")}
-                    label="Back to Dashboard"
+                    label={t("Back to Dashboard")}
                     className="mb-0"
                 />
             </div>

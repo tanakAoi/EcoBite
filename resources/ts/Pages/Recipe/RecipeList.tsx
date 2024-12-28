@@ -3,6 +3,7 @@ import { Link } from "@inertiajs/react";
 import { FC, useState } from "react";
 import RecipeSearchForm from "./RecipeSearchForm";
 import Pagination from "../../Components/Pagination";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface RecipeListProps {
     recipesData: PaginatedRecipes;
@@ -14,6 +15,7 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
         useState<PaginatedRecipes>(recipesData);
     const [ingredientNames, setIngredientNames] = useState<string[]>([]);
     const [isSearchActive, setIsSearchActive] = useState(false);
+    const { t } = useLaravelReactI18n();
 
     const updateRecipeList = (
         searchedRecipesData: PaginatedRecipes,
@@ -27,12 +29,12 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
     return (
         <div className="max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-6">
-                <h1 className="text-5xl font-bold font-serif">Recipes</h1>
+                <h1 className="text-5xl font-bold font-serif">{t("Recipes")}</h1>
                 <Link
                     className="w-full md:w-fit text-center bg-dark text-primary px-4 py-2 rounded font-semibold transition hover:bg-primary hover:text-dark"
                     href={route("recipe.create")}
                 >
-                    Create a new recipe
+                    {t("Create a New Recipe")}
                 </Link>
             </div>
             <div>
@@ -43,7 +45,7 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
                 {isSearchActive ? (
                     <>
                         <h2 className="text-2xl mb-4">
-                            Search Results for{" "}
+                            {t("Search Results for")}{" "}
                             <strong>{ingredientNames.join(", ")}</strong>
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -76,7 +78,9 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
                                                     />
                                                 ) : (
                                                     <div className="flex justify-center items-center w-full h-full text-gray-500">
-                                                        No Image Available
+                                                        {t(
+                                                            "No Image Available"
+                                                        )}
                                                     </div>
                                                 )}
                                             </div>
@@ -84,33 +88,37 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
                                                 {recipe.title}
                                             </h2>
                                             <p className="text-sm text-gray-500">
-                                                Created at:{" "}
-                                                {new Date(
-                                                    recipe.created_at
-                                                ).toLocaleDateString()}
+                                                {t("created_at", {
+                                                    date: new Date(
+                                                        recipe.created_at
+                                                    ).toLocaleDateString(),
+                                                })}
                                             </p>
                                             <p>
-                                                Ingredients:{" "}
-                                                {recipe.ingredients
-                                                    .map(
-                                                        (ingredient) =>
-                                                            ingredient.name
-                                                    )
-                                                    .join(", ")}
+                                                {t("ingredients", {
+                                                    ingredients:
+                                                        recipe.ingredients
+                                                            .map(
+                                                                (ingredient) =>
+                                                                    ingredient.name
+                                                            )
+                                                            .join(", "),
+                                                })}
                                             </p>
                                         </Link>
                                     </div>
                                 ))
                             ) : (
                                 <p>
-                                    No recipes found for the selected
-                                    ingredients.
+                                    {t(
+                                        "No recipes found for the selected ingredients."
+                                    )}
                                 </p>
                             )}
                         </div>
                         <Pagination
                             pageData={newRecipesData}
-                            itemLabel="recipe"
+                            itemLabel={t("recipe")}
                         />
                     </>
                 ) : (
@@ -141,7 +149,7 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
                                                 />
                                             ) : (
                                                 <div className="flex justify-center items-center w-full h-full text-gray-500">
-                                                    No Image Available
+                                                    {t("No Image Available")}
                                                 </div>
                                             )}
                                         </div>
@@ -149,16 +157,17 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
                                             {recipe.title}
                                         </h2>
                                         <p className="text-sm text-gray-500">
-                                            Created at:{" "}
-                                            {new Date(
-                                                recipe.created_at
-                                            ).toLocaleDateString()}
+                                            {t("created_at", {
+                                                date: new Date(
+                                                    recipe.created_at
+                                                ).toLocaleDateString(),
+                                            })}
                                         </p>
                                     </Link>
                                 </div>
                             ))}
                         </div>
-                        <Pagination pageData={recipesData} itemLabel="recipe" />
+                        <Pagination pageData={recipesData} itemLabel={t("recipe")} />
                     </>
                 )}
             </div>

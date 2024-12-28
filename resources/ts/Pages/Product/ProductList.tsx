@@ -4,7 +4,7 @@ import { Product } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { FC, useState } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
-import { formatCurrency } from "../../../utils/formatCurrency";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 interface PaginatedProducts {
     data: Product[];

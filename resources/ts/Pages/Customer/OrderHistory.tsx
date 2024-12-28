@@ -1,29 +1,28 @@
-import React, { FC, useEffect, useState } from "react";
-import axios from "axios";
-import { usePage } from "@inertiajs/react";
+import { FC } from "react";
 import { Order } from "@/types";
 import BackLink from "../../Components/BackLink";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface OrderHistoryProps {
     orders: Order[];
 }
 
 const OrderHistory: FC<OrderHistoryProps> = ({ orders }) => {
-    console.log(orders);
+    const { t } = useLaravelReactI18n();
 
     if (orders.length === 0) {
-        return <div className="text-center mt-10">No orders found.</div>;
+        return <div className="text-center mt-10">{t("No orders found.")}</div>;
     }
 
     return (
         <div className="max-w-7xl mx-auto mt-10 px-5 md:px-10">
             <div className="flex justify-between">
                 <h2 className="text-5xl font-serif font-bold text-gray-800 mb-8">
-                    Order History
+                    {t("Order History")}
                 </h2>
                 <BackLink
                     href={route("user.index")}
-                    label="Back to Dashboard"
+                    label={t("Back to Dashboard")}
                 />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -34,7 +33,7 @@ const OrderHistory: FC<OrderHistoryProps> = ({ orders }) => {
                     >
                         <div className="flex justify-between items-center mb-2">
                             <h3 className="text-lg font-medium text-gray-700">
-                                Order #{order.id}
+                                {t("order_number", {number: order.id})}
                             </h3>
                             <span className="text-sm text-gray-500">
                                 {new Date(
@@ -44,15 +43,16 @@ const OrderHistory: FC<OrderHistoryProps> = ({ orders }) => {
                         </div>
                         <div className="text-gray-600">
                             <p>
-                                <strong>Total:</strong> ${order.total_price}
+                                <strong>{t("Total")}: </strong>
+                                {order.total_price}
                             </p>
                             <p>
-                                <strong>Status:</strong> {order.order_status}
+                                <strong>{t("Status")}:</strong> {order.order_status}
                             </p>
                         </div>
                         <div className="mt-4">
                             <h4 className="text-sm font-semibold text-gray-700">
-                                Items:
+                                {t("Items")}:
                             </h4>
                             <ul className="list-disc pl-5 text-sm text-gray-600 space-y-1">
                                 {order.items.map((item) => (

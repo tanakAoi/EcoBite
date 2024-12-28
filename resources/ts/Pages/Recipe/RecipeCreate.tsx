@@ -3,6 +3,7 @@ import { useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
 import Button from "../../Components/Button";
 import BackLink from "../../Components/BackLink";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface RecipeFormData {
     user_id: number;
@@ -33,9 +34,10 @@ interface Instruction {
 
 const RecipeCreate: FC = () => {
     const { user } = usePage().props;
+    const { t } = useLaravelReactI18n();
 
     if (!user) {
-        return <div>Loading...</div>;
+        return <div>{t("Loading...")}</div>;
     }
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,7 +67,16 @@ const RecipeCreate: FC = () => {
         unit: "",
     });
     const [shopIngredients, setShopIngredients] = useState<ShopProduct[]>([]);
-    const unitOptions = ["g", "kg", "ml", "l", "tbsp", "tsp", "cup", "piece"];
+    const unitOptions = [
+        t("g"),
+        t("kg"),
+        t("ml"),
+        t("l"),
+        t("tbsp"),
+        t("tsp"),
+        t("cup"),
+        t("piece"),
+    ];
 
     useEffect(() => {
         const fetchShopIngredients = async () => {
@@ -211,12 +222,12 @@ const RecipeCreate: FC = () => {
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-4xl font-bold text-gray-800 mb-8 font-serif">
-                Create a New Recipe
+                {t("Create a New Recipe")}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Title
+                        {t("Title")}
                     </label>
                     <input
                         type="text"
@@ -233,7 +244,7 @@ const RecipeCreate: FC = () => {
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Description
+                        {t("Description")}
                     </label>
                     <textarea
                         value={data.description}
@@ -249,7 +260,7 @@ const RecipeCreate: FC = () => {
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Recipe Image
+                        {t("Recipe Image")}
                     </label>
                     <input
                         type="file"
@@ -265,7 +276,7 @@ const RecipeCreate: FC = () => {
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Ingredients
+                        {t("Ingredients")}
                     </label>
                     <div className="flex gap-2 mb-2">
                         <select
@@ -273,7 +284,7 @@ const RecipeCreate: FC = () => {
                             className="block w-full p-2 border border-gray-300 rounded-lg"
                         >
                             <option value="">
-                                Select from shop ingredients
+                                {t("Select from shop ingredients")}
                             </option>
                             {shopIngredients.map((item) => (
                                 <option key={item.id} value={item.id}>
@@ -281,13 +292,13 @@ const RecipeCreate: FC = () => {
                                 </option>
                             ))}
                             <option value="other" className="font-bold">
-                                Add custom ingredient
+                                {t("Add custom ingredient")}
                             </option>
                         </select>
                         {isCustomIngredient && (
                             <input
                                 type="text"
-                                placeholder="Custom ingredient name"
+                                placeholder={t("Custom ingredient name")}
                                 value={currentIngredient.name}
                                 onChange={(e) =>
                                     setCurrentIngredient({
@@ -300,6 +311,7 @@ const RecipeCreate: FC = () => {
                         )}
                         <input
                             type="number"
+                            min={0}
                             placeholder="Quantity"
                             value={currentIngredient.quantity}
                             onChange={(e) =>
@@ -320,7 +332,7 @@ const RecipeCreate: FC = () => {
                             }
                             className="block w-1/3 p-2 border border-gray-300 rounded-lg"
                         >
-                            <option value="">Select unit</option>
+                            <option value="">{t("Select unit")}</option>
                             {unitOptions.map((unit) => (
                                 <option key={unit} value={unit}>
                                     {unit}
@@ -328,7 +340,7 @@ const RecipeCreate: FC = () => {
                             ))}
                         </select>
                         <Button
-                            label="Add"
+                            label={t("Add")}
                             type="button"
                             onClick={addIngredient}
                         />
@@ -356,12 +368,12 @@ const RecipeCreate: FC = () => {
 
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Instructions
+                        {t("Instructions")}
                     </label>
                     <div className="flex gap-2 mb-2">
                         <input
                             type="text"
-                            placeholder="Add step"
+                            placeholder={t("Add step")}
                             value={data.currentInstruction}
                             onChange={(e) =>
                                 setData("currentInstruction", e.target.value)
@@ -369,7 +381,7 @@ const RecipeCreate: FC = () => {
                             className="block w-full p-2 border border-gray-300 rounded-lg"
                         />
                         <Button
-                            label="Add"
+                            label={t("Add")}
                             type="button"
                             onClick={addInstruction}
                         />
@@ -401,7 +413,7 @@ const RecipeCreate: FC = () => {
                 </div>
                 <div>
                     <Button
-                        label="Submit Recipe"
+                        label={t("Submit Recipe")}
                         type="submit"
                         disabled={processing}
                     />
@@ -409,7 +421,7 @@ const RecipeCreate: FC = () => {
             </form>
             <BackLink
                 href={route("recipe.index")}
-                label="Back to Recipes"
+                label={t("Back to Recipes")}
                 className="mb-0"
             />
         </div>

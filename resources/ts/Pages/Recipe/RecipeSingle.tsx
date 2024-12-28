@@ -2,17 +2,21 @@ import BackLink from "../../Components/BackLink";
 import { Recipe } from "@/types";
 import { Link } from "@inertiajs/react";
 import  { FC } from "react";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface RecipeSingleProps {
     recipe: Recipe;
 }
 
 const RecipeSingle: FC<RecipeSingleProps> = ({ recipe }) => {
-    console.log(recipe);
+    const { t } = useLaravelReactI18n();
 
     return (
         <div className="max-w-4xl mx-auto">
-            <BackLink href={route("recipe.index")} label="Back to Recipes" />
+            <BackLink
+                href={route("recipe.index")}
+                label={t("Back to Recipes")}
+            />
             <div className="">
                 <div
                     className={`w-full h-64 overflow-hidden rounded-lg mb-8 ${
@@ -27,7 +31,7 @@ const RecipeSingle: FC<RecipeSingleProps> = ({ recipe }) => {
                         />
                     ) : (
                         <div className="flex justify-center items-center w-full h-full text-gray-500">
-                            No Image Available
+                            {t("No Image Available")}
                         </div>
                     )}
                 </div>
@@ -38,8 +42,11 @@ const RecipeSingle: FC<RecipeSingleProps> = ({ recipe }) => {
                             {recipe.title}
                         </h1>
                         <span className="text-sm text-gray-500">
-                            Created at:{" "}
-                            {new Date(recipe.created_at).toLocaleDateString()}
+                            {t("created_at", {
+                                date: new Date(
+                                    recipe.created_at
+                                ).toLocaleDateString(),
+                            })}
                         </span>
                     </div>
 
@@ -50,7 +57,7 @@ const RecipeSingle: FC<RecipeSingleProps> = ({ recipe }) => {
                     <div className="flex flex-col gap-4">
                         <div>
                             <h2 className="text-2xl font-semibold mb-2">
-                                Ingredients
+                                {t("Ingredients")}
                             </h2>
                             <ul className="list-disc pl-6 text-lg text-gray-700">
                                 {recipe.ingredients &&
@@ -81,13 +88,13 @@ const RecipeSingle: FC<RecipeSingleProps> = ({ recipe }) => {
                                         </li>
                                     ))
                                 ) : (
-                                    <p>No ingredients available.</p>
+                                    <p>{t("No ingredients available.")}</p>
                                 )}
                             </ul>
                         </div>
                         <div>
                             <h2 className="text-2xl font-semibold mb-2">
-                                Instructions
+                                {t("Instructions")}
                             </h2>
                             <div className="text-lg text-gray-700 flex flex-col gap-3">
                                 {recipe.instructions
