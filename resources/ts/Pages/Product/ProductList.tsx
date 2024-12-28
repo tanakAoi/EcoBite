@@ -5,6 +5,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { FC, useState } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import { formatCurrency } from "../../utils/formatCurrency";
+import Accordion from "../../Components/Accordion";
 
 interface PaginatedProducts {
     data: Product[];
@@ -20,7 +21,8 @@ interface ProductListProps {
 
 const ProductList: FC<ProductListProps> = ({ productsData }) => {
     const { data } = productsData;
-    const { exchangeRates, locale, currency } = usePage().props;
+    const { exchangeRates, locale, userCurrency, shopCurrency } =
+        usePage().props;
     const [productQuantities, setProductQuantities] = useState<{
         [key: number]: number;
     }>({});
@@ -38,6 +40,7 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
             <h1 className="text-5xl text-center font-bold mb-10 font-serif">
                 {t("Our Products")}
             </h1>
+            {shopCurrency !== userCurrency && <Accordion />}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {data.map((product) => (
                     <div
@@ -73,8 +76,8 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
                                     {formatCurrency(
                                         product.price,
                                         locale,
-                                        "USD",
-                                        currency,
+                                        "SEK",
+                                        userCurrency,
                                         exchangeRates
                                     )}
                                 </span>

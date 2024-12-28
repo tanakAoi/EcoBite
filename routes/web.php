@@ -15,10 +15,10 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminOrderController;
-use App\Http\Controllers\AdminProductController;
-use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminOrderController;
+use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\ContactController;
@@ -30,6 +30,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\Admin\ShopSettingController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -130,11 +131,11 @@ Route::middleware('auth')->group(function () {
 
 // Admin
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    Route::get(
-        '/admin',
-        [AdminController::class, 'index']
-    )
-        ->name('admin.index');
+    Route::get('/admin',[AdminController::class, 'index'])->name('admin.index');
+
+    Route::get('/admin/settings', [ShopSettingController::class, 'index'])->name('admin.settings.index');
+    Route::post('/admin/settings/currency/update', [ShopSettingController::class, 'updateCurrency'])->name('admin.settings.currency.update');
+    
 
     Route::resource('/admin/product', AdminProductController::class)
         ->names([
@@ -148,7 +149,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         ])
         ->except(['update']);
     Route::post('/admin/product/update/{id}', [AdminProductController::class, 'update'])
-    ->name('admin.product.update');
+        ->name('admin.product.update');
 
     Route::resource('/admin/order', AdminOrderController::class)
         ->names([
@@ -158,7 +159,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             'update' => 'admin.order.update',
             'store' => 'admin.order.store',
         ]);
-        
+
     Route::resource('/admin/user', AdminUserController::class)
         ->names([
             'index' => 'admin.user.index',

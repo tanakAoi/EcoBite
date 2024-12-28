@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import { usePage } from "@inertiajs/react";
 import { formatCurrency } from "../../utils/formatCurrency";
+import Accordion from "../../Components/Accordion";
 
 interface ProductSingleProps {
     product: Product;
@@ -12,7 +13,7 @@ interface ProductSingleProps {
 
 const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
     const [quantity, setQuantity] = useState<number>(1);
-    const { exchangeRates, locale, currency } = usePage().props;
+    const { exchangeRates, locale, userCurrency, shopCurrency } = usePage().props;
     const { t } = useLaravelReactI18n();
 
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +59,7 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
                                 product.price,
                                 locale,
                                 "USD",
-                                currency,
+                                userCurrency,
                                 exchangeRates
                             )}
                         </span>
@@ -80,6 +81,7 @@ const ProductSingle: React.FC<ProductSingleProps> = ({ product }) => {
                             )}
                         </div>
                     </div>
+                    {shopCurrency !== userCurrency && <Accordion />}
                     <div className="flex items-center gap-4">
                         <input
                             id="quantity"

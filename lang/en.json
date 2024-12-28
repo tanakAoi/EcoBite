@@ -101,5 +101,12 @@
     "Your order ID" : "Your order ID",
     "Order Summary": "Order Summary",
     "We will send you an email confirmation shortly with more details." : "We will send you an email confirmation shortly with more details.",
-    "Back to Home": "Back to Home"
+    "Back to Home": "Back to Home",
+    "About displayed prices": "About displayed prices",
+    "price_warning": "The prices displayed are based on the :currency and calculated using the exchange rate of the day. Please be aware that there may be slight discrepancies at the time of payment.",
+    "Swedish Krona": "Swedish Krona",
+    "US Dollar": "US Dollar",
+    "Japanese Yen": "Japanese Yen",
+    "Warning": "Warning",
+    "currency_warning_message": "When you change the currency, the selected currency will become the reference currency applied during the checkout process. Additionally, the prices of products displayed in the shop will directly reflect the amount set in the selected currency. For example, if the current price of a product is set at 100 Swedish Krona, changing the currency to US Dollar will display the product price as 100 USD. We recommend adjusting the product prices as needed before changing the currency."
 }

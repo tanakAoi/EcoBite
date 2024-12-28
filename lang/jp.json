@@ -98,8 +98,15 @@
     "Pay": "決済",
     "Order Confirmation": "注文確認",
     "Thank you for your order!": "ご注文ありがとうございます！",
-    "Your order ID is" : "注文番号",
+    "Your order ID" : "注文番号",
     "Order Summary": "注文概要",
     "We will send you an email confirmation shortly with more details." : "詳細については、後ほどメールにてご連絡いたします。",
-    "Back to Home": "ホームに戻る"
+    "Back to Home": "ホームに戻る",
+    "About displayed prices": "表示価格について",
+    "price_warning": "表示されている価格は:currencyを基準に当日の為替レートで計算されたものであるため、お支払い時に若干の差額が生じる可能性がございます。予めご了承ください。",
+    "Swedish Krona": "スウェーデンクローナ",
+    "US Dollar": "アメリカドル",
+    "Japanese Yen": "日本円",
+    "Warning": "警告",
+    "currency_warning_message": "通貨を変更すると、その選択された通貨が顧客の決済時に適用される基準通貨となります。また、ショップ内で表示される商品の価格は、設定された金額にその通貨が直接適用される形となることにご留意ください。例えば、現在商品の価格が100スウェーデンクローナで設定されている場合、通貨を米ドルに変更すると、その商品価格が100米ドルとして表示されます。通貨を変更する前に、必要に応じて商品価格の設定を行うことをお勧めします。"
 }

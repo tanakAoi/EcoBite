@@ -14,7 +14,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
     const [updatedCart, setUpdatedCart] = useState<Cart>(cart);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const { t } = useLaravelReactI18n();
-    const { exchangeRates, locale, currency } = usePage().props;
+    const { exchangeRates, locale, userCurrency } = usePage().props;
 
     useEffect(() => {
         setUpdatedCart(cart);
@@ -146,7 +146,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                                 item.product.price,
                                                 locale,
                                                 "USD",
-                                                currency,
+                                                userCurrency,
                                                 exchangeRates
                                             )}
                                         </p>
@@ -192,7 +192,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                             item.product.price,
                                             locale,
                                             "USD",
-                                            currency,
+                                            userCurrency,
                                             exchangeRates,
                                             item.quantity
                                         )}
@@ -208,7 +208,7 @@ const CartContent: React.FC<CartProps> = ({ cart }) => {
                                 updatedCart.total_price ?? 0,
                                 locale,
                                 "USD",
-                                currency,
+                                userCurrency,
                                 exchangeRates
                             )}
                         </p>

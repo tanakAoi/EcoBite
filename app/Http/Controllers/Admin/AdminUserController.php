@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -50,7 +51,6 @@ class AdminUserController extends Controller
         $user->email = $request->input('email');
         $user->role = $request->input('role');
         $user->save();
-
 
         session()->flash('type', 'success');
         session()->flash('message', 'User updated successfully!');

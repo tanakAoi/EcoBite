@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Session;
 use App\Models\Cart;
 use App\Services\ExchangeRateService;
+use App\Models\ShopSetting;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,25 +49,22 @@ class AppServiceProvider extends ServiceProvider
             'locale' => function () {
                 return session('locale', config('app.locale'));
             },
-            'currency' => function () {
+            'userCurrency' => function () {
                 $currencyMap = [
                     'sv' => 'SEK',
                     'en' => 'USD',
                     'jp' => 'JPY',
                 ];
-                $currency = $currencyMap[session('locale')] ?? 'USD';
-                return session('currency', $currency);
+                $currency = $currencyMap[session('locale')] ?? 'SEK';
+                return session('userCurrency', $currency);
+            },
+            'shopCurrency' => function () {
+                return ShopSetting::first()->shop_currency ?? 'SEK';
             },
             'exchangeRates' => function () {
                 $exchangeRateService = app(ExchangeRateService::class);
                 return $exchangeRateService->getRates();
             },
-            /* 'success' => function () {
-                return Session::get('success');
-            },
-            'error' => function () {
-                return Session::get('error');
-            }, */
         ]);
     }
 }

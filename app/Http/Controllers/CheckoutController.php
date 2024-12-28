@@ -32,15 +32,15 @@ class CheckoutController extends Controller
         $intent = $stripe->paymentIntents->create([
             'customer' => $customerId,
             'amount' => $request->totalPrice * 100,
-            'currency' => 'sek',
+            'currency' => $request->currency,
             'automatic_payment_methods' => ['enabled' => true],
         ]);
 
         $returnUrl = config('app.url') . '/checkout/order-confirmation';
 
         return response()->json([
-            'client_secret' => $intent->client_secret, 
-            'return_url' => $returnUrl
+            'client_secret' => $intent->client_secret,
+            'return_url' => $returnUrl,
         ]);
     }
 
