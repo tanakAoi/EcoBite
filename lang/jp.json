@@ -171,5 +171,13 @@
     "Back to Users": "ユーザー一覧に戻る",
     "User Management": "ユーザー管理",
     "user": "ユーザー",
-    "user_details": "ユーザー詳細 - :username"
+    "user_details": "ユーザー詳細 - :username",
+    "Edit Hero": "ヒーロー編集",
+    "Hero text": "ヒーローテキスト",
+    "Text color": "テキスト色",
+    "Light": "ライト",
+    "Dark": "ダーク",
+    "Hero image": "ヒーロー画像",
+    "No recipes available": "レシピがありません",
+    "No products available": "商品がありません"
 }

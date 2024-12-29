@@ -171,5 +171,13 @@
     "Back to Users": "Tillbaka till Användare",
     "User Management": "Användarhantering",
     "user": "användare",
-    "user_details": "Användardetaljer - :username"
+    "user_details": "Användardetaljer - :username",
+    "Edit Hero": "Redigera Hero",
+    "Hero text": "Hero text",
+    "Text color": "Textfärg",
+    "Light": "Ljus",
+    "Dark": "Mörk",
+    "Hero image": "Hero bild",
+    "No recipes available": "Inga recept tillgängliga",
+    "No products available": "Inga produkter tillgängliga"
 }

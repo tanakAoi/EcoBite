@@ -171,6 +171,14 @@
     "Back to Users" : "Back to Users",
     "User Management" : "User Management",
     "user" : "user",
-    "user_details" : "User Details - :username"
+    "user_details" : "User Details - :username",
+    "Edit Hero": "Edit Hero",
+    "Hero text": "Hero text",
+    "Text color": "Text color",
+    "Light": "Light",
+    "Dark": "Dark",
+    "Hero image": "Hero image",
+    "No recipes available": "No recipes available",
+    "No products available": "No products available"
 }
 
