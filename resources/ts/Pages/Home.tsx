@@ -22,8 +22,14 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes, heroData }) => {
     return (
         <div className="">
             <div
-                className="flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[40rem]"
-                style={{ backgroundImage: `url(${heroData.image})` }}
+                className={`flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[40rem] ${
+                    heroData.image ? "" : "bg-gray-200"
+                }`}
+                style={{
+                    backgroundImage: heroData.image
+                        ? `url(${heroData.image})`
+                        : "none",
+                }}
             >
                 <h1
                     className={`font-serif ${
