@@ -100,7 +100,7 @@ export default function Login({
                     )}
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        {t("Login")}
+                        {t("Log in")}
                     </PrimaryButton>
                 </div>
             </form>
