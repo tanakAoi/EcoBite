@@ -1,11 +1,48 @@
 {
+  "lang/en.json": {
+    "file": "assets/en-CgKp4nCv.js",
+    "name": "en",
+    "src": "lang/en.json",
+    "isDynamicEntry": true
+  },
+  "lang/jp.json": {
+    "file": "assets/jp-DXnzlCEq.js",
+    "name": "jp",
+    "src": "lang/jp.json",
+    "isDynamicEntry": true
+  },
+  "lang/php_en.json": {
+    "file": "assets/php_en-D7y24saB.js",
+    "name": "php_en",
+    "src": "lang/php_en.json",
+    "isDynamicEntry": true
+  },
+  "lang/sv.json": {
+    "file": "assets/sv-Bsj1sL7L.js",
+    "name": "sv",
+    "src": "lang/sv.json",
+    "isDynamicEntry": true
+  },
+  "resources/assets/images/hero-bg-1.jpg": {
+    "file": "assets/hero-bg-1-BM9of1aK.jpg",
+    "src": "resources/assets/images/hero-bg-1.jpg"
+  },
   "resources/ts/app.tsx": {
-    "file": "assets/app-CKvN0ciu.js",
+    "file": "assets/app-CDGnU1ue.js",
     "name": "app",
     "src": "resources/ts/app.tsx",
     "isEntry": true,
+    "dynamicImports": [
+      "lang/en.json",
+      "lang/jp.json",
+      "lang/php_en.json",
+      "lang/sv.json"
+    ],
     "css": [
-      "assets/app-Cnln-U78.css"
+      "assets/app-Cj7Pt0aR.css"
+    ],
+    "assets": [
+      "assets/hero-bg-1-BM9of1aK.jpg"
     ]
   }
 }
