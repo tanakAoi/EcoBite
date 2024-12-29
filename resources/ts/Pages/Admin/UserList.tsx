@@ -1,9 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 import Pagination from "../../Components/Pagination";
 import BackLink from "../../Components/BackLink";
 import DeleteForm from "../../Components/DeleteForm";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface PaginatedUsers {
     data: User[];
@@ -21,6 +22,7 @@ interface UserListProps {
 const UserList: FC<UserListProps> = ({ usersData }) => {
     const { data } = usersData;
     const [users, setUsers] = useState<User[]>([]);
+    const { t } = useLaravelReactI18n();
 
     useEffect(() => {
         setUsers(data);
@@ -33,32 +35,40 @@ const UserList: FC<UserListProps> = ({ usersData }) => {
     return (
         <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-4xl font-serif font-semibold text-gray-800 mb-6">
-                User Management
+                {t("User Management")}
             </h2>
             <table className="min-w-full table-auto border">
                 <thead>
                     <tr className="bg-gray-100">
                         <th className="px-4 py-2 border">ID</th>
-                        <th className="px-4 py-2 border">Name</th>
-                        <th className="px-4 py-2 border">Email</th>
-                        <th className="px-4 py-2 border">Role</th>
-                        <th className="px-4 py-2 border">Actions</th>
+                        <th className="px-4 py-2 border">{t("username")}</th>
+                        <th className="px-4 py-2 border">{t("Email")}</th>
+                        <th className="px-4 py-2 border">{t("Role")}</th>
+                        <th className="px-4 py-2 border">{t("Actions")}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((user) => (
                         <tr key={user.id} className="relative">
                             <td className="px-4 py-2 border">{user.id}</td>
-                            <td className="px-4 py-2 border">{user.username}</td>
+                            <td className="px-4 py-2 border">
+                                {user.username}
+                            </td>
                             <td className="px-4 py-2 border">{user.email}</td>
-                            <td className="px-4 py-2 border">{user.role}</td>
+                            <td className="px-4 py-2 border">
+                                {
+                                    (user.role === "customer" && t("Customer")) 
+                                    ||
+                                    (user.role === "admin" && t("Administrator"))
+                                }
+                            </td>
                             <td className="px-4 py-2 border">
                                 <div className="flex flex-col items-center gap-2 relative z-10">
                                     <Link
                                         href={route("admin.user.edit", user.id)}
                                         className=" bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center"
                                     >
-                                        Edit
+                                        {t("Edit")}
                                     </Link>
                                     <DeleteForm
                                         deleteObject="user"
@@ -75,10 +85,10 @@ const UserList: FC<UserListProps> = ({ usersData }) => {
                     ))}
                 </tbody>
             </table>
-            <Pagination pageData={usersData} itemLabel="user" />
+            <Pagination pageData={usersData} itemLabel={t("user")} />
             <BackLink
                 href={route("admin.index")}
-                label="Back to Dashboard"
+                label={t("Back to Dashboard")}
                 className="mb-0"
             />
         </div>

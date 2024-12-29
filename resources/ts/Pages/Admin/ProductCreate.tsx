@@ -3,6 +3,7 @@ import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import Button from "../../Components/Button";
 import BackLink from "../../Components/BackLink";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 const ProductCreate: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -14,6 +15,7 @@ const ProductCreate: React.FC = () => {
         image: null as File | null,
         image_url: "",
     });
+    const { t } = useLaravelReactI18n();
 
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
@@ -64,7 +66,7 @@ const ProductCreate: React.FC = () => {
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-4xl font-bold text-gray-800 mb-8 font-serif">
-                Create a New Product
+                {t("Create a New Product")}
             </h2>
             <form
                 onSubmit={handleSubmit}
@@ -73,7 +75,7 @@ const ProductCreate: React.FC = () => {
             >
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Product Name
+                        {t("Product Name")}
                     </label>
                     <input
                         type="text"
@@ -90,7 +92,7 @@ const ProductCreate: React.FC = () => {
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Description
+                        {t("Description")}
                     </label>
                     <textarea
                         value={data.description}
@@ -106,7 +108,7 @@ const ProductCreate: React.FC = () => {
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Price
+                        {t("Price")}
                     </label>
                     <input
                         type="number"
@@ -125,7 +127,7 @@ const ProductCreate: React.FC = () => {
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Stock Quantity
+                        {t("Stock Quantity")}
                     </label>
                     <input
                         type="number"
@@ -144,7 +146,7 @@ const ProductCreate: React.FC = () => {
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Product Image
+                        {t("Product Image")}
                     </label>
                     <input
                         type="file"
@@ -162,7 +164,7 @@ const ProductCreate: React.FC = () => {
                 </div>
                 <div>
                     <Button
-                        label="Save Product"
+                        label={t("Save Product")}
                         type="submit"
                         disabled={processing}
                     />
@@ -170,7 +172,7 @@ const ProductCreate: React.FC = () => {
             </form>
             <BackLink
                 href={route("admin.product.index")}
-                label="Back to Products"
+                label={t("Back to Products")}
                 className="mb-0"
             />
         </div>

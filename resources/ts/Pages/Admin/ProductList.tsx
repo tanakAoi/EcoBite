@@ -1,15 +1,13 @@
 // resources/js/Pages/Admin/ProductList.tsx
 
 import React, { useState, useEffect } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Product } from "@/types";
 import DeleteForm from "../../Components/DeleteForm";
 import Pagination from "../../Components/Pagination";
-import {
-    ArrowLeftEndOnRectangleIcon,
-    ArrowUturnLeftIcon,
-} from "@heroicons/react/24/outline";
 import BackLink from "../../Components/BackLink";
+import { useLaravelReactI18n } from "laravel-react-i18n";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 interface PaginatedProducts {
     data: Product[];
@@ -27,6 +25,8 @@ interface AdminProductProps {
 const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const { data } = productsData;
+    const { t } = useLaravelReactI18n();
+    const { locale, shopCurrency, exchangeRates } = usePage().props;
 
     useEffect(() => {
         setProducts(data);
@@ -42,13 +42,13 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
         <div className="max-w-6xl mx-auto mt-10 p-6">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-4xl font-serif font-semibold text-gray-800 mb-4">
-                    Product Management
+                    {t("Product Management")}
                 </h2>
                 <Link
                     href={route("admin.product.create")}
                     className="mb-4 inline-block bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition"
                 >
-                    Add New Product
+                    {t("Add New Product")}
                 </Link>
             </div>
             <table className="min-w-full table-auto border-collapse border border-gray-300">
@@ -56,21 +56,29 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                     <tr className="bg-gray-100">
                         <th className="px-4 py-2 text-left border">ID</th>
                         <th className="px-4 py-2 text-left border">
-                            Product Name
+                            {t("Product Name")}
                         </th>
                         <th className="px-4 py-2 text-left border">
-                            Description
-                        </th>
-                        <th className="px-4 py-2 text-left border">Price</th>
-                        <th className="px-4 py-2 text-left border">Stock</th>
-                        <th className="px-4 py-2 text-left border">Image</th>
-                        <th className="px-4 py-2 text-left border">
-                            Created At
+                            {t("Description")}
                         </th>
                         <th className="px-4 py-2 text-left border">
-                            Updated At
+                            {t("Price")}
                         </th>
-                        <th className="px-4 py-2 text-left border">Actions</th>
+                        <th className="px-4 py-2 text-left border text-nowrap">
+                            {t("Stock Quantity")}
+                        </th>
+                        <th className="px-4 py-2 text-left border text-nowrap">
+                            {t("Product Image")}
+                        </th>
+                        <th className="px-4 py-2 text-left border">
+                            {t("Created At")}
+                        </th>
+                        <th className="px-4 py-2 text-left border">
+                            {t("Updated At")}
+                        </th>
+                        <th className="px-4 py-2 text-left border">
+                            {t("Actions")}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,7 +95,13 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                                     : product.description}
                             </td>
                             <td className="px-4 py-2 border">
-                                ${product.price}
+                                {formatCurrency(
+                                    product.price,
+                                    locale,
+                                    shopCurrency,
+                                    shopCurrency,
+                                    exchangeRates
+                                )}
                             </td>
                             <td className="px-4 py-2 border">
                                 {product.stock_quantity}
@@ -116,9 +130,9 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                                             "admin.product.edit",
                                             product.id
                                         )}
-                                        className=" bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center"
+                                        className=" bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center text-nowrap"
                                     >
-                                        Edit
+                                        {t("Edit")}
                                     </Link>
                                     <DeleteForm
                                         deleteObject="product"
@@ -135,10 +149,10 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                     ))}
                 </tbody>
             </table>
-            <Pagination pageData={productsData} itemLabel="product" />
+            <Pagination pageData={productsData} itemLabel={t("product")} />
             <BackLink
                 href={route("admin.index")}
-                label="Back to Dashboard"
+                label={t("Back to Dashboard")}
                 className="i"
             />
         </div>

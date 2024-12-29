@@ -1,19 +1,23 @@
-import React, { useState } from "react";
-import { Link, useForm } from "@inertiajs/react";
+import { FC, FormEvent } from "react";
+import { useForm, usePage } from "@inertiajs/react";
 import { OrderDetails, OrderItem } from "@/types";
 import Button from "../../Components/Button";
 import BackLink from "../../Components/BackLink";
+import { useLaravelReactI18n } from "laravel-react-i18n";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 interface OrderUpdateProps {
     order: OrderDetails;
 }
 
-const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
+const OrderUpdate: FC<OrderUpdateProps> = ({ order }) => {
     const { data, setData, put, processing, errors } = useForm({
         order_status: order.order_status,
     });
+    const { t } = useLaravelReactI18n();
+    const { locale, shopCurrency, exchangeRates } = usePage().props;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         put(route("admin.order.update", order.id), {
             preserveScroll: true,
@@ -26,12 +30,12 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                Edit Order - #{order.id}
+                {t("edit_order", { id: order.id })}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Order Status
+                        {t("Order Status")}
                     </label>
                     <select
                         value={data.order_status}
@@ -40,10 +44,10 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
                         }
                         className="block w-full p-2 border border-gray-300 rounded-lg"
                     >
-                        <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
+                        <option value="pending">{t("pending")}</option>
+                        <option value="processing">{t("processing")}</option>
+                        <option value="completed">{t("completed")}</option>
+                        <option value="cancelled">{t("cancelled")}</option>
                     </select>
                     {errors.order_status && (
                         <div className="text-red-500 text-sm mt-1">
@@ -54,7 +58,7 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
 
                 <div>
                     <Button
-                        label="Save Changes"
+                        label={t("Save Changes")}
                         type="submit"
                         disabled={processing}
                     />
@@ -62,15 +66,23 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
             </form>
             <div className="mt-8">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                    Order Items
+                    {t("Order Items")}
                 </h3>
                 <table className="min-w-full table-auto border">
                     <thead>
                         <tr className="bg-gray-100">
-                            <th className="px-4 py-2 border">Product Name</th>
-                            <th className="px-4 py-2 border">Quantity</th>
-                            <th className="px-4 py-2 border">Unit Price</th>
-                            <th className="px-4 py-2 border">Total Price</th>
+                            <th className="px-4 py-2 border">
+                                {t("Product Name")}
+                            </th>
+                            <th className="px-4 py-2 border">
+                                {t("Quantity")}
+                            </th>
+                            <th className="px-4 py-2 border">
+                                {t("Unit Price")}
+                            </th>
+                            <th className="px-4 py-2 border">
+                                {t("Total Price")}
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,10 +95,22 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
                                     {item.quantity}
                                 </td>
                                 <td className="px-4 py-2 border">
-                                    ${item.product.price}
+                                    {formatCurrency(
+                                        item.product.price,
+                                        locale,
+                                        shopCurrency,
+                                        shopCurrency,
+                                        exchangeRates
+                                    )}
                                 </td>
                                 <td className="px-4 py-2 border">
-                                    ${item.total_price}
+                                    {formatCurrency(
+                                        item.total_price,
+                                        locale,
+                                        shopCurrency,
+                                        shopCurrency,
+                                        exchangeRates
+                                    )}
                                 </td>
                             </tr>
                         ))}
@@ -95,7 +119,7 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({ order }) => {
             </div>
             <BackLink
                 href={route("admin.order.index")}
-                label="Back to Orders"
+                label={t("Back to Orders")}
                 className="mt-6 mb-0"
             />
         </div>

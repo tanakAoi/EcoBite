@@ -1,61 +1,92 @@
 // resources/js/Pages/Admin/OrderShow.tsx
 
 import React from "react";
-import { Link } from "@inertiajs/react";
 import { OrderDetails, OrderItem } from "@/types";
 import BackLink from "../../Components/BackLink";
+import { useLaravelReactI18n } from "laravel-react-i18n";
+import { formatCurrency } from "../../utils/formatCurrency";
+import { usePage } from "@inertiajs/react";
 
 interface OrderShowProps {
     order: OrderDetails;
 }
 
 const OrderShow: React.FC<OrderShowProps> = ({ order }) => {
+    const { t } = useLaravelReactI18n();
+    const { locale, shopCurrency, exchangeRates } = usePage().props;
+
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                Order Details - #{order.id}
+                {t("order_details", { id: order.id })}
             </h2>
             <div className="space-y-4 mb-6">
                 <div>
-                    <strong className="text-gray-700">Order ID:</strong> #
+                    <strong className="text-gray-700">{t("Order ID")}:</strong>{" "}
                     {order.id}
                 </div>
                 <div>
-                    <strong className="text-gray-700">Customer Name:</strong>{" "}
+                    <strong className="text-gray-700">
+                        {t("Customer Name")}:
+                    </strong>{" "}
                     {order.user.username}
                 </div>
                 <div>
-                    <strong className="text-gray-700">Customer Email:</strong>{" "}
+                    <strong className="text-gray-700">
+                        {t("Customer Email")}:
+                    </strong>{" "}
                     {order.user.email}
                 </div>
                 <div>
-                    <strong className="text-gray-700">Total Price:</strong> $
-                    {order.total_price}
+                    <strong className="text-gray-700">
+                        {t("Total Price")}:
+                    </strong>{" "}
+                    {formatCurrency(
+                        order.total_price,
+                        locale,
+                        shopCurrency,
+                        shopCurrency,
+                        exchangeRates
+                    )}
                 </div>
                 <div>
-                    <strong className="text-gray-700">Order Status:</strong>{" "}
-                    {order.order_status}
+                    <strong className="text-gray-700">
+                        {t("Order Status")}:
+                    </strong>{" "}
+                    {t(order.order_status)}
                 </div>
                 <div>
-                    <strong className="text-gray-700">Created At:</strong>{" "}
+                    <strong className="text-gray-700">
+                        {t("Created At")}:
+                    </strong>{" "}
                     {new Date(order.created_at).toLocaleString()}
                 </div>
                 <div>
-                    <strong className="text-gray-700">Updated At:</strong>{" "}
+                    <strong className="text-gray-700">
+                        {t("Updated At")}:
+                    </strong>{" "}
                     {new Date(order.updated_at).toLocaleString()}
                 </div>
             </div>
             <div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                    Order Items
+                    {t("Order Items")}
                 </h3>
                 <table className="min-w-full table-auto border">
                     <thead>
                         <tr className="bg-gray-100">
-                            <th className="px-4 py-2 border">Product Name</th>
-                            <th className="px-4 py-2 border">Quantity</th>
-                            <th className="px-4 py-2 border">Unit Price</th>
-                            <th className="px-4 py-2 border">Total Price</th>
+                            <th className="px-4 py-2 border">
+                                {t("Product Name")}
+                            </th>
+                            <th className="px-4 py-2 border">
+                                {t("Quantity")}
+                            </th>
+                            <th className="px-4 py-2 border">
+                                {t("Unit Price")}
+                            </th>
+                            <th className="px-4 py-2 border">
+                                {t("Total Price")}
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,10 +99,22 @@ const OrderShow: React.FC<OrderShowProps> = ({ order }) => {
                                     {item.quantity}
                                 </td>
                                 <td className="px-4 py-2 border">
-                                    ${item.product.price}
+                                    {formatCurrency(
+                                        item.product.price,
+                                        locale,
+                                        shopCurrency,
+                                        shopCurrency,
+                                        exchangeRates
+                                    )}
                                 </td>
                                 <td className="px-4 py-2 border">
-                                    ${item.total_price}
+                                    {formatCurrency(
+                                        item.total_price,
+                                        locale,
+                                        shopCurrency,
+                                        shopCurrency,
+                                        exchangeRates
+                                    )}
                                 </td>
                             </tr>
                         ))}
@@ -80,7 +123,7 @@ const OrderShow: React.FC<OrderShowProps> = ({ order }) => {
             </div>
             <BackLink
                 href={route("admin.order.index")}
-                label="Back to Orders"
+                label={t("Back to Orders")}
                 className="mb-0 mt-6"
             />
         </div>

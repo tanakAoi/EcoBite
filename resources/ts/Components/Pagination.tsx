@@ -63,6 +63,8 @@ const Pagination: FC<PaginationProps> = ({ pageData, itemLabel }) => {
                     ? `${itemLabel}er`
                     : locale === "sv" && itemLabel === "recipe"
                     ? `${itemLabel}`
+                    : locale === "sv" && itemLabel === "order"
+                    ? `${itemLabel}`
                     : locale === "jp"
                     ? `${itemLabel}`
                     : itemLabel}

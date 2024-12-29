@@ -3,6 +3,7 @@ import Button from "../../Components/Button";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface ProductEditProps {
     product: {
@@ -27,6 +28,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
         image: null as File | null,
         image_url: product.image ?? "",
     });
+    const { t } = useLaravelReactI18n();
 
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -89,7 +91,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
         <div className="min-h-screen p-6 max-w-4xl mx-auto">
             <div className="bg-white shadow-md rounded-lg p-6">
                 <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-                    Edit Product
+                    {t("Edit Product")}
                 </h1>
                 <form
                     onSubmit={handleSubmit}
@@ -101,7 +103,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                             htmlFor="name"
                             className="text-gray-700 font-medium"
                         >
-                            Name
+                            {t("Product Name")}
                         </label>
                         <input
                             type="text"
@@ -122,7 +124,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                             htmlFor="description"
                             className="text-gray-700 font-medium"
                         >
-                            Description
+                            {t("Description")}
                         </label>
                         <textarea
                             id="description"
@@ -143,7 +145,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                                 htmlFor="price"
                                 className="text-gray-700 font-medium"
                             >
-                                Price
+                                {t("Price")}
                             </label>
                             <input
                                 type="number"
@@ -164,7 +166,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                                 htmlFor="stock_quantity"
                                 className="text-gray-700 font-medium"
                             >
-                                Stock Quantity
+                                {t("Stock Quantity")}
                             </label>
                             <input
                                 type="number"
@@ -183,7 +185,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="" className="text-gray-700 font-medium">
-                            Image
+                            {t("Product Image")}
                         </label>
                         <input
                             type="file"
@@ -205,7 +207,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                     </div>
                     <div className="flex justify-end">
                         <Button
-                            label={processing ? "Saving..." : "Save"}
+                            label={processing ? t("Saving...") : t("Save")}
                             type="submit"
                             disabled={processing}
                             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 transition"
@@ -215,7 +217,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
             </div>
             <BackLink
                 href={route("admin.product.index")}
-                label="Back to Products"
+                label={t("Back to Products")}
             />
         </div>
     );

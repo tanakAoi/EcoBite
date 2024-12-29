@@ -3,6 +3,7 @@ import { useForm } from "@inertiajs/react";
 import { User } from "@/types";
 import Button from "../../Components/Button";
 import BackLink from "../../Components/BackLink";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface UserEditProps {
     user: User;
@@ -14,6 +15,7 @@ const UserEdit: React.FC<UserEditProps> = ({ user }) => {
         email: user.email,
         role: user.role,
     });
+    const { t } = useLaravelReactI18n();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -28,12 +30,12 @@ const UserEdit: React.FC<UserEditProps> = ({ user }) => {
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                Edit User - {user.username}
+                {t("edit_user", { username: user.username })}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Name
+                        {t("username")}
                     </label>
                     <input
                         type="text"
@@ -50,7 +52,7 @@ const UserEdit: React.FC<UserEditProps> = ({ user }) => {
 
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Email
+                        {t("Email")}
                     </label>
                     <input
                         type="email"
@@ -67,15 +69,15 @@ const UserEdit: React.FC<UserEditProps> = ({ user }) => {
 
                 <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                        Role
+                        {t("Role")}
                     </label>
                     <select
                         value={data.role}
                         onChange={(e) => setData("role", e.target.value)}
                         className="block w-full p-2 border border-gray-300 rounded-lg"
                     >
-                        <option value="admin">Admin</option>
-                        <option value="customer">Customer</option>
+                        <option value="admin">{t("Administrator")}</option>
+                        <option value="customer">{t("Customer")}</option>
                     </select>
                     {errors.role && (
                         <div className="text-red-500 text-sm mt-1">
@@ -86,13 +88,13 @@ const UserEdit: React.FC<UserEditProps> = ({ user }) => {
 
                 <div>
                     <Button
-                        label="Save Changes"
+                        label={t("Save Changes")}
                         type="submit"
                         disabled={processing}
                     />
                 </div>
             </form>
-            <BackLink href={route("admin.user.index")} label="Back to Users" className="mb-0" />
+            <BackLink href={route("admin.user.index")} label={t("Back to Users")} className="mb-0" />
         </div>
     );
 };

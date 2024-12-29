@@ -5,6 +5,7 @@ import TextInput from '../../Components/TextInput';
 import GuestLayout from '../../Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 export default function ResetPassword({
     token,
@@ -19,6 +20,7 @@ export default function ResetPassword({
         password: '',
         password_confirmation: '',
     });
+    const { t } = useLaravelReactI18n();
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -69,7 +71,7 @@ export default function ResetPassword({
                 <div className="mt-4">
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value={t("Confirm Password")}
                     />
 
                     <TextInput
@@ -91,7 +93,7 @@ export default function ResetPassword({
 
                 <div className="mt-4 flex items-center justify-end">
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Reset Password
+                        {t("Reset Password")}
                     </PrimaryButton>
                 </div>
             </form>

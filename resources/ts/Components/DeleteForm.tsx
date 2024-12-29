@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "@inertiajs/react";
+import { useLaravelReactI18n } from "laravel-react-i18n";
 
 interface DeleteFormProps {
     deleteObject: string;
@@ -15,6 +16,7 @@ const DeleteForm: React.FC<DeleteFormProps> = ({
     onDelete,
 }) => {
     const { delete: destroy } = useForm();
+    const { t } = useLaravelReactI18n();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -62,7 +64,7 @@ const DeleteForm: React.FC<DeleteFormProps> = ({
                 type="submit"
                 className="bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center"
             >
-                Delete
+                {t("Delete")}
             </button>
         </form>
     );

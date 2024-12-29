@@ -1,14 +1,19 @@
 import React from "react";
 import DeleteForm from "../../Components/DeleteForm";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Product } from "@/types";
 import BackLink from "../../Components/BackLink";
+import { useLaravelReactI18n } from "laravel-react-i18n";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 interface ProductShowProps {
     product: Product;
 }
 
 const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
+    const { t } = useLaravelReactI18n();
+    const { locale, shopCurrency, exchangeRates } = usePage().props;
+
     const handleDelete = () => {
         window.location.href = "/admin/product";
     };
@@ -29,7 +34,13 @@ const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
                         {product.description}
                     </p>
                     <p className="text-2xl font-semibold text-gray-800 mb-8">
-                        ${product.price}
+                        {formatCurrency(
+                            product.price,
+                            locale,
+                            shopCurrency,
+                            shopCurrency,
+                            exchangeRates
+                        )}
                     </p>
                 </div>
                 <div className="flex gap-4 w-full justify-center">
@@ -37,17 +48,18 @@ const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
                         href={route("admin.product.edit", product.id)}
                         className="max-w-md w-full text-center bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition"
                     >
-                        Edit
+                        {t("Edit")}
                     </Link>
                     <DeleteForm
                         productId={product.id}
                         onDelete={handleDelete}
+                        deleteObject="product"
                     />
                 </div>
             </div>
             <BackLink
                 href={route("admin.product.index")}
-                label="Back to Products"
+                label={t("Back to Products")}
             />
         </div>
     );
