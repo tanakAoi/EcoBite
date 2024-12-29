@@ -10,7 +10,7 @@ interface ShopSetting {
 }
 
 interface ShopSettingsPageProps extends PageProps {
-    shopSetting: ShopSetting;
+    shopSetting?: ShopSetting;
 }
 
 const SelectCurrency: FC = () => {
@@ -55,10 +55,10 @@ const SelectCurrency: FC = () => {
                     </select>
                     <Button label={t("Save")} onClick={handleSaveCurrency} />
                 </div>
-                {shopSetting.shop_currency && (
+                {shopSetting?.shop_currency && (
                     <p className="text-lg text-nowrap">
                         {t("Current currency")}:{" "}
-                        <strong>{shopSetting.shop_currency}</strong>
+                        <strong>{shopSetting?.shop_currency}</strong>
                     </p>
                 )}
             </div>
