@@ -23,12 +23,8 @@
     "src": "lang/sv.json",
     "isDynamicEntry": true
   },
-  "resources/assets/images/hero-bg-1.jpg": {
-    "file": "assets/hero-bg-1-BM9of1aK.jpg",
-    "src": "resources/assets/images/hero-bg-1.jpg"
-  },
   "resources/ts/app.tsx": {
-    "file": "assets/app-CleuqI1Y.js",
+    "file": "assets/app-Ce-FeZNF.js",
     "name": "app",
     "src": "resources/ts/app.tsx",
     "isEntry": true,
@@ -39,10 +35,7 @@
       "lang/sv.json"
     ],
     "css": [
-      "assets/app-Di9fO8d1.css"
-    ],
-    "assets": [
-      "assets/hero-bg-1-BM9of1aK.jpg"
+      "assets/app-FoK0VrUg.css"
     ]
   }
 }
