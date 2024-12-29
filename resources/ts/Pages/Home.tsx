@@ -4,6 +4,7 @@ import { FC } from "react";
 import { route } from "ziggy-js";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useLaravelReactI18n } from "laravel-react-i18n";
+import heroImage from "../../assets/images/hero-bg-1.jpg";
 
 interface HomeProps {
     latestProducts: Product[];
@@ -15,7 +16,10 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
 
     return (
         <div className="">
-            <div className="flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[30rem] bg-[url('../assets/images/hero-bg-1.jpg')]">
+            <div
+                className="flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[30rem]"
+                style={{ backgroundImage: `url(${heroImage})` }}
+            >
                 <h1 className="font-serif text-light text-6xl md:text-7xl pl-10 py-24 md:pt-32">
                     It's a holiday time!
                 </h1>
@@ -77,7 +81,9 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
                                         />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center bg-secondary/20">
-                                            <span>{t("No Image Available")}</span>
+                                            <span>
+                                                {t("No Image Available")}
+                                            </span>
                                         </div>
                                     )}
                                     <div className="w-full flex justify-between items-center absolute bottom-0 bg-dark text-primary p-4">

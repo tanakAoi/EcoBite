@@ -15,6 +15,7 @@ export default defineConfig({
     build: {
         outDir: "public/build",
     },
+    assetsInclude: ["**/*.jpg", "**/*.png", "**/*.svg"],
     server: {
         https: process.env.APP_ENV === "production",
     },
