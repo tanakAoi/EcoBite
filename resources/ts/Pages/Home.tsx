@@ -7,21 +7,32 @@ import { useLaravelReactI18n } from "laravel-react-i18n";
 import heroImage from "../../assets/images/hero-bg-1.jpg";
 
 interface HomeProps {
+    heroData: {
+        tagline: string;
+        text_color: string;
+        image: string;
+    };
     latestProducts: Product[];
     featuredRecipes: Recipe[];
 }
 
-const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes }) => {
+const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes, heroData }) => {
     const { t } = useLaravelReactI18n();
 
     return (
         <div className="">
             <div
-                className="flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[30rem]"
-                style={{ backgroundImage: `url(${heroImage})` }}
+                className="flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[40rem]"
+                style={{ backgroundImage: `url(${heroData.image})` }}
             >
-                <h1 className="font-serif text-light text-6xl md:text-7xl pl-10 py-24 md:pt-32">
-                    It's a holiday time!
+                <h1
+                    className={`font-serif ${
+                        heroData.text_color === "light"
+                            ? "text-light"
+                            : "text-dark"
+                    }  text-6xl md:text-7xl pl-10 py-24 md:pt-32`}
+                >
+                    {heroData.tagline}
                 </h1>
             </div>
             <div className="max-w-7xl mt-16 mx-auto px-6 md:px-10">

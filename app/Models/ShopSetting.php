@@ -11,5 +11,8 @@ class ShopSetting extends Model
 
     protected $fillable = [
         'shop_currency',
+        'tagline',
+        'text_color',
+        'image',
     ];
 }

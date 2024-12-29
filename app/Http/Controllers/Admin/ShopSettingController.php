@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ShopSetting;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class ShopSettingController extends Controller
@@ -14,7 +15,7 @@ class ShopSettingController extends Controller
     {
         $shopSetting = ShopSetting::first();
 
-        return Inertia::render('Admin/ShopSettings', [
+        return Inertia::render('Admin/ShopSettings/ShopSettings', [
             'shopSetting' => $shopSetting,
         ]);
     }
@@ -34,5 +35,28 @@ class ShopSettingController extends Controller
         session()->flash('message', 'Shop currency updated successfully!');
 
         return response()->json(['message' => 'SHop currency updated'], 200);
+    }
+
+    public function updateHero(Request $request)
+    {
+
+        $shopSetting = ShopSetting::firstOrCreate([]);
+
+        $request->validate([
+            'tagline' => 'nullable|string',
+            'text_color' => 'nullable|string|in:dark,light',
+            'image_url' => 'nullable|string|url',
+        ]);
+
+        $shopSetting->update([
+            'tagline' => $request->filled('tagline') ? $request->tagline : $shopSetting->tagline,
+            'text_color' => $request->filled('text_color') ? $request->text_color : $shopSetting->text_color,
+            'image' => $request->filled('image_url') ? $request->image_url : $shopSetting->image,
+        ]);
+
+        session()->flash('type', 'success');
+        session()->flash('message', 'Hero updated successfully!');
+
+        return redirect()->route('admin.settings.index');
     }
 }

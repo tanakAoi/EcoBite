@@ -135,7 +135,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
     Route::get('/admin/settings', [ShopSettingController::class, 'index'])->name('admin.settings.index');
     Route::post('/admin/settings/currency/update', [ShopSettingController::class, 'updateCurrency'])->name('admin.settings.currency.update');
-    
+    Route::post('/admin/settings/hero/update', [ShopSettingController::class, 'updateHero'])->name('admin.settings.hero.update');
 
     Route::resource('/admin/product', AdminProductController::class)
         ->names([

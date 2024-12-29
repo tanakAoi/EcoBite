@@ -69,8 +69,6 @@ class AdminProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        Log::info($request->all());
-
         $product = Product::findOrFail($id);
 
         $request->validate([
@@ -82,12 +80,12 @@ class AdminProductController extends Controller
         ]);
 
         $product->update([
-        'name' => $request->name,
-        'description' => $request->description,
-        'price' => $request->price,
-        'stock_quantity' => $request->stock_quantity,
-        'image' => $request->image_url,
-    ]);
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock_quantity' => $request->stock_quantity,
+            'image' => $request->image_url,
+        ]);
 
         session()->flash('type', 'success');
         session()->flash('message', 'Product updated successfully!');

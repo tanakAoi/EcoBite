@@ -1,11 +1,11 @@
-import React, { useState, useEffect, FormEventHandler } from "react";
+import { useState, useEffect, FormEventHandler, FC } from "react";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import Button from "../../Components/Button";
 import BackLink from "../../Components/BackLink";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 
-const ProductCreate: React.FC = () => {
+const ProductCreate: FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { data, setData, post, processing, errors } = useForm({
         name: "",
