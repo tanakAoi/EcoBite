@@ -48,7 +48,11 @@ const ShopSettings: FC = () => {
                 <option value="JPY">JPY</option>
             </select>
             <Button label={t("Save")} onClick={handleSaveCurrency} />
-            <p>{t("Current currency")}: {shopSetting.shop_currency}</p>
+            {shopSetting.shop_currency && (
+                <p>
+                    {t("Current currency")}: {shopSetting.shop_currency}
+                </p>
+            )}
             <div className="p-4 mb-4 text-yellow-800 bg-yellow-200 border border-yellow-300 rounded-md">
                 <strong>{t("Warning")}</strong>: {t("currency_warning_message")}
             </div>
