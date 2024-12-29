@@ -1,5 +1,5 @@
 {
-    "Products": "Produker",
+    "Products": "Produkter",
     "Recipes": "Recept",
     "Create account": "Skapa konto",
     "Account": "Konto",
@@ -179,5 +179,8 @@
     "Dark": "Mörk",
     "Hero image": "Hero bild",
     "No recipes available": "Inga recept tillgängliga",
-    "No products available": "Inga produkter tillgängliga"
+    "No products available": "Inga produkter tillgängliga",
+    "Don't have an account?" : "Har du inget konto?",
+    "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website." : "En hero är ett nyckelvisuellt element på startsidan, utformat för att dra uppmärksamhet och framhäva viktig innehåll eller åtgärder. Det inkluderar vanligtvis en fångande tagline och en bild som representerar webbplatsens tema.",
+    "In this section, you can update the hero text, image, and text color to better match the theme of your site." : "I detta avsnitt kan du uppdatera hero text, bild och textfärg för att bättre matcha din webbplats tema." 
 }

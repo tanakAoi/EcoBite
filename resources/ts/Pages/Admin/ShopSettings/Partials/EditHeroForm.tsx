@@ -63,6 +63,18 @@ const EditHeroForm: FC = () => {
     return (
         <div className="mb-10 max-w-2xl">
             <h3 className="font-bold text-xl mb-4">{t("Edit Hero")}</h3>
+            <div className="mb-6 text-gray-700">
+                <p>
+                    {t(
+                        "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website."
+                    )}
+                </p>
+                <p className="mt-2">
+                    {t(
+                        "In this section, you can update the hero text, image, and text color to better match the theme of your site."
+                    )}
+                </p>
+            </div>
             <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
                 <div>
                     <label

@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -46,8 +46,11 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Mail::to($user->email)->send(new UserNotificationMail($user, 'user_registered'));
-        
+        Mail::to($user->email)->send(new UserNotificationMail([
+            'user' => $user,
+            'type' => 'user_registered'
+        ]));
+
         Auth::login($user);
 
         return redirect(route('home', absolute: false));

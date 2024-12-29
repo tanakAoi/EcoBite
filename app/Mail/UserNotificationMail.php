@@ -23,10 +23,10 @@ class UserNotificationMail extends Mailable
      */
     public function __construct($data)
     {
-        $this->user = $data['user'];
-        $this->order = $data['order'];
-        $this->orderItems = $data['orderItems'];
-        $this->type = $data['type'];
+        $this->user = $data['user'] ?? null;;
+        $this->order = $data['order'] ?? null;
+        $this->orderItems = $data['orderItems'] ?? null;
+        $this->type = $data['type'] ?? null;
     }
 
     /**

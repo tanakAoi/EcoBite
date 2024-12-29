@@ -179,5 +179,8 @@
     "Dark": "ダーク",
     "Hero image": "ヒーロー画像",
     "No recipes available": "レシピがありません",
-    "No products available": "商品がありません"
+    "No products available": "商品がありません",
+    "Don't have an account?" : "アカウントをお持ちでないですか？",
+    "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website." : "ヒーローは、ホームページの重要なビジュアル要素で、注意を引き、重要なコンテンツやアクションを強調するために設計されています。通常、キャッチーなタグラインと、ウェブサイトのテーマを表す画像が含まれています。",
+    "In this section, you can update the hero text, image, and text color to better match the theme of your site." : "このセクションでは、ヒーローテキスト、画像、テキスト色を更新して、サイトのテーマにより適合させることができます。"
 }
