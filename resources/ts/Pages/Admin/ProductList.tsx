@@ -51,104 +51,106 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                     {t("Add New Product")}
                 </Link>
             </div>
-            <table className="min-w-full table-auto border-collapse border border-gray-300">
-                <thead>
-                    <tr className="bg-gray-100">
-                        <th className="px-4 py-2 text-left border">ID</th>
-                        <th className="px-4 py-2 text-left border">
-                            {t("Product Name")}
-                        </th>
-                        <th className="px-4 py-2 text-left border">
-                            {t("Description")}
-                        </th>
-                        <th className="px-4 py-2 text-left border">
-                            {t("Price")}
-                        </th>
-                        <th className="px-4 py-2 text-left border text-nowrap">
-                            {t("Stock Quantity")}
-                        </th>
-                        <th className="px-4 py-2 text-left border text-nowrap">
-                            {t("Product Image")}
-                        </th>
-                        <th className="px-4 py-2 text-left border">
-                            {t("Created At")}
-                        </th>
-                        <th className="px-4 py-2 text-left border">
-                            {t("Updated At")}
-                        </th>
-                        <th className="px-4 py-2 text-left border">
-                            {t("Actions")}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product) => (
-                        <tr key={product.id} className="border-b relative">
-                            <td className="px-4 py-2 border">{product.id}</td>
-                            <td className="px-4 py-2 border">{product.name}</td>
-                            <td className="px-4 py-2 border">
-                                {product.description.length > 50
-                                    ? `${product.description.substring(
-                                          0,
-                                          50
-                                      )}...`
-                                    : product.description}
-                            </td>
-                            <td className="px-4 py-2 border">
-                                {formatCurrency(
-                                    product.price,
-                                    locale,
-                                    shopCurrency,
-                                    shopCurrency,
-                                    exchangeRates
-                                )}
-                            </td>
-                            <td className="px-4 py-2 border">
-                                {product.stock_quantity}
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    style={{ width: "50px", height: "auto" }}
-                                />
-                            </td>
-                            <td className="px-4 py-2 border">
-                                {new Date(
-                                    product.created_at
-                                ).toLocaleDateString()}
-                            </td>
-                            <td className="px-4 py-2 border">
-                                {new Date(
-                                    product.updated_at
-                                ).toLocaleDateString()}
-                            </td>
-                            <td className="px-4 py-2 border">
-                                <div className="flex flex-col items-center gap-2 relative z-10">
-                                    <Link
-                                        href={route(
-                                            "admin.product.edit",
-                                            product.id
-                                        )}
-                                        className=" bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center text-nowrap"
-                                    >
-                                        {t("Edit")}
-                                    </Link>
-                                    <DeleteForm
-                                        deleteObject="product"
-                                        productId={product.id}
-                                        onDelete={handleDelete}
-                                    />
-                                </div>
-                            </td>
-                            <Link
-                                href={route("admin.product.show", product.id)}
-                                className="absolute inset-0 z-0"
-                            ></Link>
+            <div className="overflow-x-auto">
+                <table className="min-w-full table-auto border-collapse border border-gray-300">
+                    <thead>
+                        <tr className="bg-gray-100">
+                            <th className="px-4 py-2 text-left border">ID</th>
+                            <th className="px-4 py-2 text-left border">
+                                {t("Product Name")}
+                            </th>
+                            <th className="px-4 py-2 text-left border">
+                                {t("Description")}
+                            </th>
+                            <th className="px-4 py-2 text-left border">
+                                {t("Price")}
+                            </th>
+                            <th className="px-4 py-2 text-left border text-nowrap">
+                                {t("Stock Quantity")}
+                            </th>
+                            <th className="px-4 py-2 text-left border text-nowrap">
+                                {t("Product Image")}
+                            </th>
+                            <th className="px-4 py-2 text-left border">
+                                {t("Created At")}
+                            </th>
+                            <th className="px-4 py-2 text-left border">
+                                {t("Updated At")}
+                            </th>
+                            <th className="px-4 py-2 text-left border">
+                                {t("Actions")}
+                            </th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {products.map((product) => (
+                            <tr key={product.id} className="border-b relative">
+                                <td className="px-4 py-2 border">{product.id}</td>
+                                <td className="px-4 py-2 border">{product.name}</td>
+                                <td className="px-4 py-2 border">
+                                    {product.description.length > 50
+                                        ? `${product.description.substring(
+                                              0,
+                                              50
+                                          )}...`
+                                        : product.description}
+                                </td>
+                                <td className="px-4 py-2 border">
+                                    {formatCurrency(
+                                        product.price,
+                                        locale,
+                                        shopCurrency,
+                                        shopCurrency,
+                                        exchangeRates
+                                    )}
+                                </td>
+                                <td className="px-4 py-2 border">
+                                    {product.stock_quantity}
+                                </td>
+                                <td className="px-4 py-2 border">
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        style={{ width: "50px", height: "auto" }}
+                                    />
+                                </td>
+                                <td className="px-4 py-2 border">
+                                    {new Date(
+                                        product.created_at
+                                    ).toLocaleDateString()}
+                                </td>
+                                <td className="px-4 py-2 border">
+                                    {new Date(
+                                        product.updated_at
+                                    ).toLocaleDateString()}
+                                </td>
+                                <td className="px-4 py-2 border">
+                                    <div className="flex flex-col items-center gap-2 relative z-10">
+                                        <Link
+                                            href={route(
+                                                "admin.product.edit",
+                                                product.id
+                                            )}
+                                            className=" bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition w-full text-center text-nowrap"
+                                        >
+                                            {t("Edit")}
+                                        </Link>
+                                        <DeleteForm
+                                            deleteObject="product"
+                                            productId={product.id}
+                                            onDelete={handleDelete}
+                                        />
+                                    </div>
+                                </td>
+                                <Link
+                                    href={route("admin.product.show", product.id)}
+                                    className="absolute inset-0 z-0"
+                                ></Link>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             <Pagination pageData={productsData} itemLabel={t("product")} />
             <BackLink
                 href={route("admin.index")}

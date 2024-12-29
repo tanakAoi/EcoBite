@@ -77,7 +77,7 @@ const Header: React.FC<HeaderProps> = () => {
             </div>
             {/* Mobile menu */}
             <ul
-                className={`absolute top-0 left-0 h-screen w-full py-10 z-10 bg-dark/95 text-3xl flex flex-col items-center justify-center gap-8  ${
+                className={`absolute top-0 left-0 h-screen w-full py-10 z-20 bg-dark/95 text-3xl flex flex-col items-center justify-center gap-8  ${
                     isMenuOpen ? "block" : "hidden"
                 }`}
             >
