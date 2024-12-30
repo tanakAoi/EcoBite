@@ -52,14 +52,14 @@ const RecipeCreate: FC = () => {
     });
     const [shopIngredients, setShopIngredients] = useState<ShopProduct[]>([]);
     const unitOptions = [
-        t("g"),
-        t("kg"),
-        t("ml"),
-        t("l"),
-        t("tbsp"),
-        t("tsp"),
-        t("cup"),
-        t("piece"),
+        "g",
+        "kg",
+        "ml",
+        "l",
+        "tbsp",
+        "tsp",
+        "cup",
+        "piece",
     ];
 
     if (!user) {
@@ -79,6 +79,8 @@ const RecipeCreate: FC = () => {
             image_url: "",
         }
     );
+    console.log(data);
+    
 
     useEffect(() => {
         const fetchShopIngredients = async () => {
@@ -188,7 +190,7 @@ const RecipeCreate: FC = () => {
 
             setData("image_url", uploadedImageUrl);
         }
-        
+
         setIsSubmitting(true);
     };
 
@@ -329,7 +331,7 @@ const RecipeCreate: FC = () => {
                             <option value="">{t("Select unit")}</option>
                             {unitOptions.map((unit) => (
                                 <option key={unit} value={unit}>
-                                    {unit}
+                                    {t(unit)}
                                 </option>
                             ))}
                         </select>
@@ -347,7 +349,7 @@ const RecipeCreate: FC = () => {
                                 className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm flex items-center"
                             >
                                 {ingredient.name} - {ingredient.quantity}{" "}
-                                {ingredient.unit}
+                                {t(ingredient.unit)}
                                 <button
                                     type="button"
                                     onClick={() => removeIngredient(index)}
