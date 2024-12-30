@@ -90,7 +90,7 @@ export interface Order {
     items: Array<OrderItem>;
 }
 
-export interface OrderItem {
+/* export interface OrderItem {
     id: number;
     order_id: number;
     product_id: number;
@@ -99,6 +99,13 @@ export interface OrderItem {
     created_at: string;
     updated_at: string;
     product: Product;
+} */
+
+export interface OrderItem {
+    id: number;
+    name: string;
+    quantity: number;
+    price: string;
 }
 
 export interface OrderDetails {

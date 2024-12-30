@@ -1,7 +1,6 @@
-import { CartItemProduct } from "@/types";
+import { OrderItem } from "@/types";
 import { usePage } from "@inertiajs/react";
-import axios from "axios";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import { formatCurrency } from "../utils/formatCurrency";
 import BackLink from "../Components/BackLink";
@@ -10,7 +9,7 @@ import { PageProps } from "@/types/index";
 interface OrderConfirmationProps extends PageProps {
     orderId: number;
     orderTotalPrice: number;
-    orderItems: CartItemProduct[];
+    orderItems: OrderItem[];
 }
 
 const OrderConfirmation: FC<OrderConfirmationProps> = ({
@@ -55,7 +54,7 @@ const OrderConfirmation: FC<OrderConfirmationProps> = ({
                                     </span>
                                     <span>
                                         {formatCurrency(
-                                            item.price,
+                                            parseFloat(item.price),
                                             locale,
                                             "USD",
                                             userCurrency,
