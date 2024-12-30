@@ -148,6 +148,7 @@
     "Back to Orders" : "Back to Orders",
     "edit_order" : "Edit Order - #:id",
     "pending" : "Pending",
+    "confirmed" : "Confirmed",
     "processing" : "Processing",
     "completed" : "Completed",
     "cancelled" : "Cancelled",

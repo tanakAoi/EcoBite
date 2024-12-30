@@ -148,6 +148,7 @@
     "Back to Orders": "Tillbaka till Ordrar",
     "edit_order": "Redigera Order - #:id",
     "pending": "Avvaktar",
+    "confirmed": "Bekräftar",
     "processing": "Bearbetar",
     "completed": "Slutförd",
     "cancelled": "Avbruten",

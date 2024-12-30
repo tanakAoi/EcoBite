@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\UserNotificationMail;
-
 class OrderController extends Controller
 {
     public function store(Request $request)
@@ -17,7 +14,6 @@ class OrderController extends Controller
             'user_id' => 'nullable|exists:users,id',
             'session_id' => 'nullable|string',
             'total_price' => 'required|numeric',
-            'order_status' => 'nullable|string',
             'items' => 'required|array',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
@@ -27,7 +23,7 @@ class OrderController extends Controller
             'user_id' => $data['user_id'] ?? null,
             'session_id' => $data['session_id'] ?? null,
             'total_price' => $data['total_price'],
-            'order_status' => $data['order_status'] ?? 'pending',
+            'order_status' => 'pending',
         ]);
 
         $orderItems = [];
@@ -55,15 +51,17 @@ class OrderController extends Controller
             ];
         }
 
-        $user = $request->user();
+        return $order->id;
+    }
 
-        Mail::to($user->email)->send(new UserNotificationMail([
-            'user' => $user,
-            'order' => $order,
-            'orderItems' => $orderItems,
-            'type' => 'order_confirmed',
-        ]));
+    public function updateStatus($id)
+    {
+        $order = Order::findOrFail($id);
 
-        return response()->json(['order_id' => $order->id], 201);
+        $order->update([
+            'order_status' => 'confirmed',
+        ]);
+
+        return $order->order_status;
     }
 }

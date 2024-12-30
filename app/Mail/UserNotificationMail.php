@@ -14,6 +14,7 @@ class UserNotificationMail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $userEmail;
     public $type;
     public $order;
     public $orderItems;
@@ -23,9 +24,10 @@ class UserNotificationMail extends Mailable
      */
     public function __construct($data)
     {
+        $this->userEmail = $data['user_email'] ?? null;;
         $this->user = $data['user'] ?? null;;
         $this->order = $data['order'] ?? null;
-        $this->orderItems = $data['orderItems'] ?? null;
+        $this->orderItems = $data['items'] ?? null;
         $this->type = $data['type'] ?? null;
     }
 

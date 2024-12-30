@@ -24,13 +24,13 @@ class CartController extends Controller
         return Inertia::render('Cart', ['cart' => $cart]);
     }
 
-    public function clearCart(Request $request)
+    public function clearCart($user_id, $session_id)
     {
-        Log::info($request->all());
-
-        $cart = Cart::where('user_id', $request->input('user_id'))
-            ->orWhere('session_id', $request->input('session_id'))
-            ->first();
+        if($user_id) {
+            $cart = Cart::where('user_id', $user_id)->first();
+        } else {
+            $cart = Cart::where('session_id', $session_id)->first();
+        }
 
         if ($cart) {
             $cart->items()->delete();
