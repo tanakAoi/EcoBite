@@ -14,7 +14,8 @@ interface OrderShowProps {
 const OrderShow: FC<OrderShowProps> = ({ order }) => {
     const { t } = useLaravelReactI18n();
     const { locale, shopCurrency, exchangeRates } = usePage().props;
-
+    console.log(order);
+    
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
@@ -29,7 +30,7 @@ const OrderShow: FC<OrderShowProps> = ({ order }) => {
                     <strong className="text-gray-700">
                         {t("Customer Name")}:
                     </strong>{" "}
-                    {order.user.username}
+                    {order.user.username ? order.user.username : "Guest"}
                 </div>
                 <div>
                     <strong className="text-gray-700">

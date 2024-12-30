@@ -56,7 +56,7 @@ const OrderConfirmation: FC<OrderConfirmationProps> = ({
                                         {formatCurrency(
                                             parseFloat(item.price),
                                             locale,
-                                            "USD",
+                                            shopCurrency,
                                             userCurrency,
                                             exchangeRates,
                                             item.quantity
