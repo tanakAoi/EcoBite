@@ -12,8 +12,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::table('users')->where('role', 'user')->update(['role' => 'customer']);
-
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role');
         });
@@ -21,6 +19,8 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->enum('role', ['admin', 'customer'])->default('customer')->after('password');
         });
+
+        DB::table('users')->where('role', 'user')->update(['role' => 'customer']);
     }
 
     /**
