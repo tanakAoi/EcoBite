@@ -37,7 +37,8 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
             prevProducts.filter((product) => product.id !== id)
         );
     };
-
+    console.log(products);
+    
     return (
         <div className="max-w-6xl mx-auto mt-10 p-6">
             <div className="flex justify-between items-center mb-6">
@@ -99,7 +100,7 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                                     {formatCurrency(
                                         product.price,
                                         locale,
-                                        shopCurrency,
+                                        product.currency,
                                         shopCurrency,
                                         exchangeRates
                                     )}

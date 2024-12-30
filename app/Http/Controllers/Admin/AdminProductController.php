@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
-use Illuminate\Support\Facades\Log;
 
 class AdminProductController extends Controller
 {
@@ -33,6 +32,7 @@ class AdminProductController extends Controller
             'price' => 'numeric',
             'stock_quantity' => 'integer',
             'image_url' => 'nullable|string|url',
+            'product_currency' => 'string|max:3',
         ]);
 
         Product::create([
@@ -41,6 +41,7 @@ class AdminProductController extends Controller
             'price' => $request->input('price'),
             'stock_quantity' => $request->input('stock_quantity'),
             'image' => $request->input('image_url'),
+            'currency' => $request->input('product_currency'),
         ]);
 
         session()->flash('type', 'success');
@@ -77,6 +78,7 @@ class AdminProductController extends Controller
             'price' => 'numeric|min:0',
             'stock_quantity' => 'integer|min:0',
             'image_url' => 'nullable|string|url',
+            'product_currency' => 'string|max:3',
         ]);
 
         $product->update([
@@ -85,6 +87,7 @@ class AdminProductController extends Controller
             'price' => $request->price,
             'stock_quantity' => $request->stock_quantity,
             'image' => $request->image_url,
+            'currency' => $request->product_currency,
         ]);
 
         session()->flash('type', 'success');

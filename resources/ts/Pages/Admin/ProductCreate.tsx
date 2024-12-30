@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEventHandler, FC } from "react";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import Button from "../../Components/Button";
 import BackLink from "../../Components/BackLink";
 import { useLaravelReactI18n } from "laravel-react-i18n";
@@ -17,6 +17,7 @@ const ProductCreate: FC = () => {
     });
     const { t } = useLaravelReactI18n();
     const { uploadImage, error } = useFileUpload("products");
+    const { shopCurrency } = usePage().props;
 
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
@@ -44,6 +45,7 @@ const ProductCreate: FC = () => {
             formData.append("price", String(data.price));
             formData.append("stock_quantity", String(data.stock_quantity));
             formData.append("image_url", data.image_url);
+            formData.append("product_currency", shopCurrency);
 
             post(route("admin.product.store"), {
                 data: formData,
@@ -100,15 +102,18 @@ const ProductCreate: FC = () => {
                     <label className="block text-gray-700 font-medium mb-2">
                         {t("Price")}
                     </label>
-                    <input
-                        type="number"
-                        value={data.price}
-                        onChange={(e) =>
-                            setData("price", parseFloat(e.target.value))
-                        }
-                        className="block w-full p-2 border border-gray-300 rounded-lg"
-                        required
-                    />
+                    <div className="flex items-center gap-4">
+                        <input
+                            type="number"
+                            value={data.price}
+                            onChange={(e) =>
+                                setData("price", parseFloat(e.target.value))
+                            }
+                            className="block w-fit p-2 border border-gray-300 rounded-lg"
+                            required
+                        />
+                        <span>{shopCurrency}</span>
+                    </div>
                     {errors.price && (
                         <div className="text-red-500 text-sm mt-1">
                             {errors.price}
@@ -125,7 +130,7 @@ const ProductCreate: FC = () => {
                         onChange={(e) =>
                             setData("stock_quantity", parseInt(e.target.value))
                         }
-                        className="block w-full p-2 border border-gray-300 rounded-lg"
+                        className="block w-fit p-2 border border-gray-300 rounded-lg"
                         required
                     />
                     {errors.stock_quantity && (

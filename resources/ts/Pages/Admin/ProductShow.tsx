@@ -37,7 +37,7 @@ const ProductShow: React.FC<ProductShowProps> = ({ product }) => {
                         {formatCurrency(
                             product.price,
                             locale,
-                            shopCurrency,
+                            product.currency,
                             shopCurrency,
                             exchangeRates
                         )}

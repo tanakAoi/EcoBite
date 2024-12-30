@@ -1,6 +1,6 @@
 import BackLink from "../../Components/BackLink";
 import Button from "../../Components/Button";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
 import { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
@@ -31,6 +31,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
     });
     const { t } = useLaravelReactI18n();
     const { uploadImage, error } = useFileUpload("products");
+    const { shopCurrency } = usePage().props;
 
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -45,7 +46,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
             setData((prev) => ({ ...prev, image: file }));
         }
     };
-    console.log(data);
+
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
 
@@ -73,6 +74,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
             formData.append("price", String(data.price));
             formData.append("stock_quantity", String(data.stock_quantity));
             formData.append("image_url", data.image_url);
+            formData.append("product_currency", shopCurrency);
 
             post(route("admin.product.update", product.id), {
                 data: formData,
@@ -142,14 +144,17 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
                             >
                                 {t("Price")}
                             </label>
-                            <input
-                                type="number"
-                                id="price"
-                                name="price"
-                                value={data.price}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2 mt-1"
-                            />
+                            <div className="flex items-center gap-4">
+                                <input
+                                    type="number"
+                                    id="price"
+                                    name="price"
+                                    value={data.price}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded-md p-2 mt-1"
+                                />
+                                <span>{shopCurrency}</span>
+                            </div>
                             {errors.price && (
                                 <p className="text-red-500 text-sm">
                                     {errors.price}

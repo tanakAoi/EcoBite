@@ -13,6 +13,7 @@ export interface Product {
     description: string;
     stock_quantity: number;
     image: string;
+    currency: string;
     created_at: string;
     updated_at: string;
 }
@@ -112,7 +113,7 @@ export interface OrderDetails {
     id: number;
     order_status: string;
     total_price: number;
-    user: User;
+    user?: User;
     items: Array<OrderItem>;
     created_at: string;
     updated_at: string;
