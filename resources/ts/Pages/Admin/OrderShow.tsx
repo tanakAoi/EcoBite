@@ -1,17 +1,17 @@
 // resources/js/Pages/Admin/OrderShow.tsx
 
-import React from "react";
 import { OrderDetails, OrderItem } from "@/types";
 import BackLink from "../../Components/BackLink";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { usePage } from "@inertiajs/react";
+import { FC } from "react";
 
 interface OrderShowProps {
     order: OrderDetails;
 }
 
-const OrderShow: React.FC<OrderShowProps> = ({ order }) => {
+const OrderShow: FC<OrderShowProps> = ({ order }) => {
     const { t } = useLaravelReactI18n();
     const { locale, shopCurrency, exchangeRates } = usePage().props;
 
