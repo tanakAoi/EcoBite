@@ -7,7 +7,7 @@
 
 <body>
     <h1>Order Confirmed!</h1>
-    <p>Hi {{ $user->username }},</p>
+    <p>Hi {{ $user ? $user->username : "Guest" }},</p>
     <p>Thank you for your order! Your order has been successfully placed.</p>
     <p>We'll notify you once your items are shipped. Below are the details of your order:</p>
     <ul>

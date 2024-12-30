@@ -148,6 +148,7 @@
     "Back to Orders": "注文一覧に戻る",
     "edit_order": "注文編集 - #:id",
     "pending": "保留中",
+    "confirmed" : "確認済み",
     "processing": "処理中",
     "completed": "完了",
     "cancelled": "キャンセル",

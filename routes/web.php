@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\ContactController;
@@ -110,7 +111,9 @@ Route::delete('/cart/item/delete/{cartItemId}', [CartItemController::class, 'rem
 // Checkout
 Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.create-payment-intent');
-Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+/* Route::post('/checkout/create-checkout-session', [CheckoutController::class, 'createCheckoutSession'])->name('checkout.create-checkout-session');
+ */Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
 
 // Order
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');

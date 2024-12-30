@@ -5,42 +5,23 @@ import { FC, useEffect, useState } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import { formatCurrency } from "../utils/formatCurrency";
 import BackLink from "../Components/BackLink";
+import { PageProps } from "@/types/index";
 
-const OrderConfirmation: FC = ({}) => {
-    const { cart, user, locale, userCurrency, exchangeRates } = usePage().props;
-    const [orderId, setOrderId] = useState<number | null>(null);
-    const [orderPlaced, setOrderPlaced] = useState(false);
+interface OrderConfirmationProps extends PageProps {
+    orderId: number;
+    orderTotalPrice: number;
+    orderItems: CartItemProduct[];
+}
+
+const OrderConfirmation: FC<OrderConfirmationProps> = ({
+    orderId,
+    orderTotalPrice,
+    orderItems,
+}) => {
+    const { locale, userCurrency, exchangeRates, shopCurrency } = usePage().props;
     const { t } = useLaravelReactI18n();
-
-    useEffect(() => {
-        const saveOrderData = async () => {
-            if (orderPlaced) return;
-
-            try {
-                const response = await axios.post(route("order.store"), {
-                    user_id: user ? user.id : null,
-                    session_id: user ? null : cart.session_id,
-                    total_price: cart.total_price,
-                    items: cart.items,
-                });
-                if (response.status === 201) {
-                    setOrderId(response.data.order_id);
-                    setOrderPlaced(true);
-
-                    await axios.delete(route("cart.clear"), {
-                        params: {
-                            user_id: user ? user.id : null,
-                            session_id: user ? null : cart.session_id,
-                        },
-                    });
-                }
-            } catch (error) {
-                console.error("Error saving order:", error);
-            }
-        };
-        saveOrderData();
-    }, [orderPlaced, cart]);
-
+    console.log(orderId, orderItems, orderTotalPrice);
+    
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl w-full mx-auto mt-10">
@@ -52,7 +33,7 @@ const OrderConfirmation: FC = ({}) => {
                     <p>
                         {t("Your order ID")}
                         {": "}
-                        <strong>{orderId}</strong>
+                        <strong>{orderId as number}</strong>
                         <span className="font-bold text-gray-900"></span>
                     </p>
                 </div>
@@ -62,19 +43,19 @@ const OrderConfirmation: FC = ({}) => {
                         {t("Order Summary")}
                     </h3>
                     <ul className="list-none space-y-4 mt-4">
-                        {cart.items?.map(
-                            (item: CartItemProduct, index: number) => (
+                        {orderItems.map(
+                            (item, index) => (
                                 <li
                                     key={index}
                                     className="flex justify-between text-gray-700"
                                 >
                                     <span>
-                                        {item.product.name} (x
+                                        {item.name} (x
                                         {item.quantity})
                                     </span>
                                     <span>
                                         {formatCurrency(
-                                            item.product.price,
+                                            item.price,
                                             locale,
                                             "USD",
                                             userCurrency,
@@ -93,9 +74,9 @@ const OrderConfirmation: FC = ({}) => {
                         <span>{t("Total")}: </span>
                         <span>
                             {formatCurrency(
-                                cart.total_price ?? 0,
+                                orderTotalPrice,
                                 locale,
-                                "USD",
+                                shopCurrency,
                                 userCurrency,
                                 exchangeRates
                             )}
