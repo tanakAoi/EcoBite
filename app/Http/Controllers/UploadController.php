@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
@@ -10,6 +11,8 @@ class UploadController extends Controller
     public function store(Request $request)
     {
         try {
+            Log::info($request->all());
+            
             $request->validate([
                 'image' => 'required|image|mimes:jpg,jpeg,png,gif,webp|max:10240', // max 10MB
                 'category' => 'required|in:products,recipes,other',

@@ -1,8 +1,8 @@
 import { useForm } from "@inertiajs/react";
 import Button from "../../../../Components/Button";
-import axios from "axios";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 import { FC, FormEventHandler, useEffect, useState } from "react";
+import useFileUpload from "../../../../hooks/useFileUpload";
 
 const EditHeroForm: FC = () => {
     const { t } = useLaravelReactI18n();
@@ -13,32 +13,22 @@ const EditHeroForm: FC = () => {
         text_color: "light",
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setError] = useState("");
+    const { uploadImage, error } = useFileUpload("other");
 
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
 
         if (data.image) {
-            const imageFormData = new FormData();
+            const uploadedImageUrl = await uploadImage(data.image);
 
-            imageFormData.append("category", "other");
-            imageFormData.append("image", data.image);
-
-            try {
-                const response = await axios.post(
-                    route("upload.store"),
-                    imageFormData
-                );
-                setData("image_url", response.data.url);
-            } catch (error) {
-                console.error(error);
-                setError((error as any).message);
+            if (!uploadedImageUrl || error) {
+                setIsSubmitting(false);
                 return;
             }
-        } else {
-            setData("image_url", "");
-        }
 
+            setData("image_url", uploadedImageUrl);
+        }
+        
         setIsSubmitting(true);
     };
 
@@ -48,9 +38,7 @@ const EditHeroForm: FC = () => {
 
             formData.append("tagline", data.tagline);
             formData.append("text_color", data.text_color);
-            if (data.image_url) {
-                formData.append("image_url", data.image_url);
-            }
+            formData.append("image_url", data.image_url);
 
             post(route("admin.settings.hero.update"), {
                 data: formData,
@@ -58,7 +46,7 @@ const EditHeroForm: FC = () => {
 
             setIsSubmitting(false);
         }
-    }, [isSubmitting, data.image_url]);
+    }, [isSubmitting]);
 
     return (
         <div className="mb-10 max-w-2xl">
@@ -132,7 +120,7 @@ const EditHeroForm: FC = () => {
                     <div className="text-red-500 text-sm mt-1">{error}</div>
                 )}
                 <Button
-                    label={t("Save")}
+                    label={processing ? t("Saving...") : t("Save")}
                     type="submit"
                     className="w-fit self-end"
                     disabled={processing}
