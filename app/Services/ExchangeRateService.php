@@ -4,13 +4,14 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\ShopSetting;
 
 class ExchangeRateService
 {
     public function getRates()
     {
         return cache()->remember('exchangeRates', 60 * 60 * 24, function () {
-            
+
             $response = Http::get(
                 'https://openexchangerates.org/api/latest.json',
                 [
@@ -28,7 +29,9 @@ class ExchangeRateService
             }
 
             $rates = $response->json('rates');
-            $baseCurrency = config('shop.currency', 'SEK');
+
+            $shopSetting = ShopSetting::first();
+            $baseCurrency = $shopSetting ? $shopSetting->shop_currency : 'SEK';
 
             if ($baseCurrency !== 'USD' && isset($rates[$baseCurrency])) {
                 $baseRate = $rates[$baseCurrency];

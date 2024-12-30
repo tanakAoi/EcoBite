@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ShopSetting;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class ShopSettingController extends Controller
@@ -28,8 +26,6 @@ class ShopSettingController extends Controller
 
         $shopSetting = ShopSetting::firstOrCreate([]);
         $shopSetting->update(['shop_currency' => $request->shop_currency]);
-
-        Config::set('shop.currency', $request->shop_currency);
 
         session()->flash('type', 'success');
         session()->flash('message', 'Shop currency updated successfully!');
