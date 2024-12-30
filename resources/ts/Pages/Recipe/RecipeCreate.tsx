@@ -4,6 +4,7 @@ import axios from "axios";
 import Button from "../../Components/Button";
 import BackLink from "../../Components/BackLink";
 import { useLaravelReactI18n } from "laravel-react-i18n";
+import useFileUpload from "../../hooks/useFileUpload";
 
 interface RecipeFormData {
     user_id: number;
@@ -35,25 +36,8 @@ interface Instruction {
 const RecipeCreate: FC = () => {
     const { user } = usePage().props;
     const { t } = useLaravelReactI18n();
-
-    if (!user) {
-        return <div>{t("Loading...")}</div>;
-    }
-
+    const { uploadImage, error } = useFileUpload("recipes");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { data, setData, post, processing, errors } = useForm<RecipeFormData>(
-        {
-            user_id: user.id,
-            title: "",
-            description: "",
-            ingredients: [],
-            instructions: [],
-            customIngredient: "",
-            currentInstruction: "",
-            image: null,
-            image_url: "",
-        }
-    );
     const [isCustomIngredient, setIsCustomIngredient] = useState(false);
     const [currentIngredient, setCurrentIngredient] = useState<{
         name: string;
@@ -77,6 +61,24 @@ const RecipeCreate: FC = () => {
         t("cup"),
         t("piece"),
     ];
+
+    if (!user) {
+        return <div>{t("Loading...")}</div>;
+    }
+
+    const { data, setData, post, processing, errors } = useForm<RecipeFormData>(
+        {
+            user_id: user.id,
+            title: "",
+            description: "",
+            ingredients: [],
+            instructions: [],
+            customIngredient: "",
+            currentInstruction: "",
+            image: null,
+            image_url: "",
+        }
+    );
 
     useEffect(() => {
         const fetchShopIngredients = async () => {
@@ -177,24 +179,16 @@ const RecipeCreate: FC = () => {
         e.preventDefault();
 
         if (data.image) {
-            const imageFormData = new FormData();
+            const uploadedImageUrl = await uploadImage(data.image);
 
-            imageFormData.append("category", "recipes");
-            imageFormData.append("image", data.image);
-
-            try {
-                const response = await axios.post(
-                    route("upload.store"),
-                    imageFormData
-                );
-                setData("image_url", response.data.url);
-            } catch (error) {
-                console.error(error);
+            if (!uploadedImageUrl || error) {
+                setIsSubmitting(false);
+                return;
             }
-        } else {
-            setData("image_url", "");
-        }
 
+            setData("image_url", uploadedImageUrl);
+        }
+        
         setIsSubmitting(true);
     };
 
@@ -217,7 +211,7 @@ const RecipeCreate: FC = () => {
 
             setIsSubmitting(false);
         }
-    }, [isSubmitting, data.image_url]);
+    }, [isSubmitting]);
 
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
@@ -413,7 +407,7 @@ const RecipeCreate: FC = () => {
                 </div>
                 <div>
                     <Button
-                        label={t("Submit Recipe")}
+                        label={processing ? t("Saving...") : t("Submit Recipe")}
                         type="submit"
                         disabled={processing}
                     />

@@ -4,6 +4,7 @@ import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
+import useFileUpload from "../../hooks/useFileUpload";
 
 interface ProductEditProps {
     product: {
@@ -29,6 +30,7 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
         image_url: product.image ?? "",
     });
     const { t } = useLaravelReactI18n();
+    const { uploadImage, error } = useFileUpload("products");
 
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,21 +50,14 @@ const ProductEdit: FC<ProductEditProps> = ({ product }) => {
         e.preventDefault();
 
         if (data.image) {
-            const imageFormData = new FormData();
+            const uploadedImageUrl = await uploadImage(data.image);
 
-            imageFormData.append("category", "products");
-            imageFormData.append("image", data.image);
-
-            try {
-                const response = await axios.post(
-                    route("upload.store"),
-                    imageFormData
-                );
-                setData("image_url", response.data.url);
-            } catch (error) {
-                console.error(error);
+            if (!uploadedImageUrl || error) {
+                setIsSubmitting(false);
                 return;
             }
+
+            setData("image_url", uploadedImageUrl);
         }
 
         setIsSubmitting(true);

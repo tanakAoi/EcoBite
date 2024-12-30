@@ -1,9 +1,9 @@
 import { useState, useEffect, FormEventHandler, FC } from "react";
 import { useForm } from "@inertiajs/react";
-import axios from "axios";
 import Button from "../../Components/Button";
 import BackLink from "../../Components/BackLink";
 import { useLaravelReactI18n } from "laravel-react-i18n";
+import useFileUpload from "../../hooks/useFileUpload";
 
 const ProductCreate: FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,28 +16,20 @@ const ProductCreate: FC = () => {
         image_url: "",
     });
     const { t } = useLaravelReactI18n();
+    const { uploadImage, error } = useFileUpload("products");
 
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
 
         if (data.image) {
-            const imageFormData = new FormData();
+            const uploadedImageUrl = await uploadImage(data.image);
 
-            imageFormData.append("category", "products");
-            imageFormData.append("image", data.image);
-
-            try {
-                const response = await axios.post(
-                    route("upload.store"),
-                    imageFormData
-                );
-
-                setData("image_url", response.data.url);
-            } catch (error) {
-                console.error(error);
+            if (!uploadedImageUrl || error) {
+                setIsSubmitting(false);
+                return;
             }
-        } else {
-            setData("image_url", "");
+
+            setData("image_url", uploadedImageUrl);
         }
 
         setIsSubmitting(true);
@@ -51,9 +43,7 @@ const ProductCreate: FC = () => {
             formData.append("description", data.description);
             formData.append("price", String(data.price));
             formData.append("stock_quantity", String(data.stock_quantity));
-            if (data.image_url) {
-                formData.append("image_url", data.image_url);
-            }
+            formData.append("image_url", data.image_url);
 
             post(route("admin.product.store"), {
                 data: formData,
@@ -61,7 +51,7 @@ const ProductCreate: FC = () => {
 
             setIsSubmitting(false);
         }
-    }, [isSubmitting, data.image_url]);
+    }, [isSubmitting]);
 
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
@@ -164,7 +154,7 @@ const ProductCreate: FC = () => {
                 </div>
                 <div>
                     <Button
-                        label={t("Save Product")}
+                        label={processing ? t("Saving...") : t("Save Product")}
                         type="submit"
                         disabled={processing}
                     />
