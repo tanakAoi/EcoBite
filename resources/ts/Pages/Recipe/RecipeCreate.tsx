@@ -412,6 +412,7 @@ const RecipeCreate: FC = () => {
                         disabled={processing}
                     />
                 </div>
+                {error && <div>{error}</div>}
             </form>
             <BackLink
                 href={route("recipe.index")}
