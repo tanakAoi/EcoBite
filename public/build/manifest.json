@@ -1,12 +1,12 @@
 {
   "lang/en.json": {
-    "file": "assets/en-CgKp4nCv.js",
+    "file": "assets/en-D6CKGP82.js",
     "name": "en",
     "src": "lang/en.json",
     "isDynamicEntry": true
   },
   "lang/jp.json": {
-    "file": "assets/jp-DXnzlCEq.js",
+    "file": "assets/jp-BLM7fkSG.js",
     "name": "jp",
     "src": "lang/jp.json",
     "isDynamicEntry": true
@@ -18,13 +18,13 @@
     "isDynamicEntry": true
   },
   "lang/sv.json": {
-    "file": "assets/sv-QqyQIrcj.js",
+    "file": "assets/sv-CCUZQHso.js",
     "name": "sv",
     "src": "lang/sv.json",
     "isDynamicEntry": true
   },
   "resources/ts/app.tsx": {
-    "file": "assets/app-D_m_PM5m.js",
+    "file": "assets/app-DEnfJCQ8.js",
     "name": "app",
     "src": "resources/ts/app.tsx",
     "isEntry": true,
