@@ -45,9 +45,10 @@ const OrderUpdate: FC<OrderUpdateProps> = ({ order }) => {
                         className="block w-full p-2 border border-gray-300 rounded-lg"
                     >
                         <option value="pending">{t("pending")}</option>
+                        <option value="confirmed">{t("confirmed")}</option>
                         <option value="processing">{t("processing")}</option>
                         <option value="completed">{t("completed")}</option>
-                        <option value="cancelled">{t("cancelled")}</option>
+                        <option value="canceled">{t("canceled")}</option>
                     </select>
                     {errors.order_status && (
                         <div className="text-red-500 text-sm mt-1">

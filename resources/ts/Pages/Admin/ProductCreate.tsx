@@ -58,7 +58,7 @@ const ProductCreate: FC = () => {
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
             <h2 className="text-4xl font-bold text-gray-800 mb-8 font-serif">
-                {t("Create a New Product")}
+                {t("Create a new product")}
             </h2>
             <form
                 onSubmit={handleSubmit}

@@ -26,6 +26,7 @@ const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
         selectedIngredients: [] as number[],
     });
 
+    // TODO: Shop products need to get name from product table
     useEffect(() => {
         const fetchAllIngredients = async () => {
             try {

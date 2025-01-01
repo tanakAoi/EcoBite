@@ -55,7 +55,6 @@ class CheckoutController extends Controller
             ],
         ]);
 
-        /* $returnUrl = config('app.url') . '/checkout/order-confirmation?order_id=' . $orderId; */
         $returnUrl = route('checkout.confirm', ['order_id' => $order_id]);
 
         return response()->json([

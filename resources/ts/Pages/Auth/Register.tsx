@@ -76,7 +76,7 @@ export default function Register() {
                         onChange={(e) => setData('password', e.target.value)}
                         required
                     />
-
+                    <span className='text-sm'>({t("At least 8 characters")})</span>
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 

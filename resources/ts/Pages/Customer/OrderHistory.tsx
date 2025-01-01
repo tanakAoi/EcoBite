@@ -47,7 +47,7 @@ const OrderHistory: FC<OrderHistoryProps> = ({ orders }) => {
                                 {order.total_price}
                             </p>
                             <p>
-                                <strong>{t("Status")}:</strong> {order.order_status}
+                                <strong>{t("Status")}:</strong> {t(order.order_status)}
                             </p>
                         </div>
                         <div className="mt-4">

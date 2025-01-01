@@ -22,7 +22,7 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes, heroData }) => {
         <div className="">
             <div
                 className={`flex items-center w-full bg-cover bg-center bg-no-repeat md:h-[40rem] ${
-                    heroData?.image ? "" : "bg-gray-200"
+                    heroData?.image ? "" : "bg-dark/50"
                 }`}
                 style={{
                     backgroundImage: heroData?.image

@@ -58,7 +58,9 @@ export default function UpdatePasswordForm({
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {t("Ensure your account is using a long, random password to stay secure.")}
+                    {t(
+                        "Ensure your account is using a long, random password to stay secure."
+                    )}
                 </p>
             </header>
 
@@ -106,7 +108,7 @@ export default function UpdatePasswordForm({
                 <div>
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value="Confirm new password"
                     />
 
                     <TextInput
@@ -127,7 +129,9 @@ export default function UpdatePasswordForm({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>{t("Save")}</PrimaryButton>
+                    <PrimaryButton disabled={processing}>
+                        {t("Save")}
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}

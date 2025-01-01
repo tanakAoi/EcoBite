@@ -34,7 +34,7 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
                     className="w-full md:w-fit text-center bg-dark text-primary px-4 py-2 rounded font-semibold transition hover:bg-primary hover:text-dark"
                     href={route("recipe.create")}
                 >
-                    {t("Create a New Recipe")}
+                    {t("Create a new recipe")}
                 </Link>
             </div>
             <div>

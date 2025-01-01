@@ -49,7 +49,7 @@ const ProductList: React.FC<AdminProductProps> = ({ productsData }) => {
                     href={route("admin.product.create")}
                     className="mb-4 inline-block bg-dark text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-dark transition"
                 >
-                    {t("Add New Product")}
+                    {t("Add new product")}
                 </Link>
             </div>
             <div className="overflow-x-auto">

@@ -23,7 +23,7 @@
     "pagination": "Page :current_page of :last_page",
     "No Image Available": "No Image Available",
     "Back to Products": "Back to Products",
-    "Create a New Recipe": "Create a New Recipe",
+    "Create a new recipe": "Create a new recipe",
     "Search Results for": "Search Results for",
     "created_at": "Created at: :date",
     "ingredients": "Ingredients: :ingredients",
@@ -151,16 +151,16 @@
     "confirmed" : "Confirmed",
     "processing" : "Processing",
     "completed" : "Completed",
-    "cancelled" : "Cancelled",
+    "canceled" : "Canceled",
     "Save Changes" : "Save Changes",
-    "Create a New Product" : "Create a New Product",
+    "Create a new product" : "Create a new product",
     "Stock Quantity" : "Stock Quantity",
     "Product Image" : "Product Image",
     "Save Product" : "Save Product",
     "Edit Product" : "Edit Product",
     "Saving..." : "Saving...",
     "Product Management" : "Product Management",
-    "Add New Product" : "Add New Product",
+    "Add new product" : "Add new product",
     "Edit" : "Edit",
     "Delete" : "Delete",
     "Shop currency" : "Shop currency",
@@ -183,6 +183,8 @@
     "No products available": "No products available",
     "Don't have an account?" : "Don't have an account?",
     "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website." : "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website.",
-    "In this section, you can update the hero text, image, and text color to better match the theme of your site." : "In this section, you can update the hero text, image, and text color to better match the theme of your site."
+    "In this section, you can update the hero text, image, and text color to better match the theme of your site." : "In this section, you can update the hero text, image, and text color to better match the theme of your site.",
+    "At least 8 characters" : "At least 8 characters",
+    "Confirm new password" : "Confirm new password"
 }
 
