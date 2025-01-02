@@ -1,66 +1,155 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# EcoBite - README
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Tech Stack
 
-## About Laravel
+-   **Backend**: Laravel
+-   **Frontend**: React (with TypeScript & Vite)
+-   **Inertia.js**
+-   **Database**: MySQL
+-   **Hosting**: Heroku
+-   **Styling**: Tailwind CSS
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Development Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+To develop EcoBite locally, you need the following:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Tools:
 
-## Learning Laravel
+-   PHP (v8.1 or later)
+-   Composer (latest version)
+-   MySQL (local or hosted instance)
+-   TablePlus or another database client (optional, for managing the database)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### External services:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   Stripe (payment)
+-   AWS (Uploading files)
+-   Deepl (Dynamic translation)
+-   Mailgun (Sending E-mail)
+-   Open Exchange Rate (Currency data API)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Extensions:
 
-## Laravel Sponsors
+-   Laravel Herd (for managing Laravel projects locally)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Testing Locally
 
-### Premium Partners
+1. Clone the repository:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+    git clone <repository-url>
+    ```
 
-## Contributing
+2. Install dependencies:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    composer install
+    npm install
+    ```
 
-## Code of Conduct
+3. Set up the database:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    - Import the provided SQL dump (`database/ecobite.sql`).
+    - Alternatively, run migrations and seed the database:
+        ```bash
+        php artisan migrate --seed
+        ```
 
-## Security Vulnerabilities
+4. Define environment variables:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    - Copy `.env.example` to `.env`.
+    - Update the variables with your local settings (see [Environment Variables](#environment-variables)).
 
-## License
+5. Generate the application key:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    - Run the following command to generate a new application key:
+
+        ```bash
+          php artisan key:generate
+        ```
+
+        Then update `APP_KEY` in `.env`.
+
+6. Start the development servers:
+
+    ```bash
+    npm run dev
+    ```
+
+7. Access the application:
+    - If you use Herd, access `http://ecobite.test` or `http://<your-project-name>.test`
+    - Alternatively, run:
+        ```bash
+           php artisan serve
+        ```
+        And access `http://localhost:8000`
+
+## External Services
+
+-   **Hosting**:
+    -   [Heroku](https://heroku.com): For hosting.
+-   **Database**:
+    -   MySQL hosted locally or on a cloud provider.
+
+## Environment Variables
+
+You need to define the following environment variables:
+
+### Database
+
+-   `DB_CONNECTION=mysql`
+-   `DB_HOST=<your-database-host>`
+-   `DB_PORT=3306`
+-   `DB_DATABASE=<your-database-name>`
+-   `DB_USERNAME=<your-database-username>`
+-   `DB_PASSWORD=<your-database-password>`
+
+### Stripe
+
+-   `STRIPE_SECRET_KEY=<your-stripe-secret-key>`
+-   `STRIPE_PUBLIC_KEY=<your-stripe-public-key>`
+-   `STRIPE_WEBHOOK_SECRET=<your-stripe-webhook-secret>`
+
+### Mailgun
+
+-   `MAIL_MAILER=<your-mail-driver>`
+-   `MAILGUN_DOMAIN=<your-mailgun-domain>`
+-   `MAILGUN_SECRET=<your-mailgun-secret>`
+-   `MAILGUN_ENDPOINT=<your-mailgun-endpoint>`
+
+### AWS
+
+-   `AWS_ACCESS_KEY_ID=<your-aws-access-key-id>`
+-   `AWS_SECRET_ACCESS_KEY=<your-aws-secret-access-key>`
+-   `AWS_DEFAULT_REGION=<your-aws-region>`
+-   `AWS_BUCKET=<your-aws-bucket-name>`
+
+### Open Exchange Rate
+
+-   `OER_APP_ID=<your-open-exchange-rate-app-id>`
+
+### Deepl
+
+-   `DEEPL_API_KEY=<your-deepl-api-key>`
+
+## Database
+
+-   A SQL dump is provided in `database/dump.sql` for quick setup.
+-   Alternatively, run the migrations and seeders to generate sample data.
+
+## Test Users
+
+In the deployed version, you can use the following credentials:
+
+-   **Admin**:
+    -   Email: `admin@test.com`
+    -   Password: `password`
+-   **User**:
+    -   Email: `customer@test.com`
+    -   Password: `password`
+
+If you wish to receive mail, create your account with your email-address in the application. (Do not forget to save your e-mail address as recipient in Mailgun if you use Free plan.)
+
+## Additional Notes
+
+- You need to manually change the role to 'admin' for the first administrator in the database.

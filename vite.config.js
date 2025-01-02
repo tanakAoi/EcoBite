@@ -19,8 +19,5 @@ export default defineConfig({
     server: {
         https: process.env.APP_ENV === "production",
     },
-    base:
-        process.env.APP_ENV === "production"
-            ? "https://ecobite-4c90906c8f67.herokuapp.com/"
-            : "/",
+    base: process.env.APP_ENV === "production" ? process.env.APP_URL : "/",
 });
