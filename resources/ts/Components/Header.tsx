@@ -47,6 +47,9 @@ const Header: React.FC<HeaderProps> = () => {
                 <li>
                     <Link href={route("recipe.index")}>{t("Recipes")}</Link>
                 </li>
+                <li>
+                    <Link href={route("about")}>{t("About")}</Link>
+                </li>
                 {user ? (
                     <li>
                         <Link href={route("user.index")}>{t("Account")}</Link>

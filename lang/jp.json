@@ -185,5 +185,8 @@
     "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website." : "ヒーローは、ホームページの重要なビジュアル要素で、注意を引き、重要なコンテンツやアクションを強調するために設計されています。通常、キャッチーなタグラインと、ウェブサイトのテーマを表す画像が含まれています。",
     "In this section, you can update the hero text, image, and text color to better match the theme of your site." : "このセクションでは、ヒーローテキスト、画像、テキスト色を更新して、サイトのテーマにより適合させることができます。",
     "At least 8 characters" : "8文字以上",
-    "Confirm new password" : "新しいパスワードを確認"
+    "Confirm new password" : "新しいパスワードを確認",
+    "About": "EcoBiteについて",
+    "Contact": "お問い合わせ",
+    "about_text": "EcoBiteは、食料品のオンラインショップで、ユーザーが簡単に必要な材料を見つけ、購入できるサービスです。レシピ機能を使用して、材料を使ったレシピを探し、必要なアイテムをショッピングカートに追加することで、料理が簡単に始められます。ログインすると、ユーザーは自分自身でレシピを作成したり、他のユーザーと共有することも可能です。"
 }

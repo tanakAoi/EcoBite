@@ -185,5 +185,8 @@
     "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website." : "En hero är ett nyckelvisuellt element på startsidan, utformat för att dra uppmärksamhet och framhäva viktig innehåll eller åtgärder. Det inkluderar vanligtvis en fångande tagline och en bild som representerar webbplatsens tema.",
     "In this section, you can update the hero text, image, and text color to better match the theme of your site." : "I detta avsnitt kan du uppdatera hero text, bild och textfärg för att bättre matcha din webbplats tema." ,
     "At least 8 characters" : "Minst 8 tecken",
-    "Confirm new password" : "Bekräfta nytt lösenord"
+    "Confirm new password" : "Bekräfta nytt lösenord",
+    "About" : "Om oss",
+    "Contact" : "Kontakt",
+    "about_text": "EcoBite är en online matbutik där användare enkelt kan hitta och köpa de ingredienser de behöver genom en receptfunktion. Genom att söka efter recept som använder ingredienserna och lägga till nödvändiga artiklar i varukorgen blir matlagning både enkel och bekväm. När du är inloggad kan användare också skapa sina egna recept och dela dem med andra."
 }

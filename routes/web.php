@@ -112,7 +112,8 @@ Route::delete('/cart/item/delete/{cartItemId}', [CartItemController::class, 'rem
 Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.create-payment-intent');
 /* Route::post('/checkout/create-checkout-session', [CheckoutController::class, 'createCheckoutSession'])->name('checkout.create-checkout-session');
- */Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+ */
+Route::get('/checkout/order-confirmation', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
 
 // Order
@@ -134,7 +135,7 @@ Route::middleware('auth')->group(function () {
 
 // Admin
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    Route::get('/admin',[AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
     Route::get('/admin/settings', [ShopSettingController::class, 'index'])->name('admin.settings.index');
     Route::post('/admin/settings/currency/update', [ShopSettingController::class, 'updateCurrency'])->name('admin.settings.currency.update');
@@ -176,10 +177,10 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 // Other Pages
 Route::get('/about', function () {
     return Inertia::render('Other/About');
-});
+})->name('about');
 Route::get('/faq', function () {
     return Inertia::render('Other/FAQ');
-});
+})->name('faq');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', 'ContactController@send');
 

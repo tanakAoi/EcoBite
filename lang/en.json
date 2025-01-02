@@ -185,6 +185,9 @@
     "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website." : "A hero is a key visual element on the homepage, designed to grab attention and highlight important content or actions. It usually includes a catchy tagline and an image that represents the theme of the website.",
     "In this section, you can update the hero text, image, and text color to better match the theme of your site." : "In this section, you can update the hero text, image, and text color to better match the theme of your site.",
     "At least 8 characters" : "At least 8 characters",
-    "Confirm new password" : "Confirm new password"
+    "Confirm new password" : "Confirm new password",
+    "About": "About",
+    "Contact": "Contact",
+    "about_text" : "EcoBite is an online grocery store where users can easily find and purchase the ingredients they need through a recipe feature. By searching for recipes that use the ingredients and adding the necessary items to the shopping cart, cooking becomes easy and convenient. When logged in, users can also create their own recipes and share them with others."
 }
 
