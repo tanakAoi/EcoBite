@@ -5,22 +5,62 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Models\RecipeIngredient;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Storage;
+use App\Services\TranslationService;
 
 class RecipeController extends Controller
 {
+    protected $translationService;
+
+    public function __construct(TranslationService $translationService)
+    {
+        $this->translationService = $translationService;
+    }
+
     public function index()
     {
         $recipes = Recipe::paginate(12);
+
+        $lang = strtoupper(session('locale', 'en'));
+
+        $translatedRecipes = $recipes->getCollection()->map(function ($recipe) use ($lang) {
+
+            $cacheKey = "recipe_{$recipe->id}_{$lang}_title";
+
+            return $this->translationService->translateAndCache(
+                $recipe,
+                $cacheKey,
+                $lang,
+                function ($recipe, $lang) {
+                    $recipe->title = $this->translationService->translateText($recipe->title, $lang);
+                    return $recipe;
+                }
+            );
+        });
+
+        $recipes->setCollection($translatedRecipes);
+
         return Inertia::render('Recipe/RecipeList', ['recipesData' => $recipes]);
     }
 
     public function show($id)
     {
         $recipe = Recipe::with('ingredients.product')->find($id);
-        return Inertia::render('Recipe/RecipeSingle', ['recipe' => $recipe]);
+
+        $lang = strtoupper(session('locale', 'en'));
+
+        $cacheKey = "recipe_{$recipe->id}_{$lang}";
+
+        $translatedRecipe = $this->translationService->translateAndCache(
+            $recipe,
+            $cacheKey,
+            $lang,
+            function ($recipe, $lang) {
+                return $this->translationService->translateSingleRecipe($recipe, $lang);
+            }
+        );
+
+        return Inertia::render('Recipe/RecipeSingle', ['recipe' => $translatedRecipe]);
     }
 
     public function create()
@@ -86,7 +126,40 @@ class RecipeController extends Controller
                 ->whereIn('id', $matchingRecipeIds)
                 ->paginate(12);
 
-            $ingredientNames = RecipeIngredient::whereIn('id', $selectedIngredientIds)->pluck('name');
+            $lang = strtoupper(session('locale', 'en'));
+
+            $searchedRecipesData->getCollection()->map(function ($recipe) use ($lang) {
+                $recipe->ingredients->map(function ($ingredient) use ($lang) {
+                    $cacheKey = "searched_recipe_ingredient_{$ingredient->id}_{$lang}";
+
+                    $ingredient->name = $this->translationService->translateAndCache(
+                        $ingredient->name,
+                        $cacheKey,
+                        $lang,
+                        function ($name, $lang) {
+                            return $this->translationService->translateText($name, $lang);
+                        }
+                    );
+
+                    return $ingredient;
+                });
+                return $recipe;
+            });
+
+            $ingredientNames = RecipeIngredient::whereIn('id', $selectedIngredientIds)
+                ->get()
+                ->map(function ($ingredient) use ($lang) {
+                    $cacheKey = "searched_ingredient_{$ingredient->id}_{$lang}";
+                    return $this->translationService->translateAndCache(
+                        $ingredient->name,
+                        $cacheKey,
+                        $lang,
+                        function ($name, $lang) {
+                            return $this->translationService->translateText($name, $lang);
+                        }
+                    );
+                    return $ingredient->name;
+                });
 
             return response()->json([
                 'searchedRecipesData' => $searchedRecipesData,

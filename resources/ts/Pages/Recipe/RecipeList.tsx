@@ -29,7 +29,9 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
     return (
         <div className="max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-6">
-                <h1 className="text-5xl font-bold font-serif">{t("Recipes")}</h1>
+                <h1 className="text-5xl font-bold font-serif">
+                    {t("Recipes")}
+                </h1>
                 <Link
                     className="w-full md:w-fit text-center bg-dark text-primary px-4 py-2 rounded font-semibold transition hover:bg-primary hover:text-dark"
                     href={route("recipe.create")}
@@ -167,7 +169,10 @@ const RecipeList: FC<RecipeListProps> = ({ recipesData }) => {
                                 </div>
                             ))}
                         </div>
-                        <Pagination pageData={recipesData} itemLabel={t("recipe")} />
+                        <Pagination
+                            pageData={recipesData}
+                            itemLabel={t("recipe")}
+                        />
                     </>
                 )}
             </div>

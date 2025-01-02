@@ -14,6 +14,9 @@ const OrderHistory: FC<OrderHistoryProps> = ({ orders }) => {
         return <div className="text-center mt-10">{t("No orders found.")}</div>;
     }
 
+    console.log(orders);
+    
+
     return (
         <div className="max-w-7xl mx-auto mt-10 px-5 md:px-10">
             <div className="flex justify-between">

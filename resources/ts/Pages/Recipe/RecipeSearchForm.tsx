@@ -1,7 +1,7 @@
 import Button from "../../Components/Button";
 import { PaginatedRecipes, Recipe } from "@/types";
 import { useForm } from "@inertiajs/react";
-import axios from "axios";
+import axios, { all } from "axios";
 import { FC, useEffect, useState } from "react";
 import { useLaravelReactI18n } from "laravel-react-i18n";
 
@@ -53,6 +53,8 @@ const RecipeSearchForm: FC<RecipeSearchFormProps> = ({ onSearch }) => {
         };
         fetchAllIngredients();
     }, []);
+
+    
 
     const addIngredient = (id: number) => {
         const newIngredients = data.selectedIngredients.includes(id)
