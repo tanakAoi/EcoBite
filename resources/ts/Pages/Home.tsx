@@ -119,7 +119,9 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes, heroData }) => {
                             </div>
                         </div>
                     ) : (
-                        <p className="text-center">{t("No recipes available")}</p>
+                        <p className="text-center">
+                            {t("No recipes available")}
+                        </p>
                     )}
                     <Link
                         href={route("recipe.index")}
@@ -150,11 +152,13 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes, heroData }) => {
                                         <img
                                             src={product.image}
                                             alt={product.name}
-                                            className="w-full object-cover object-center"
+                                            className="w-full aspect-square object-cover object-center"
                                         />
                                     ) : (
-                                        <div className="w-full h-48 bg-secondary/20">
-                                            <span>{t("No Image Available")}</span>
+                                        <div className="w-full aspect-square bg-secondary/20 flex items-center justify-center">
+                                            <span>
+                                                {t("No Image Available")}
+                                            </span>
                                         </div>
                                     )}
                                     <h3 className="text-xl font-medium uppercase">
@@ -164,7 +168,9 @@ const Home: FC<HomeProps> = ({ latestProducts, featuredRecipes, heroData }) => {
                             ))}
                         </div>
                     ) : (
-                        <p className="text-center">{t("No products available")}</p>
+                        <p className="text-center">
+                            {t("No products available")}
+                        </p>
                     )}
                     <Link
                         href={route("product.index")}

@@ -40,7 +40,7 @@ class ExchangeRateService
                 }
             }
 
-            return $rates;;
+            return $rates;
         });
     }
 }
