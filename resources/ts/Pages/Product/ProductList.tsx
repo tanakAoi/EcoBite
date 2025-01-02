@@ -35,6 +35,10 @@ const ProductList: FC<ProductListProps> = ({ productsData }) => {
         }));
     };
 
+
+        console.log(data);
+        
+
     return (
         <div className="">
             <h1 className="text-5xl text-center font-bold mb-10 font-serif">

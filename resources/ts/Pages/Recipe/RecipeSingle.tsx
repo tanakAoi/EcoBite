@@ -10,6 +10,7 @@ interface RecipeSingleProps {
 
 const RecipeSingle: FC<RecipeSingleProps> = ({ recipe }) => {
     const { t } = useLaravelReactI18n();
+    console.log(recipe);
 
     return (
         <div className="max-w-4xl mx-auto">
@@ -83,8 +84,8 @@ const RecipeSingle: FC<RecipeSingleProps> = ({ recipe }) => {
                                                 ingredient.quantity > 1) ||
                                             (ingredient.unit === "piece" &&
                                                 ingredient.quantity > 1)
-                                                ? `${ingredient.unit}s`
-                                                : ingredient.unit}
+                                                ? `${t(ingredient.unit)}s`
+                                                : t(ingredient.unit)}
                                         </li>
                                     ))
                                 ) : (
