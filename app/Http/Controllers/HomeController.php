@@ -42,7 +42,7 @@ class HomeController extends Controller
 
         $latestProducts = Product::latest()->take(3)->get();
         $latestProducts = $latestProducts->map(function ($product) use ($lang) {
-            $cacheKey = "product_{$product->id}_{$lang}_name";
+            $cacheKey = "latest_product_{$product->id}_{$lang}_name";
 
             $product->name = $this->translationService->translateAndCache(
                 $product->name,
@@ -58,7 +58,7 @@ class HomeController extends Controller
 
         $featuredRecipes = Recipe::latest()->take(3)->get();
         $featuredRecipes = $featuredRecipes->map(function ($recipe) use ($lang) {
-            $cacheKey = "recipe_{$recipe->id}_{$lang}_title";
+            $cacheKey = "featured_recipe_{$recipe->id}_{$lang}_title";
 
             $recipe->title = $this->translationService->translateAndCache(
                 $recipe->title,

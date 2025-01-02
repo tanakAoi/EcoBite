@@ -29,7 +29,7 @@ class TranslationService
         return $translated->text;
     }
 
-    public function translateAndCache($data, string $cacheKey, string $lang, callable $translationCallback, $ttl = 86400)
+    public function translateAndCache($data, string $cacheKey, string $lang, callable $translationCallback, $ttl = 604800)
     {
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
